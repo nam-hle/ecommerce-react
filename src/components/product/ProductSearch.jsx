@@ -1,23 +1,21 @@
-import { Filters } from 'components/common';
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { clearRecentSearch, removeSelectedRecent, setTextFilter } from 'redux/actions/filterActions';
+import { Filters } from "components/common";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { clearRecentSearch, removeSelectedRecent, setTextFilter } from "redux/actions/filterActions";
 
 const ProductSearch = () => {
   const history = useHistory();
 
-  const {
-    productsLength, filter, products, isLoading
-  } = useSelector((state) => ({
+  const { productsLength, filter, products, isLoading } = useSelector((state) => ({
     filter: state.filter,
     products: state.products.items,
     isLoading: state.app.loading,
-    productsLength: state.products.length
+    productsLength: state.products.length,
   }));
   const dispatch = useDispatch();
   const searchInput = useRef(null);
-  let input = '';
+  let input = "";
 
   useEffect(() => {
     searchInput.current.focus();
@@ -27,16 +25,16 @@ const ProductSearch = () => {
     const val = e.target.value.trim();
     input = val;
 
-    if (val === '' && productsLength !== 0) {
+    if (val === "" && productsLength !== 0) {
       dispatch(setTextFilter(val));
-      history.push('/');
+      history.push("/");
     }
   };
 
   const onKeyUp = (e) => {
     if (e.keyCode === 13 && productsLength !== 0) {
       dispatch(setTextFilter(input));
-      history.push('/');
+      history.push("/");
     }
   };
 
@@ -66,7 +64,7 @@ const ProductSearch = () => {
         <div className="product-search-recent">
           <div className="product-search-recent-header">
             <h5>Recent Searches</h5>
-            <h5 onClick={onClearRecentSearch} style={{ color: 'red' }} role="presentation">
+            <h5 onClick={onClearRecentSearch} style={{ color: "red" }} role="presentation">
               Clear
             </h5>
           </div>
@@ -78,25 +76,20 @@ const ProductSearch = () => {
                   className="pill-content margin-0"
                   onClick={() => {
                     dispatch(setTextFilter(item));
-                    history.push('/');
+                    history.push("/");
                   }}
-                  role="presentation"
-                >
+                  role="presentation">
                   {item}
                 </h5>
-                <div
-                  className="pill-remove"
-                  onClick={() => dispatch(removeSelectedRecent(item))}
-                  role="presentation"
-                >
-                  <h5 className="text-subtle margin-0"><i className="fa fa-times-circle" /></h5>
+                <div className="pill-remove" onClick={() => dispatch(removeSelectedRecent(item))} role="presentation">
+                  <h5 className="text-subtle margin-0">
+                    <i className="fa fa-times-circle" />
+                  </h5>
                 </div>
               </div>
             </div>
           ))}
-          {filter.recent.length === 0 && (
-            <h5 className="text-subtle">No recent searches</h5>
-          )}
+          {filter.recent.length === 0 && <h5 className="text-subtle">No recent searches</h5>}
         </div>
         <div className="product-search-filter">
           <h5 className="margin-0">Choose Filters</h5>

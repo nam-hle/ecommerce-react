@@ -1,4 +1,4 @@
-import { CLEAR_PROFILE, SET_PROFILE, UPDATE_PROFILE_SUCCESS } from 'constants/constants';
+import { CLEAR_PROFILE, SET_PROFILE, UPDATE_PROFILE_SUCCESS } from "constants/constants";
 // import profile from 'static/profile.jpg';
 // import banner from 'static/banner.jpg';
 
@@ -19,7 +19,7 @@ export default (state = {}, action) => {
     case UPDATE_PROFILE_SUCCESS:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case CLEAR_PROFILE:
       return {};

@@ -3,18 +3,24 @@ module.exports = {
         browser: true,
         node: true
     },
+    parser: "@typescript-eslint/parser",
     parserOptions: {
         project: [
             "./tsconfig.json",
-        ]
+        ],
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true
+        },
     },
     extends: ["plugin:prettier/recommended"],
-    plugins: ["prettier", "deprecation"],
+    plugins: ["prettier", "import", "deprecation", "@typescript-eslint", "react-hooks"],
     settings: {
         react: {
-            version: "16.14.0"
+            version: "17.0.2"
         }
     },
+
     rules: {
         "@typescript-eslint/ban-types": ["error", { types: { object: false } }], // TODO: Enable object for better object typing iterator
         "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -30,6 +36,5 @@ module.exports = {
         "react-hooks/exhaustive-deps": "error",
         "prettier/prettier": "error",
         "deprecation/deprecation": "warn",
-        "mocha/no-exclusive-tests": "error"
     }
 };

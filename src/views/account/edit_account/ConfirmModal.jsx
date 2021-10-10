@@ -1,18 +1,15 @@
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { Modal } from 'components/common';
-import { useFormikContext } from 'formik';
-import PropType from 'prop-types';
-import React, { useState } from 'react';
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import { Modal } from "components/common";
+import { useFormikContext } from "formik";
+import PropType from "prop-types";
+import React, { useState } from "react";
 
 const ConfirmModal = ({ onConfirmUpdate, modal }) => {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const { values } = useFormikContext();
 
   return (
-    <Modal
-      isOpen={modal.isOpenModal}
-      onRequestClose={modal.onCloseModal}
-    >
+    <Modal isOpen={modal.isOpenModal} onRequestClose={modal.onCloseModal}>
       <div className="text-center padding-l">
         <h4>Confirm Update</h4>
         <p>
@@ -39,18 +36,15 @@ const ConfirmModal = ({ onConfirmUpdate, modal }) => {
             onConfirmUpdate(values, password);
             modal.onCloseModal();
           }}
-          type="button"
-        >
+          type="button">
           <CheckOutlined />
-          &nbsp;
-          Confirm
+          &nbsp; Confirm
         </button>
       </div>
       <button
         className="modal-close-button button button-border button-border-gray button-small"
         onClick={modal.onCloseModal}
-        type="button"
-      >
+        type="button">
         <CloseOutlined />
       </button>
     </Modal>
@@ -61,8 +55,8 @@ ConfirmModal.propTypes = {
   onConfirmUpdate: PropType.func.isRequired,
   modal: PropType.shape({
     onCloseModal: PropType.func,
-    isOpenModal: PropType.bool
-  }).isRequired
+    isOpenModal: PropType.bool,
+  }).isRequired,
 };
 
 export default ConfirmModal;

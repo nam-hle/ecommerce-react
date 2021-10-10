@@ -1,24 +1,19 @@
-import * as Route from 'constants/routes';
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import logo from '../../../static/logo-full.png';
+import * as Route from "constants/routes";
+import React from "react";
+import { useLocation } from "react-router-dom";
+import logo from "../../../static/logo-full.png";
 
 const Footer = () => {
   const { pathname } = useLocation();
 
-  const visibleOnlyPath = [
-    Route.HOME,
-    Route.SHOP
-  ];
+  const visibleOnlyPath = [Route.HOME, Route.SHOP];
 
   return !visibleOnlyPath.includes(pathname) ? null : (
     <footer className="footer">
       <div className="footer-col-1">
         <strong>
           <span>
-            Developed by
-            {' '}
-            <a href="https://github.com/jgudo">JULIUS GUEVARRA</a>
+            Developed by <a href="https://github.com/jgudo">JULIUS GUEVARRA</a>
           </span>
         </strong>
       </div>

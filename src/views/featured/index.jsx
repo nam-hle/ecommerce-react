@@ -1,19 +1,14 @@
-import { MessageDisplay } from 'components/common';
-import { ProductShowcaseGrid } from 'components/product';
-import { useDocumentTitle, useFeaturedProducts, useScrollTop } from 'hooks';
-import React from 'react';
-import bannerImg from '../../../static/banner-guy.png';
+import { MessageDisplay } from "components/common";
+import { ProductShowcaseGrid } from "components/product";
+import { useDocumentTitle, useFeaturedProducts, useScrollTop } from "hooks";
+import React from "react";
+import bannerImg from "../../../static/banner-guy.png";
 
 const FeaturedProducts = () => {
-  useDocumentTitle('Featured Products | Salinaka');
+  useDocumentTitle("Featured Products | Salinaka");
   useScrollTop();
 
-  const {
-    featuredProducts,
-    fetchFeaturedProducts,
-    isLoading,
-    error
-  } = useFeaturedProducts();
+  const { featuredProducts, fetchFeaturedProducts, isLoading, error } = useFeaturedProducts();
 
   return (
     <main className="content">
@@ -28,17 +23,10 @@ const FeaturedProducts = () => {
         </div>
         <div className="display">
           <div className="product-display-grid">
-            {(error && !isLoading) ? (
-              <MessageDisplay
-                message={error}
-                action={fetchFeaturedProducts}
-                buttonLabel="Try Again"
-              />
+            {error && !isLoading ? (
+              <MessageDisplay message={error} action={fetchFeaturedProducts} buttonLabel="Try Again" />
             ) : (
-              <ProductShowcaseGrid
-                products={featuredProducts}
-                skeletonCount={6}
-              />
+              <ProductShowcaseGrid products={featuredProducts} skeletonCount={6} />
             )}
           </div>
         </div>

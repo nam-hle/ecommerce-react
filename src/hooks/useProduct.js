@@ -1,7 +1,7 @@
-import { useDidMount } from 'hooks';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import firebase from 'services/firebase';
+import { useDidMount } from "hooks";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import firebase from "services/firebase";
 
 const useProduct = (id) => {
   // get and check if product exists in store
@@ -27,13 +27,13 @@ const useProduct = (id) => {
               setLoading(false);
             }
           } else {
-            setError('Product not found.');
+            setError("Product not found.");
           }
         }
       } catch (err) {
         if (didMount) {
           setLoading(false);
-          setError(err?.message || 'Something went wrong.');
+          setError(err?.message || "Something went wrong.");
         }
       }
     })();

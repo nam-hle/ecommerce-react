@@ -1,24 +1,24 @@
 /* eslint-disable no-nested-ternary */
-import { useDidMount } from 'hooks';
-import PropType from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, withRouter } from 'react-router-dom';
-import { applyFilter, resetFilter } from 'redux/actions/filterActions';
-import { selectMax, selectMin } from 'selectors/selector';
-import PriceRange from './PriceRange';
+import { useDidMount } from "hooks";
+import PropType from "prop-types";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, withRouter } from "react-router-dom";
+import { applyFilter, resetFilter } from "redux/actions/filterActions";
+import { selectMax, selectMin } from "selectors/selector";
+import PriceRange from "./PriceRange";
 
 const Filters = ({ closeModal }) => {
   const { filter, isLoading, products } = useSelector((state) => ({
     filter: state.filter,
     isLoading: state.app.loading,
-    products: state.products.items
+    products: state.products.items,
   }));
   const [field, setFilter] = useState({
     brand: filter.brand,
     minPrice: filter.minPrice,
     maxPrice: filter.maxPrice,
-    sortBy: filter.sortBy
+    sortBy: filter.sortBy,
   });
   const dispatch = useDispatch();
   const history = useHistory();
@@ -29,15 +29,16 @@ const Filters = ({ closeModal }) => {
 
   useEffect(() => {
     if (didMount && window.screen.width <= 480) {
-      history.push('/');
+      history.push("/");
     }
 
-    if (didMount && closeModal) closeModal();
+    if (didMount && closeModal) {
+      closeModal();
+    }
 
     setFilter(filter);
     window.scrollTo(0, 0);
   }, [filter]);
-
 
   const onPriceChange = (minVal, maxVal) => {
     setFilter({ ...field, minPrice: minVal, maxPrice: maxVal });
@@ -68,7 +69,7 @@ const Filters = ({ closeModal }) => {
   };
 
   const onResetFilter = () => {
-    const filterFields = ['brand', 'minPrice', 'maxPrice', 'sortBy'];
+    const filterFields = ["brand", "minPrice", "maxPrice", "sortBy"];
 
     if (filterFields.some((key) => !!filter[key])) {
       dispatch(resetFilter());
@@ -90,8 +91,7 @@ const Filters = ({ closeModal }) => {
             className="filters-brand"
             value={field.brand}
             disabled={isLoading || products.length === 0}
-            onChange={onBrandFilterChange}
-          >
+            onChange={onBrandFilterChange}>
             <option value="">All Brands</option>
             <option value="salt">Salt Maalat</option>
             <option value="betsin">Betsin Maalat</option>
@@ -108,8 +108,7 @@ const Filters = ({ closeModal }) => {
           className="filters-sort-by d-block"
           value={field.sortBy}
           disabled={isLoading || products.length === 0}
-          onChange={onSortFilterChange}
-        >
+          onChange={onSortFilterChange}>
           <option value="">None</option>
           <option value="name-asc">Name Ascending A - Z</option>
           <option value="name-desc">Name Descending Z - A</option>
@@ -142,16 +141,14 @@ const Filters = ({ closeModal }) => {
           className="filters-button button button-small"
           disabled={isLoading || products.length === 0}
           onClick={onApplyFilter}
-          type="button"
-        >
+          type="button">
           Apply filters
         </button>
         <button
           className="filters-button button button-border button-small"
           disabled={isLoading || products.length === 0}
           onClick={onResetFilter}
-          type="button"
-        >
+          type="button">
           Reset filters
         </button>
       </div>
@@ -160,7 +157,7 @@ const Filters = ({ closeModal }) => {
 };
 
 Filters.propTypes = {
-  closeModal: PropType.func.isRequired
+  closeModal: PropType.func.isRequired,
 };
 
 export default withRouter(Filters);

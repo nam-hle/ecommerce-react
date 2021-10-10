@@ -1,8 +1,8 @@
-import PropType from 'prop-types';
-import React, { useState } from 'react';
+import PropType from "prop-types";
+import React, { useState } from "react";
 
 const ColorChooser = ({ availableColors, onSelectedColorChange }) => {
-  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedColor, setSelectedColor] = useState("");
 
   const setColor = (color) => {
     setSelectedColor(color);
@@ -12,7 +12,7 @@ const ColorChooser = ({ availableColors, onSelectedColorChange }) => {
     <div className="color-chooser">
       {availableColors.map((color) => (
         <div
-          className={selectedColor === color ? 'color-item color-item-selected' : 'color-item'}
+          className={selectedColor === color ? "color-item color-item-selected" : "color-item"}
           key={color}
           onClick={() => setColor(color)}
           style={{ backgroundColor: color }}
@@ -25,7 +25,7 @@ const ColorChooser = ({ availableColors, onSelectedColorChange }) => {
 
 ColorChooser.propTypes = {
   availableColors: PropType.arrayOf(PropType.string).isRequired,
-  onSelectedColorChange: PropType.func.isRequired
+  onSelectedColorChange: PropType.func.isRequired,
 };
 
 export default ColorChooser;

@@ -1,23 +1,23 @@
-import { useDidMount } from 'hooks';
-import { useEffect, useState } from 'react';
-import firebase from 'services/firebase';
+import { useDidMount } from "hooks";
+import { useEffect, useState } from "react";
+import firebase from "services/firebase";
 
 const useFeaturedProducts = (itemsCount) => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const didMount = useDidMount(true);
 
   const fetchFeaturedProducts = async () => {
     try {
       setLoading(true);
-      setError('');
+      setError("");
 
       const docs = await firebase.getFeaturedProducts(itemsCount);
 
       if (docs.empty) {
         if (didMount) {
-          setError('No featured products found.');
+          setError("No featured products found.");
           setLoading(false);
         }
       } else {
@@ -35,7 +35,7 @@ const useFeaturedProducts = (itemsCount) => {
       }
     } catch (e) {
       if (didMount) {
-        setError('Failed to fetch featured products');
+        setError("Failed to fetch featured products");
         setLoading(false);
       }
     }
@@ -48,7 +48,10 @@ const useFeaturedProducts = (itemsCount) => {
   }, []);
 
   return {
-    featuredProducts, fetchFeaturedProducts, isLoading, error
+    featuredProducts,
+    fetchFeaturedProducts,
+    isLoading,
+    error,
   };
 };
 

@@ -1,12 +1,12 @@
-import { CloseOutlined } from '@ant-design/icons';
-import { BasketItemControl } from 'components/basket';
-import { ImageLoader } from 'components/common';
-import { displayMoney } from 'helpers/utils';
-import PropType from 'prop-types';
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { removeFromBasket } from 'redux/actions/basketActions';
+import { CloseOutlined } from "@ant-design/icons";
+import { BasketItemControl } from "components/basket";
+import { ImageLoader } from "components/common";
+import { displayMoney } from "helpers/utils";
+import PropType from "prop-types";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { removeFromBasket } from "redux/actions/basketActions";
 
 const BasketItem = ({ product }) => {
   const dispatch = useDispatch();
@@ -17,17 +17,11 @@ const BasketItem = ({ product }) => {
       <BasketItemControl product={product} />
       <div className="basket-item-wrapper">
         <div className="basket-item-img-wrapper">
-          <ImageLoader
-            alt={product.name}
-            className="basket-item-img"
-            src={product.image}
-          />
+          <ImageLoader alt={product.name} className="basket-item-img" src={product.image} />
         </div>
         <div className="basket-item-details">
-          <Link to={`/product/${product.id}`} onClick={() => document.body.classList.remove('is-basket-open')}>
-            <h4 className="underline basket-item-name">
-              {product.name}
-            </h4>
+          <Link to={`/product/${product.id}`} onClick={() => document.body.classList.remove("is-basket-open")}>
+            <h4 className="underline basket-item-name">{product.name}</h4>
           </Link>
           <div className="basket-item-specs">
             <div>
@@ -36,20 +30,17 @@ const BasketItem = ({ product }) => {
             </div>
             <div>
               <span className="spec-title">Size</span>
-              <h5 className="my-0">
-                {product.selectedSize}
-                {' '}
-                mm
-              </h5>
+              <h5 className="my-0">{product.selectedSize} mm</h5>
             </div>
             <div>
               <span className="spec-title">Color</span>
-              <div style={{
-                backgroundColor: product.selectedColor || product.availableColors[0],
-                width: '15px',
-                height: '15px',
-                borderRadius: '50%'
-              }}
+              <div
+                style={{
+                  backgroundColor: product.selectedColor || product.availableColors[0],
+                  width: "15px",
+                  height: "15px",
+                  borderRadius: "50%",
+                }}
               />
             </div>
           </div>
@@ -60,8 +51,7 @@ const BasketItem = ({ product }) => {
         <button
           className="basket-item-remove button button-border button-border-gray button-small"
           onClick={onRemoveFromBasket}
-          type="button"
-        >
+          type="button">
           <CloseOutlined />
         </button>
       </div>
@@ -87,8 +77,8 @@ BasketItem.propTypes = {
     imageUrl: PropType.string,
     isFeatured: PropType.bool,
     isRecommended: PropType.bool,
-    availableColors: PropType.arrayOf(PropType.string)
-  }).isRequired
+    availableColors: PropType.arrayOf(PropType.string),
+  }).isRequired,
 };
 
 export default BasketItem;

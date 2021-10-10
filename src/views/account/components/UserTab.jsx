@@ -1,5 +1,5 @@
-import PropType from 'prop-types';
-import React, { useState } from 'react';
+import PropType from "prop-types";
+import React, { useState } from "react";
 
 const UserTab = (props) => {
   const { children } = props;
@@ -12,11 +12,10 @@ const UserTab = (props) => {
         <ul className="user-tab-menu">
           {children.map((child) => (
             <li
-              className={`user-tab-item ${child.props.index === activeTab ? 'user-tab-active' : ''}`}
+              className={`user-tab-item ${child.props.index === activeTab ? "user-tab-active" : ""}`}
               key={child.props.label}
               role="presentation"
-              onClick={() => onClickTabItem(child.props.index)}
-            >
+              onClick={() => onClickTabItem(child.props.index)}>
               {child.props.label}
             </li>
           ))}
@@ -24,7 +23,9 @@ const UserTab = (props) => {
       </div>
       <div className="user-tab-content">
         {children.map((child) => {
-          if (child.props.index !== activeTab) return null;
+          if (child.props.index !== activeTab) {
+            return null;
+          }
 
           return child.props.children;
         })}
@@ -34,10 +35,7 @@ const UserTab = (props) => {
 };
 
 UserTab.propTypes = {
-  children: PropType.oneOfType([
-    PropType.arrayOf(PropType.node),
-    PropType.node
-  ]).isRequired
+  children: PropType.oneOfType([PropType.arrayOf(PropType.node), PropType.node]).isRequired,
 };
 
 export default UserTab;

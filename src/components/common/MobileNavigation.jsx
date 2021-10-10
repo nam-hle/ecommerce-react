@@ -1,21 +1,21 @@
-import { BasketToggle } from 'components/basket';
-import { HOME, SIGNIN } from 'constants/routes';
-import PropType from 'prop-types';
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import UserNav from 'views/account/components/UserAvatar';
-import Badge from './Badge';
-import FiltersToggle from './FiltersToggle';
-import SearchBar from './SearchBar';
+import { BasketToggle } from "components/basket";
+import { HOME, SIGNIN } from "constants/routes";
+import PropType from "prop-types";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import UserNav from "views/account/components/UserAvatar";
+import Badge from "./Badge";
+import FiltersToggle from "./FiltersToggle";
+import SearchBar from "./SearchBar";
 
 const Navigation = (props) => {
-  const {
-    isAuthenticating, basketLength, disabledPaths, user
-  } = props;
+  const { isAuthenticating, basketLength, disabledPaths, user } = props;
   const { pathname } = useLocation();
 
   const onClickLink = (e) => {
-    if (isAuthenticating) e.preventDefault();
+    if (isAuthenticating) {
+      e.preventDefault();
+    }
   };
 
   return (
@@ -33,11 +33,9 @@ const Navigation = (props) => {
               className="button-link navigation-menu-link basket-toggle"
               onClick={onClickToggle}
               disabled={disabledPaths.includes(pathname)}
-              type="button"
-            >
-
+              type="button">
               <Badge count={basketLength}>
-                <i className="fa fa-shopping-bag" style={{ fontSize: '2rem' }} />
+                <i className="fa fa-shopping-bag" style={{ fontSize: "2rem" }} />
               </Badge>
             </button>
           )}
@@ -51,11 +49,7 @@ const Navigation = (props) => {
             <>
               {pathname !== SIGNIN && (
                 <li className="mobile-navigation-item">
-                  <Link
-                    className="navigation-menu-link"
-                    onClick={onClickLink}
-                    to={SIGNIN}
-                  >
+                  <Link className="navigation-menu-link" onClick={onClickLink} to={SIGNIN}>
                     Sign In
                   </Link>
                 </li>
@@ -80,10 +74,7 @@ Navigation.propTypes = {
   isAuthenticating: PropType.bool.isRequired,
   basketLength: PropType.number.isRequired,
   disabledPaths: PropType.arrayOf(PropType.string).isRequired,
-  user: PropType.oneOfType([
-    PropType.bool,
-    PropType.object
-  ]).isRequired
+  user: PropType.oneOfType([PropType.bool, PropType.object]).isRequired,
 };
 
 export default Navigation;

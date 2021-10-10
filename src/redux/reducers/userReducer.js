@@ -1,4 +1,4 @@
-import { ADD_USER, DELETE_USER, EDIT_USER } from 'constants/constants';
+import { ADD_USER, DELETE_USER, EDIT_USER } from "constants/constants";
 
 // const initState = [
 //   {
@@ -21,7 +21,7 @@ export default (state = {}, action) => {
         if (user.id === action.payload.id) {
           return {
             ...user,
-            ...action.payload
+            ...action.payload,
           };
         }
         return user;

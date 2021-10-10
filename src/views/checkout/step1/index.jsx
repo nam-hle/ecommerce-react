@@ -1,21 +1,21 @@
-import { ArrowRightOutlined, ShopOutlined } from '@ant-design/icons';
-import { BasketItem } from 'components/basket';
-import { CHECKOUT_STEP_2 } from 'constants/routes';
-import { displayMoney } from 'helpers/utils';
-import { useDocumentTitle, useScrollTop } from 'hooks';
-import PropType from 'prop-types';
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { StepTracker } from '../components';
-import withCheckout from '../hoc/withCheckout';
+import { ArrowRightOutlined, ShopOutlined } from "@ant-design/icons";
+import { BasketItem } from "components/basket";
+import { CHECKOUT_STEP_2 } from "constants/routes";
+import { displayMoney } from "helpers/utils";
+import { useDocumentTitle, useScrollTop } from "hooks";
+import PropType from "prop-types";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { StepTracker } from "../components";
+import withCheckout from "../hoc/withCheckout";
 
 const OrderSummary = ({ basket, subtotal }) => {
-  useDocumentTitle('Check Out Step 1 | Salinaka');
+  useDocumentTitle("Check Out Step 1 | Salinaka");
   useScrollTop();
   const dispatch = useDispatch();
   const history = useHistory();
-  const onClickPrevious = () => history.push('/');
+  const onClickPrevious = () => history.push("/");
   const onClickNext = () => history.push(CHECKOUT_STEP_2);
 
   return (
@@ -27,12 +27,7 @@ const OrderSummary = ({ basket, subtotal }) => {
         <br />
         <div className="checkout-items">
           {basket.map((product) => (
-            <BasketItem
-              basket={basket}
-              dispatch={dispatch}
-              key={product.id}
-              product={product}
-            />
+            <BasketItem basket={basket} dispatch={dispatch} key={product.id} product={product} />
           ))}
         </div>
         <br />
@@ -42,22 +37,12 @@ const OrderSummary = ({ basket, subtotal }) => {
         </div>
         <br />
         <div className="checkout-shipping-action">
-          <button
-            className="button button-muted"
-            onClick={onClickPrevious}
-            type="button"
-          >
+          <button className="button button-muted" onClick={onClickPrevious} type="button">
             <ShopOutlined />
-            &nbsp;
-            Continue Shopping
+            &nbsp; Continue Shopping
           </button>
-          <button
-            className="button"
-            onClick={onClickNext}
-            type="submit"
-          >
-            Next Step
-            &nbsp;
+          <button className="button" onClick={onClickNext} type="submit">
+            Next Step &nbsp;
             <ArrowRightOutlined />
           </button>
         </div>
@@ -68,7 +53,7 @@ const OrderSummary = ({ basket, subtotal }) => {
 
 OrderSummary.propTypes = {
   basket: PropType.arrayOf(PropType.object).isRequired,
-  subtotal: PropType.number.isRequired
+  subtotal: PropType.number.isRequired,
 };
 
 export default withCheckout(OrderSummary);

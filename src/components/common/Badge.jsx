@@ -1,5 +1,5 @@
-import PropType from 'prop-types';
-import React from 'react';
+import PropType from "prop-types";
+import React from "react";
 
 const Badge = ({ count, children }) => (
   <div className="badge">
@@ -10,10 +10,7 @@ const Badge = ({ count, children }) => (
 
 Badge.propTypes = {
   count: PropType.number.isRequired,
-  children: PropType.oneOfType([
-    PropType.arrayOf(PropType.node),
-    PropType.node
-  ]).isRequired
+  children: PropType.oneOfType([PropType.arrayOf(PropType.node), PropType.node]).isRequired,
 };
 
 export default Badge;

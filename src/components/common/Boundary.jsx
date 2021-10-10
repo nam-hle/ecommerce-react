@@ -1,5 +1,5 @@
-import PropType from 'prop-types';
-import React, { Component } from 'react';
+import PropType from "prop-types";
+import React, { Component } from "react";
 
 class Boundary extends Component {
   static getDerivedStateFromError() {
@@ -10,10 +10,9 @@ class Boundary extends Component {
     super(props);
 
     this.state = {
-      hasError: false
+      hasError: false,
     };
   }
-
 
   componentDidCatch(error) {
     console.log(error);
@@ -36,10 +35,7 @@ class Boundary extends Component {
 }
 
 Boundary.propTypes = {
-  children: PropType.oneOfType([
-    PropType.arrayOf(PropType.node),
-    PropType.node
-  ]).isRequired
+  children: PropType.oneOfType([PropType.arrayOf(PropType.node), PropType.node]).isRequired,
 };
 
 export default Boundary;

@@ -1,5 +1,5 @@
-import { useScrollTop } from 'hooks';
-import React from 'react';
+import { useScrollTop } from "hooks";
+import React from "react";
 
 const NoInternet = () => {
   useScrollTop();
@@ -9,15 +9,10 @@ const NoInternet = () => {
       <h1>:( No Internet Connection.</h1>
       <p>Please check you network connectivity and try again.</p>
       <br />
-      <button
-        className="button"
-        onClick={() => window.location.reload(true)}
-        type="button"
-      >
+      <button className="button" onClick={() => window.location.reload(true)} type="button">
         Try Again
       </button>
     </div>
-
   );
 };
 

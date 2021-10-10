@@ -1,40 +1,40 @@
-import { ArrowRightOutlined, LoadingOutlined } from '@ant-design/icons';
-import { SocialLogin } from 'components/common';
-import { CustomInput } from 'components/formik';
-import { FORGOT_PASSWORD, SIGNUP } from 'constants/routes';
-import { Field, Form, Formik } from 'formik';
-import { useDocumentTitle, useScrollTop } from 'hooks';
-import PropType from 'prop-types';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { signIn } from 'redux/actions/authActions';
-import { setAuthenticating, setAuthStatus } from 'redux/actions/miscActions';
-import * as Yup from 'yup';
+import { ArrowRightOutlined, LoadingOutlined } from "@ant-design/icons";
+import { SocialLogin } from "components/common";
+import { CustomInput } from "components/formik";
+import { FORGOT_PASSWORD, SIGNUP } from "constants/routes";
+import { Field, Form, Formik } from "formik";
+import { useDocumentTitle, useScrollTop } from "hooks";
+import PropType from "prop-types";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { signIn } from "redux/actions/authActions";
+import { setAuthenticating, setAuthStatus } from "redux/actions/miscActions";
+import * as Yup from "yup";
 
 const SignInSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Email is not valid.')
-    .required('Email is required.'),
-  password: Yup.string()
-    .required('Password is required.')
+  email: Yup.string().email("Email is not valid.").required("Email is required."),
+  password: Yup.string().required("Password is required."),
 });
 
 const SignIn = ({ history }) => {
   const { authStatus, isAuthenticating } = useSelector((state) => ({
     authStatus: state.app.authStatus,
-    isAuthenticating: state.app.isAuthenticating
+    isAuthenticating: state.app.isAuthenticating,
   }));
 
   const dispatch = useDispatch();
 
   useScrollTop();
-  useDocumentTitle('Sign In | Salinaka');
+  useDocumentTitle("Sign In | Salinaka");
 
-  useEffect(() => () => {
-    dispatch(setAuthStatus(null));
-    dispatch(setAuthenticating(false));
-  }, []);
+  useEffect(
+    () => () => {
+      dispatch(setAuthStatus(null));
+      dispatch(setAuthenticating(false));
+    },
+    []
+  );
 
   const onSignUp = () => history.push(SIGNUP);
 
@@ -43,7 +43,9 @@ const SignIn = ({ history }) => {
   };
 
   const onClickLink = (e) => {
-    if (isAuthenticating) e.preventDefault();
+    if (isAuthenticating) {
+      e.preventDefault();
+    }
   };
 
   return (
@@ -58,25 +60,20 @@ const SignIn = ({ history }) => {
       )}
       {!authStatus?.success && (
         <>
-          {authStatus?.message && (
-            <h5 className="text-center toast-error">
-              {authStatus?.message}
-            </h5>
-          )}
-          <div className={`auth ${authStatus?.message && (!authStatus?.success && 'input-error')}`}>
+          {authStatus?.message && <h5 className="text-center toast-error">{authStatus?.message}</h5>}
+          <div className={`auth ${authStatus?.message && !authStatus?.success && "input-error"}`}>
             <div className="auth-main">
               <h3>Sign in to Salinaka</h3>
               <br />
               <div className="auth-wrapper">
                 <Formik
                   initialValues={{
-                    email: '',
-                    password: ''
+                    email: "",
+                    password: "",
                   }}
                   validateOnChange
                   validationSchema={SignInSchema}
-                  onSubmit={onSubmitForm}
-                >
+                  onSubmit={onSubmitForm}>
                   {() => (
                     <Form>
                       <div className="auth-field">
@@ -101,19 +98,11 @@ const SignIn = ({ history }) => {
                       </div>
                       <br />
                       <div className="auth-field auth-action">
-                        <Link
-                          onClick={onClickLink}
-                          style={{ textDecoration: 'underline' }}
-                          to={FORGOT_PASSWORD}
-                        >
+                        <Link onClick={onClickLink} style={{ textDecoration: "underline" }} to={FORGOT_PASSWORD}>
                           <span>Forgot password?</span>
                         </Link>
-                        <button
-                          className="button auth-button"
-                          disabled={isAuthenticating}
-                          type="submit"
-                        >
-                          {isAuthenticating ? 'Signing In' : 'Sign In'}
+                        <button className="button auth-button" disabled={isAuthenticating} type="submit">
+                          {isAuthenticating ? "Signing In" : "Sign In"}
                           &nbsp;
                           {isAuthenticating ? <LoadingOutlined /> : <ArrowRightOutlined />}
                         </button>
@@ -136,8 +125,7 @@ const SignIn = ({ history }) => {
               className="button button-small button-border button-border-gray button-icon"
               disabled={isAuthenticating}
               onClick={onSignUp}
-              type="button"
-            >
+              type="button">
               Sign Up
             </button>
           </div>
@@ -149,8 +137,8 @@ const SignIn = ({ history }) => {
 
 SignIn.propTypes = {
   history: PropType.shape({
-    push: PropType.func
-  }).isRequired
+    push: PropType.func,
+  }).isRequired,
 };
 
 export default SignIn;
