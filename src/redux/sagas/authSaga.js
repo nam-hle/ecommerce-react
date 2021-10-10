@@ -7,8 +7,6 @@ import {
   SIGNOUT, SIGNUP
 } from 'constants/constants';
 import { SIGNIN as ROUTE_SIGNIN } from 'constants/routes';
-import defaultAvatar from 'images/defaultAvatar.jpg';
-import defaultBanner from 'images/defaultBanner.jpg';
 import { call, put } from 'redux-saga/effects';
 import { signInSuccess, signOutSuccess } from 'redux/actions/authActions';
 import { clearBasket, setBasketItems } from 'redux/actions/basketActions';
@@ -18,6 +16,8 @@ import { setAuthenticating, setAuthStatus } from 'redux/actions/miscActions';
 import { clearProfile, setProfile } from 'redux/actions/profileActions';
 import { history } from 'routers/AppRouter';
 import firebase from 'services/firebase';
+import defaultBanner from '../../../static/defaultBanner.jpg';
+import defaultAvatar from '../../../static/defaultAvatar.jpg';
 
 function* handleError(e) {
   const obj = { success: false, type: 'auth', isError: true };

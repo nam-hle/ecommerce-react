@@ -2,6 +2,7 @@ node_modules/
 .env.prod
 .env.dev
 dist/
+lib/
 .firebase/
 package-lock.json
 debug.log

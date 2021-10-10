@@ -1,8 +1,8 @@
 import { MessageDisplay } from 'components/common';
 import { ProductShowcaseGrid } from 'components/product';
 import { useDocumentTitle, useFeaturedProducts, useScrollTop } from 'hooks';
-import bannerImg from 'images/banner-guy.png';
 import React from 'react';
+import bannerImg from '../../../static/banner-guy.png';
 
 const FeaturedProducts = () => {
   useDocumentTitle('Featured Products | Salinaka');

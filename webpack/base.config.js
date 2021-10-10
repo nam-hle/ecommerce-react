@@ -7,7 +7,7 @@ const resolve = (dir) => {
 
 module.exports = {
   entry: [
-    '@babel/polyfill', resolve('src/index.jsx')
+    '@babel/polyfill', resolve('lib/index.js')
   ],
   output: {
     path: resolve('dist'),
@@ -16,7 +16,7 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.(js|jsx)$/,
+      test: /\.js$/,
       exclude: /node_modules/,
       use: {
         loader: 'babel-loader'
@@ -75,7 +75,7 @@ module.exports = {
   },
   resolve: {
     modules: [
-      resolve('src'),
+      resolve('lib'),
       'node_modules'
     ],
     extensions: ['*', '.js', '.jsx']
