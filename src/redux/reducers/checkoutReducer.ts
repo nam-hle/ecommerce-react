@@ -1,5 +1,4 @@
 import { RESET_CHECKOUT, SET_CHECKOUT_PAYMENT_DETAILS, SET_CHECKOUT_SHIPPING_DETAILS } from "../../constants";
-import { ActionWithPayload } from ".";
 import {
   PaymentDetails,
   ResetCheckoutPayload,
@@ -7,6 +6,7 @@ import {
   SetCheckoutShippingDetailsPayload,
   ShippingDetails,
 } from "../actions/checkoutActions";
+import { ActionWithPayload } from ".";
 
 const defaultState: CheckoutState = {
   shipping: {},

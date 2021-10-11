@@ -1,5 +1,4 @@
 import actionCreatorFactory from "typescript-fsa";
-
 import * as type from "../../constants";
 
 export const factory = actionCreatorFactory("AUTH");

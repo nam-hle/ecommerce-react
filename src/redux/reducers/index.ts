@@ -1,3 +1,4 @@
+import { Action } from "redux";
 import authReducer from "./authReducer";
 import basketReducer from "./basketReducer";
 import checkoutReducer from "./checkoutReducer";
@@ -6,7 +7,6 @@ import miscReducer from "./miscReducer";
 import productReducer from "./productReducer";
 import profileReducer from "./profileReducer";
 import userReducer from "./userReducer";
-import { Action } from "redux";
 
 export interface ActionWithPayload<Type, Payload> extends Action {
   type: Type;

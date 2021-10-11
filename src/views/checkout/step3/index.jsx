@@ -6,11 +6,11 @@ import PropType from "prop-types";
 import React from "react";
 import { Redirect } from "react-router-dom";
 import * as Yup from "yup";
-import { StepTracker } from "../components";
 import withCheckout from "../hoc/withCheckout";
-import CreditPayment from "./CreditPayment";
-import PayPalPayment from "./PayPalPayment";
+import { StepTracker } from "../components";
 import Total from "./Total";
+import PayPalPayment from "./PayPalPayment";
+import CreditPayment from "./CreditPayment";
 
 const FormSchema = Yup.object().shape({
   name: Yup.string().min(4, "Name should be at least 4 characters.").required("Name is required"),

@@ -6,7 +6,6 @@ import {
   REMOVE_FROM_BASKET,
   SET_BASKET_ITEMS,
 } from "../../constants";
-import { ActionWithPayload } from "./index";
 import {
   AddQtyItemPayload,
   AddToBasketPayload,
@@ -15,6 +14,7 @@ import {
   RemoveFromBasketPayload,
   SetBasketItemPayload,
 } from "../actions/basketActions";
+import { ActionWithPayload } from "./index";
 
 export interface Item {
   id: string;

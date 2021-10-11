@@ -1,6 +1,6 @@
-import { ActionWithPayload } from "./index";
 import { SIGNIN_SUCCESS, SIGNOUT_SUCCESS } from "../../constants";
 import { SignInSuccessPayload, SignOutSuccessPayload } from "../actions/authActions";
+import { ActionWithPayload } from "./index";
 
 export type AuthState = {
   id: string;

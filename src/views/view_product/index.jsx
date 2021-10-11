@@ -1,7 +1,7 @@
+import { RECOMMENDED_PRODUCTS, SHOP } from "constants/routes";
 import { ArrowLeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import { ColorChooser, ImageLoader, MessageDisplay } from "components/common";
 import { ProductShowcaseGrid } from "components/product";
-import { RECOMMENDED_PRODUCTS, SHOP } from "constants/routes";
 import { displayMoney } from "helpers/utils";
 import { useBasket, useDocumentTitle, useProduct, useRecommendedProducts, useScrollTop } from "hooks";
 import React, { useEffect, useRef, useState } from "react";

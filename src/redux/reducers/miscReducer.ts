@@ -1,11 +1,11 @@
 import { IS_AUTHENTICATING, LOADING, SET_AUTH_STATUS, SET_REQUEST_STATUS } from "../../constants";
-import { ActionWithPayload } from ".";
 import {
   SetAuthenticatingPayload,
   SetAuthStatusPayload,
   SetLoadingPayload,
   SetRequestStatusPayload,
 } from "../actions/miscActions";
+import { ActionWithPayload } from ".";
 
 export interface MiscState {
   loading: boolean;

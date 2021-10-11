@@ -1,14 +1,14 @@
+import { CHECKOUT_STEP_2 } from "constants/routes";
 import { ArrowRightOutlined, ShopOutlined } from "@ant-design/icons";
 import { BasketItem } from "components/basket";
-import { CHECKOUT_STEP_2 } from "constants/routes";
 import { displayMoney } from "helpers/utils";
 import { useDocumentTitle, useScrollTop } from "hooks";
 import PropType from "prop-types";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { StepTracker } from "../components";
 import withCheckout from "../hoc/withCheckout";
+import { StepTracker } from "../components";
 
 const OrderSummary = ({ basket, subtotal }) => {
   useDocumentTitle("Check Out Step 1 | Salinaka");

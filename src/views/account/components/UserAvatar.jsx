@@ -1,6 +1,6 @@
 /* eslint-disable indent */
-import { DownOutlined, LoadingOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { ACCOUNT } from "constants/routes";
+import { DownOutlined, LoadingOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";

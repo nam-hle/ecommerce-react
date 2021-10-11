@@ -6,8 +6,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { selectFilter } from "selectors/selector";
-import { ProductsNavbar } from "../components";
 import ProductsTable from "../components/ProductsTable";
+import { ProductsNavbar } from "../components";
 
 const Products = () => {
   useDocumentTitle("Product List | Salinaka Admin");

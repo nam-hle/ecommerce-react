@@ -8,7 +8,6 @@ import {
   SET_MIN_PRICE_FILTER,
   SET_TEXT_FILTER,
 } from "../../constants";
-import { ActionWithPayload } from "./index";
 import {
   ApplyFilterPayload,
   ClearRecentSearchPayload,
@@ -19,6 +18,7 @@ import {
   SetMinPriceFilterPayload,
   SetTextFilterPayload,
 } from "../actions/filterActions";
+import { ActionWithPayload } from "./index";
 
 export interface Filter {
   recent: string[];

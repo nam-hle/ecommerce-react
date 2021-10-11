@@ -1,8 +1,8 @@
 import { useModal } from "hooks";
 import PropType from "prop-types";
 import React from "react";
-import Filters from "./Filters";
 import Modal from "./Modal";
+import Filters from "./Filters";
 
 const FiltersToggle = ({ children }) => {
   const { isOpenModal, onOpenModal, onCloseModal } = useModal();

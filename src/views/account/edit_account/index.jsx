@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "redux/actions/miscActions";
 import { updateProfile } from "redux/actions/profileActions";
 import * as Yup from "yup";
-import ConfirmModal from "./ConfirmModal";
 import EditForm from "./EditForm";
+import ConfirmModal from "./ConfirmModal";
 
 const FormSchema = Yup.object().shape({
   fullname: Yup.string()

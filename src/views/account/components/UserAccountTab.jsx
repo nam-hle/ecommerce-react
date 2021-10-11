@@ -1,6 +1,6 @@
 /* eslint-disable indent */
-import { ImageLoader } from "components/common";
 import { ACCOUNT_EDIT } from "constants/routes";
+import { ImageLoader } from "components/common";
 import { displayDate } from "helpers/utils";
 import PropType from "prop-types";
 import React from "react";

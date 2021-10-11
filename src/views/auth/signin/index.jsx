@@ -1,7 +1,7 @@
+import { FORGOT_PASSWORD, SIGNUP } from "constants/routes";
 import { ArrowRightOutlined, LoadingOutlined } from "@ant-design/icons";
 import { SocialLogin } from "components/common";
 import { CustomInput } from "components/formik";
-import { FORGOT_PASSWORD, SIGNUP } from "constants/routes";
 import { Field, Form, Formik } from "formik";
 import { useDocumentTitle, useScrollTop } from "hooks";
 import PropType from "prop-types";
