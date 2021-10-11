@@ -6,3 +6,4 @@ lib/
 .firebase/
 package-lock.json
 debug.log
+/.idea/
