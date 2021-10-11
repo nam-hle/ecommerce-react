@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import { SIGNIN_SUCCESS, SIGNOUT_SUCCESS } from "../../constants";
 import { SignInSuccessPayload, SignOutSuccessPayload } from "../actions/authActions";
 import { ActionWithPayload } from "./index";
@@ -15,7 +16,9 @@ export type SignOutSuccessAction = ActionWithPayload<typeof SIGNOUT_SUCCESS, Sig
 
 export type AuthAction = SignInSuccessAction | SignOutSuccessAction;
 
-export default (state = initState, action: AuthAction) => {
+export type AuthReducer = Reducer<AuthState, AuthAction>;
+
+export const authReducer: AuthReducer = (state = initState, action: AuthAction) => {
   switch (action.type) {
     case SIGNIN_SUCCESS:
       return {

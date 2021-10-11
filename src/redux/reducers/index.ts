@@ -12,6 +12,7 @@ export interface ActionWithPayload<Type, Payload> extends Action {
   type: Type;
   payload: Payload;
 }
+
 const rootReducer = {
   products: productReducer,
   basket: basketReducer,

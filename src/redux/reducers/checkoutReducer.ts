@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import { RESET_CHECKOUT, SET_CHECKOUT_PAYMENT_DETAILS, SET_CHECKOUT_SHIPPING_DETAILS } from "../../constants";
 import {
   PaymentDetails,
@@ -38,7 +39,9 @@ export type ResetCheckoutAction = ActionWithPayload<typeof RESET_CHECKOUT, Reset
 
 export type CheckoutAction = SetCheckoutPaymentDetailsAction | SetCheckoutShippingDetailsAction | ResetCheckoutAction;
 
-export default (state = defaultState, action: CheckoutAction) => {
+export type CheckoutReducer = Reducer<CheckoutState, CheckoutAction>;
+
+export const checkoutReducer: CheckoutReducer = (state = defaultState, action: CheckoutAction) => {
   switch (action.type) {
     case SET_CHECKOUT_SHIPPING_DETAILS:
       return {

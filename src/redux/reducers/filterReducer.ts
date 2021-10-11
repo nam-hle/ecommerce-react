@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import {
   APPLY_FILTER,
   CLEAR_RECENT_SEARCH,
@@ -29,7 +30,9 @@ export interface Filter {
   sortBy: string;
 }
 
-const initState: Filter = {
+export type FilterState = Filter;
+
+const initState: FilterState = {
   recent: [],
   keyword: "",
   brand: "",
@@ -57,7 +60,9 @@ export type FilterAction =
   | RemoveSelectedRecentAction
   | ApplyFilterAction;
 
-export default (state = initState, action: FilterAction) => {
+export type FilterReducer = Reducer<FilterState, FilterAction>;
+
+export const filterReducer: FilterReducer = (state = initState, action: FilterAction) => {
   switch (action.type) {
     case SET_TEXT_FILTER:
       return {

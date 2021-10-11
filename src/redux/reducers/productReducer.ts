@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import {
   ADD_PRODUCT_SUCCESS,
   CLEAR_SEARCH_STATE,
@@ -52,7 +53,9 @@ const initState: SearchedProduct = {
   items: [],
 };
 
-export default (
+export type ProductReducer = Reducer<ProductState, ProductAction>;
+
+export const miscReducer: ProductReducer = (
   state: ProductState = {
     lastRefKey: null,
     total: 0,

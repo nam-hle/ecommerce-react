@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import { IS_AUTHENTICATING, LOADING, SET_AUTH_STATUS, SET_REQUEST_STATUS } from "../../constants";
 import {
   SetAuthenticatingPayload,
@@ -30,7 +31,9 @@ export type SetAuthStatusAction = ActionWithPayload<typeof SET_AUTH_STATUS, SetA
 
 export type MiscAction = SetLoadingAction | SetAuthenticatingAction | SetRequestStatusAction | SetAuthStatusAction;
 
-export default (state: MiscState = initState, action: MiscAction) => {
+export type MiscReducer = Reducer<MiscState, MiscAction>;
+
+export const miscReducer = (state: MiscState = initState, action: MiscAction) => {
   switch (action.type) {
     case LOADING:
       return {

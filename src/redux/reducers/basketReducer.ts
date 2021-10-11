@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import {
   ADD_QTY_ITEM,
   ADD_TO_BASKET,
@@ -12,7 +13,7 @@ import {
   ClearBasketPayload,
   MinusQtyItemPayload,
   RemoveFromBasketPayload,
-  SetBasketItemPayload,
+  SetBasketItemsPayload,
 } from "../actions/basketActions";
 import { ActionWithPayload } from "./index";
 
@@ -23,7 +24,7 @@ export interface Item {
 
 export type BasketState = Item[];
 
-export type SetBasketItemAction = ActionWithPayload<typeof SET_BASKET_ITEMS, SetBasketItemPayload>;
+export type SetBasketItemsAction = ActionWithPayload<typeof SET_BASKET_ITEMS, SetBasketItemsPayload>;
 export type AddToBasketAction = ActionWithPayload<typeof ADD_TO_BASKET, AddToBasketPayload>;
 export type RemoveFromBasketAction = ActionWithPayload<typeof REMOVE_FROM_BASKET, RemoveFromBasketPayload>;
 export type ClearBasketAction = ActionWithPayload<typeof CLEAR_BASKET, ClearBasketPayload>;
@@ -31,14 +32,16 @@ export type AddQtyItemAction = ActionWithPayload<typeof ADD_QTY_ITEM, AddQtyItem
 export type MinusQtyItemAction = ActionWithPayload<typeof MINUS_QTY_ITEM, MinusQtyItemPayload>;
 
 export type BasketAction =
-  | SetBasketItemAction
+  | SetBasketItemsAction
   | AddToBasketAction
   | RemoveFromBasketAction
   | ClearBasketAction
   | AddQtyItemAction
   | MinusQtyItemAction;
 
-export default (state: BasketState = [], action: BasketAction) => {
+export type BasketReducer = Reducer<BasketState, BasketAction>;
+
+export const basketReducer: BasketReducer = (state: BasketState = [], action: BasketAction) => {
   switch (action.type) {
     case SET_BASKET_ITEMS:
       return action.payload;

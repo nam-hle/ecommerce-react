@@ -8,7 +8,7 @@ import {
 } from "../../constants";
 import { Item } from "../reducers/basketReducer";
 
-export type SetBasketItemPayload = Item[];
+export type SetBasketItemsPayload = Item[];
 
 export const setBasketItems = (items: Item[] = []) => ({
   type: SET_BASKET_ITEMS,
