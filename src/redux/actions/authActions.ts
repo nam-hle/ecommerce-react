@@ -1,73 +1,53 @@
 import actionCreatorFactory from "typescript-fsa";
-import * as type from "../../constants";
+import firebase from "firebase";
 
-export const factory = actionCreatorFactory("AUTH");
+const factory = actionCreatorFactory("AUTH");
 
-export const signIn = (email: string, password: string) => ({
-  type: type.SIGNIN,
-  payload: {
-    email,
-    password,
-  },
-});
+export const signIn = factory<SignInPayload>("SIGN_IN");
+export interface SignInPayload {
+  email: string;
+  password: string;
+}
 
-export const signInWithGoogle = () => ({
-  type: type.SIGNIN_WITH_GOOGLE,
-});
+export const signInWithGoogle = factory<SignInWithGooglePayload>("SIGN_IN_WITH_GOOGLE");
+export interface SignInWithGooglePayload {}
 
-export const signInWithFacebook = () => ({
-  type: type.SIGNIN_WITH_FACEBOOK,
-});
+export const signInWithFacebook = factory<SignInWithGooglePayload>("SIGN_IN_WITH_FACEBOOK");
+export interface SignInWithFacebookPayload {}
 
-export const signInWithGithub = () => ({
-  type: type.SIGNIN_WITH_GITHUB,
-});
+export const signInWithGithub = factory<SignInWithGooglePayload>("SIGN_IN_WITH_GITHUB");
+export interface SignInWithGithubPayload {}
 
-export const signUp = (user: string) => ({
-  type: type.SIGNUP,
-  payload: user,
-});
+export const signUp = factory<SignUpPayload>("SIGN_UP");
+export interface SignUpPayload {
+  email: string;
+  password: string;
+  fullname: string;
+}
 
+export const signInSuccess = factory<SignInSuccessPayload>("SIGN_IN_SUCCESS");
 export interface SignInSuccessPayload {
   id: string;
   role: string;
-  provider: string;
+  provider: string | undefined;
 }
 
-export const signInSuccess = (auth: SignInSuccessPayload) => ({
-  type: type.SIGNIN_SUCCESS,
-  payload: auth,
-});
+export const setAuthPersistence = factory<SetAuthPersistencePayload>("SET_AUTH_PERSISTENCE");
+export interface SetAuthPersistencePayload {}
 
-export const setAuthPersistence = () => ({
-  type: type.SET_AUTH_PERSISTENCE,
-});
-
-export const signOut = () => ({
-  type: type.SIGNOUT,
-});
-
+export const signOut = factory.async<SignOutParamPayload, SignOutSuccessPayload>("SIGN_OUT");
 export interface SignOutSuccessPayload {}
+export interface SignOutParamPayload {}
 
-export const signOutSuccess = () => ({
-  type: type.SIGNOUT_SUCCESS,
-});
+export const onAuthStateChanged = factory.async<
+  OnAuthStateChangedParam,
+  OnAuthStateChangedResult,
+  OnAuthStateChangedError
+>("AUTH_STATE_CHANGED");
+export interface OnAuthStateChangedParam {}
+export type OnAuthStateChangedResult = firebase.User;
 
-export const onAuthStateChanged = () => ({
-  type: type.ON_AUTHSTATE_CHANGED,
-});
+export type OnAuthStateChangedError = string;
 
-export const onAuthStateSuccess = (user: string) => ({
-  type: type.ON_AUTHSTATE_SUCCESS,
-  payload: user,
-});
-
-export const onAuthStateFail = (error: Error) => ({
-  type: type.ON_AUTHSTATE_FAIL,
-  payload: error,
-});
-
-export const resetPassword = (email: string) => ({
-  type: type.RESET_PASSWORD,
-  payload: email,
-});
+export const resetPassword = factory<ResetPasswordPayload>("RESET_PASSWORD");
+export type ResetPasswordPayload = string;

@@ -1,41 +1,27 @@
-import { CLEAR_PROFILE, SET_PROFILE, UPDATE_EMAIL, UPDATE_PROFILE, UPDATE_PROFILE_SUCCESS } from "../../constants";
+import actionCreatorFactory from "typescript-fsa";
 import { Profile } from "../reducers/profileReducer";
 
-export interface ClearProfilePayload {}
+const factory = actionCreatorFactory("PROFILE");
 
-export const clearProfile = () => ({
-  type: CLEAR_PROFILE,
-});
+export const clearProfile = factory<ClearProfilePayload>("CLEAR_PROFILE");
+export interface ClearProfilePayload {}
 
 export type SetProfilePayload = Profile;
 
-export const setProfile = (user: string) => ({
-  type: SET_PROFILE,
-  payload: user,
-});
+export const setProfile = factory<SetProfilePayload>("SET_PROFILE");
 
-export const updateEmail = (password: string, newEmail: string) => ({
-  type: UPDATE_EMAIL,
-  payload: {
-    password,
-    newEmail,
-  },
-});
+export const updateEmail = factory<UpdateEmailPayload>("UPDATE_EMAIL");
+export interface UpdateEmailPayload {
+  password: string;
+  newEmail: string;
+}
 
-export const updateProfile = (newProfile: { updates: Profile; files: File; credentials: string }) => ({
-  type: UPDATE_PROFILE,
-  payload: {
-    updates: newProfile.updates,
-    files: newProfile.files,
-    credentials: newProfile.credentials,
-  },
-});
-
+export const updateProfile = factory.async<UpdateProfilePayload, UpdateProfileSuccessPayload>("UPDATE_PROFILE");
+export interface UpdateProfilePayload {
+  updates: Profile;
+  files: File;
+  credentials: string;
+}
 export interface UpdateProfileSuccessPayload {
   updates: Profile;
 }
-
-export const updateProfileSuccess = (updates: string) => ({
-  type: UPDATE_PROFILE_SUCCESS,
-  payload: updates,
-});

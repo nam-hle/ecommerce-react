@@ -1,50 +1,22 @@
-import {
-  ADD_QTY_ITEM,
-  ADD_TO_BASKET,
-  CLEAR_BASKET,
-  MINUS_QTY_ITEM,
-  REMOVE_FROM_BASKET,
-  SET_BASKET_ITEMS,
-} from "../../constants";
+import actionCreatorFactory from "typescript-fsa";
 import { Item } from "../reducers/basketReducer";
 
+const factory = actionCreatorFactory("BASKET");
+
+export const setBasketItems = factory<SetBasketItemsPayload>("SET_BASKET_ITEMS");
 export type SetBasketItemsPayload = Item[];
 
-export const setBasketItems = (items: Item[] = []) => ({
-  type: SET_BASKET_ITEMS,
-  payload: items,
-});
-
+export const addToBasket = factory<AddToBasketPayload>("ADD_TO_BASKET");
 export type AddToBasketPayload = Item;
 
-export const addToBasket = (product: Item) => ({
-  type: ADD_TO_BASKET,
-  payload: product,
-});
-
+export const removeFromBasket = factory<RemoveFromBasketPayload>("REMOVE_FROM_BASKET");
 export type RemoveFromBasketPayload = string;
 
-export const removeFromBasket = (id: string) => ({
-  type: REMOVE_FROM_BASKET,
-  payload: id,
-});
-
+export const clearBasket = factory<ClearBasketPayload>("CLEAR_BASKET");
 export interface ClearBasketPayload {}
 
-export const clearBasket = () => ({
-  type: CLEAR_BASKET,
-});
-
+export const addQtyItem = factory<AddQtyItemPayload>("ADD_QTY_ITEM");
 export type AddQtyItemPayload = string;
 
-export const addQtyItem = (id: string) => ({
-  type: ADD_QTY_ITEM,
-  payload: id,
-});
-
+export const minusQtyItem = factory<MinusQtyItemPayload>("MINUS_QTY_ITEM");
 export type MinusQtyItemPayload = string;
-
-export const minusQtyItem = (id: string) => ({
-  type: MINUS_QTY_ITEM,
-  payload: id,
-});

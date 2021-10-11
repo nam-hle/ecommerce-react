@@ -24,7 +24,7 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-empty-function": "warn",
-    "@typescript-eslint/no-empty-interface": "warn",
+    "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { ignoreRestSiblings: true }],
     curly: "error",
     "no-inner-declarations": "off",

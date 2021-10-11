@@ -7,6 +7,7 @@ import rootReducer from "../reducers";
 
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+declare const window: Window & { __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?(): typeof compose };
 
 const authPersistConfig = {
   key: "root",
@@ -14,7 +15,7 @@ const authPersistConfig = {
   whitelist: ["auth", "profile", "basket", "checkout"],
 };
 
-export default () => {
+export const createAppStore = () => {
   const store = createStore(
     persistCombineReducers(authPersistConfig, rootReducer),
     composeEnhancer(applyMiddleware(sagaMiddleware))

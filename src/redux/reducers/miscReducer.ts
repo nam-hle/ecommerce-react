@@ -1,17 +1,10 @@
-import { Reducer } from "redux";
-import { IS_AUTHENTICATING, LOADING, SET_AUTH_STATUS, SET_REQUEST_STATUS } from "../../constants";
-import {
-  SetAuthenticatingPayload,
-  SetAuthStatusPayload,
-  SetLoadingPayload,
-  SetRequestStatusPayload,
-} from "../actions/miscActions";
-import { ActionWithPayload } from ".";
+import { AnyAction } from "typescript-fsa";
+import { AuthStatus, setAuthenticating, setAuthStatus, setLoading, setRequestStatus } from "../actions/miscActions";
 
 export interface MiscState {
   loading: boolean;
   isAuthenticating: boolean;
-  authStatus: string | null;
+  authStatus: AuthStatus;
   requestStatus: string | null;
   theme: string;
 }
@@ -24,38 +17,38 @@ const initState: MiscState = {
   theme: "light",
 };
 
-export type SetLoadingAction = ActionWithPayload<typeof LOADING, SetLoadingPayload>;
-export type SetAuthenticatingAction = ActionWithPayload<typeof IS_AUTHENTICATING, SetAuthenticatingPayload>;
-export type SetRequestStatusAction = ActionWithPayload<typeof SET_REQUEST_STATUS, SetRequestStatusPayload>;
-export type SetAuthStatusAction = ActionWithPayload<typeof SET_AUTH_STATUS, SetAuthStatusPayload>;
-
-export type MiscAction = SetLoadingAction | SetAuthenticatingAction | SetRequestStatusAction | SetAuthStatusAction;
-
-export type MiscReducer = Reducer<MiscState, MiscAction>;
-
-export const miscReducer = (state: MiscState = initState, action: MiscAction) => {
-  switch (action.type) {
-    case LOADING:
-      return {
-        ...state,
-        loading: action.payload,
-      };
-    case IS_AUTHENTICATING:
-      return {
-        ...state,
-        isAuthenticating: action.payload,
-      };
-    case SET_REQUEST_STATUS:
-      return {
-        ...state,
-        requestStatus: action.payload,
-      };
-    case SET_AUTH_STATUS:
-      return {
-        ...state,
-        authStatus: action.payload,
-      };
-    default:
-      return state;
+export function miscReducer(state: MiscState | undefined, action: AnyAction): MiscState {
+  if (state === undefined) {
+    return initState;
   }
-};
+
+  if (setLoading.match(action)) {
+    return {
+      ...state,
+      loading: action.payload,
+    };
+  }
+
+  if (setAuthenticating.match(action)) {
+    return {
+      ...state,
+      isAuthenticating: action.payload,
+    };
+  }
+
+  if (setRequestStatus.match(action)) {
+    return {
+      ...state,
+      requestStatus: action.payload,
+    };
+  }
+
+  if (setAuthStatus.match(action)) {
+    return {
+      ...state,
+      authStatus: action.payload,
+    };
+  }
+
+  return state;
+}

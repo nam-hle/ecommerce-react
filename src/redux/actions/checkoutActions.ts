@@ -1,6 +1,11 @@
-import { RESET_CHECKOUT, SET_CHECKOUT_PAYMENT_DETAILS, SET_CHECKOUT_SHIPPING_DETAILS } from "../../constants";
+import actionCreatorFactory from "typescript-fsa";
 
-export interface ShippingDetails {
+const factory = actionCreatorFactory("CHECKOUT");
+
+export const setShippingDetails = factory<SetCheckoutShippingPayload>("SET_CHECKOUT_SHIPPING_DETAILS");
+export type SetCheckoutShippingPayload = Shipping;
+
+export interface Shipping {
   fullname?: string;
   email?: string;
   address?: string;
@@ -9,14 +14,9 @@ export interface ShippingDetails {
   isDone?: boolean;
 }
 
-export type SetCheckoutShippingDetailsPayload = ShippingDetails;
-
-export const setShippingDetails = (details: ShippingDetails) => ({
-  type: SET_CHECKOUT_SHIPPING_DETAILS,
-  payload: details,
-});
-
-export interface PaymentDetails {
+export const setPaymentDetails = factory<SetCheckoutPaymentPayload>("SET_CHECKOUT_PAYMENT_DETAILS");
+export type SetCheckoutPaymentPayload = Payment;
+export interface Payment {
   type: string;
   name: string;
   cardnumber: string;
@@ -24,15 +24,5 @@ export interface PaymentDetails {
   ccv: string;
 }
 
-export type SetCheckoutPaymentDetailsPayload = PaymentDetails;
-
-export const setPaymentDetails = (details: PaymentDetails) => ({
-  type: SET_CHECKOUT_PAYMENT_DETAILS,
-  payload: details,
-});
-
+export const resetCheckout = factory<ResetCheckoutPayload>("RESET_CHECKOUT");
 export interface ResetCheckoutPayload {}
-
-export const resetCheckout = () => ({
-  type: RESET_CHECKOUT,
-});

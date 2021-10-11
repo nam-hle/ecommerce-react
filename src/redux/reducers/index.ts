@@ -1,16 +1,27 @@
 import { Action } from "redux";
-import authReducer from "./authReducer";
-import basketReducer from "./basketReducer";
-import checkoutReducer from "./checkoutReducer";
-import filterReducer from "./filterReducer";
-import miscReducer from "./miscReducer";
-import productReducer from "./productReducer";
-import profileReducer from "./profileReducer";
-import userReducer from "./userReducer";
+import { authReducer, AuthState } from "./authReducer";
+import { basketReducer, BasketState } from "./basketReducer";
+import { checkoutReducer, CheckoutState } from "./checkoutReducer";
+import { filterReducer, FilterState } from "./filterReducer";
+import { miscReducer, MiscState } from "./miscReducer";
+import { productReducer, ProductState } from "./productReducer";
+import { profileReducer, ProfileState } from "./profileReducer";
+import { userReducer, UserState } from "./userReducer";
 
 export interface ActionWithPayload<Type, Payload> extends Action {
   type: Type;
   payload: Payload;
+}
+
+export interface AppState {
+  auth: AuthState;
+  basket: BasketState;
+  checkout: CheckoutState;
+  filter: FilterState;
+  products: ProductState;
+  profile: ProfileState;
+  user: UserState;
+  app: MiscState;
 }
 
 const rootReducer = {

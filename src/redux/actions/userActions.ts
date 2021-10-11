@@ -1,37 +1,23 @@
-import { ADD_USER, DELETE_USER, EDIT_USER, GET_USER, REGISTER_USER } from "../../constants";
+import actionCreatorFactory from "typescript-fsa";
 import { User } from "../reducers/userReducer";
 
+const factory = actionCreatorFactory("USER");
+
 // insert in profile array
-export const registerUser = (user: string) => ({
-  type: REGISTER_USER,
-  payload: user,
-});
+export const registerUser = factory<RegisterUserPayload>("REGISTER_USER");
+export type RegisterUserPayload = string;
 
-export const getUser = (uid: string) => ({
-  type: GET_USER,
-  payload: uid,
-});
-
-export type AddUserPayload = User;
+export type GetUserPayload = string;
+export const getUser = factory<GetUserPayload>("GET_USER");
 
 // different from registerUser -- only inserted in admins' users array not in profile array
-export const addUser = (user: User) => ({
-  type: ADD_USER,
-  payload: user,
-});
+export const addUser = factory<AddUserPayload>("ADD_USER");
+export type AddUserPayload = User;
 
+export const editUser = factory<EditUserPayload>("EDIT_USER");
 export interface EditUserPayload extends Partial<User> {
   id: string;
 }
 
-export const editUser = (updates: EditUserPayload) => ({
-  type: EDIT_USER,
-  payload: updates,
-});
-
+export const deleteUser = factory<DeleteUserPayload>("DELETE_USER");
 export type DeleteUserPayload = string;
-
-export const deleteUser = (id: string) => ({
-  type: DELETE_USER,
-  payload: id,
-});

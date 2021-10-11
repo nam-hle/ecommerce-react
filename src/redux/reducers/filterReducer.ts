@@ -1,25 +1,15 @@
-import { Reducer } from "redux";
+import { AnyAction } from "typescript-fsa";
+
 import {
-  APPLY_FILTER,
-  CLEAR_RECENT_SEARCH,
-  REMOVE_SELECTED_RECENT,
-  RESET_FILTER,
-  SET_BRAND_FILTER,
-  SET_MAX_PRICE_FILTER,
-  SET_MIN_PRICE_FILTER,
-  SET_TEXT_FILTER,
-} from "../../constants";
-import {
-  ApplyFilterPayload,
-  ClearRecentSearchPayload,
-  RemoveSelectedRecentPayload,
-  ResetFilterPayload,
-  SetBrandFilterPayload,
-  SetMaxPriceFilterPayload,
-  SetMinPriceFilterPayload,
-  SetTextFilterPayload,
+  applyFilter,
+  clearRecentSearch,
+  removeSelectedRecent,
+  resetFilter,
+  setBrandFilter,
+  setMaxPriceFilter,
+  setMinPriceFilter,
+  setTextFilter,
 } from "../actions/filterActions";
-import { ActionWithPayload } from "./index";
 
 export interface Filter {
   recent: string[];
@@ -41,71 +31,66 @@ const initState: FilterState = {
   sortBy: "",
 };
 
-export type SetTextFilterAction = ActionWithPayload<typeof SET_TEXT_FILTER, SetTextFilterPayload>;
-export type SetBrandFilterAction = ActionWithPayload<typeof SET_BRAND_FILTER, SetBrandFilterPayload>;
-export type SetMinPriceFilterAction = ActionWithPayload<typeof SET_MIN_PRICE_FILTER, SetMinPriceFilterPayload>;
-export type SetMaxPriceFilterAction = ActionWithPayload<typeof SET_MAX_PRICE_FILTER, SetMaxPriceFilterPayload>;
-export type ResetFilterAction = ActionWithPayload<typeof RESET_FILTER, ResetFilterPayload>;
-export type ClearRecentSearchAction = ActionWithPayload<typeof CLEAR_RECENT_SEARCH, ClearRecentSearchPayload>;
-export type RemoveSelectedRecentAction = ActionWithPayload<typeof REMOVE_SELECTED_RECENT, RemoveSelectedRecentPayload>;
-export type ApplyFilterAction = ActionWithPayload<typeof APPLY_FILTER, ApplyFilterPayload>;
-
-export type FilterAction =
-  | SetTextFilterAction
-  | SetBrandFilterAction
-  | SetMinPriceFilterAction
-  | SetMaxPriceFilterAction
-  | ResetFilterAction
-  | ClearRecentSearchAction
-  | RemoveSelectedRecentAction
-  | ApplyFilterAction;
-
-export type FilterReducer = Reducer<FilterState, FilterAction>;
-
-export const filterReducer: FilterReducer = (state = initState, action: FilterAction) => {
-  switch (action.type) {
-    case SET_TEXT_FILTER:
-      return {
-        ...state,
-        recent:
-          !!state.recent.find((n) => n === action.payload) || action.payload === ""
-            ? state.recent
-            : [action.payload, ...state.recent],
-        keyword: action.payload,
-      };
-    case SET_BRAND_FILTER:
-      return {
-        ...state,
-        brand: action.payload,
-      };
-    case SET_MAX_PRICE_FILTER:
-      return {
-        ...state,
-        maxPrice: action.payload,
-      };
-    case SET_MIN_PRICE_FILTER:
-      return {
-        ...state,
-        minPrice: action.payload,
-      };
-    case RESET_FILTER:
-      return initState;
-    case CLEAR_RECENT_SEARCH:
-      return {
-        ...state,
-        recent: [],
-      };
-    case REMOVE_SELECTED_RECENT:
-      return {
-        ...state,
-        recent: state.recent.filter((item) => item !== action.payload),
-      };
-    case APPLY_FILTER:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    default:
-      return state;
+export function filterReducer(state: FilterState | undefined, action: AnyAction): FilterState {
+  if (state === undefined) {
+    return initState;
   }
-};
+
+  if (setTextFilter.match(action)) {
+    return {
+      ...state,
+      recent:
+        !!state.recent.find((n) => n === action.payload) || action.payload === ""
+          ? state.recent
+          : [action.payload, ...state.recent],
+      keyword: action.payload,
+    };
+  }
+
+  if (setBrandFilter.match(action)) {
+    return {
+      ...state,
+      brand: action.payload,
+    };
+  }
+
+  if (setMaxPriceFilter.match(action)) {
+    return {
+      ...state,
+      maxPrice: action.payload,
+    };
+  }
+
+  if (setMinPriceFilter.match(action)) {
+    return {
+      ...state,
+      minPrice: action.payload,
+    };
+  }
+
+  if (resetFilter.match(action)) {
+    return initState;
+  }
+
+  if (clearRecentSearch.match(action)) {
+    return {
+      ...state,
+      recent: [],
+    };
+  }
+
+  if (removeSelectedRecent.match(action)) {
+    return {
+      ...state,
+      recent: state.recent.filter((item) => item !== action.payload),
+    };
+  }
+
+  if (applyFilter.match(action)) {
+    return {
+      ...state,
+      ...action.payload,
+    };
+  }
+  return state;
+}

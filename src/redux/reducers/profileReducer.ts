@@ -1,6 +1,5 @@
-import { CLEAR_PROFILE, SET_PROFILE, UPDATE_PROFILE_SUCCESS } from "../../constants";
-import { ClearProfilePayload, SetProfilePayload, UpdateProfileSuccessPayload } from "../actions/profileActions";
-import { ActionWithPayload } from "./index";
+import { AnyAction } from "typescript-fsa";
+import { clearProfile, setProfile, updateProfile } from "../actions/profileActions";
 
 // const initState = {
 //   fullname: 'Pedro Juan',
@@ -14,12 +13,12 @@ import { ActionWithPayload } from "./index";
 
 export interface Profile {
   fullname?: string;
-  email?: string;
+  email?: string | null;
   address?: string;
   mobile?: any;
   avatar?: any;
   banner?: any;
-  dateJoined?: number;
+  dateJoined?: string;
 }
 
 export interface File {
@@ -32,24 +31,22 @@ export interface ProfileState extends Profile {
   credentials?: string[];
 }
 
-export type SetProfileAction = ActionWithPayload<typeof SET_PROFILE, SetProfilePayload>;
-export type UpdateProfileSuccessAction = ActionWithPayload<typeof UPDATE_PROFILE_SUCCESS, UpdateProfileSuccessPayload>;
-export type ClearProfileAction = ActionWithPayload<typeof CLEAR_PROFILE, ClearProfilePayload>;
-
-export type ProfileAction = SetProfileAction | UpdateProfileSuccessAction | ClearProfileAction;
-
-export default (state: ProfileState = {}, action: ProfileAction) => {
-  switch (action.type) {
-    case SET_PROFILE:
-      return action.payload;
-    case UPDATE_PROFILE_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case CLEAR_PROFILE:
-      return {};
-    default:
-      return state;
+export function profileReducer(state: ProfileState | undefined, action: AnyAction): ProfileState {
+  if (state === undefined) {
+    return {};
   }
-};
+
+  if (setProfile.match(action)) {
+    return action.payload;
+  }
+
+  if (updateProfile.done.match(action)) {
+    return { ...state, ...action.payload.result };
+  }
+
+  if (clearProfile.match(action)) {
+    return {};
+  }
+
+  return state;
+}

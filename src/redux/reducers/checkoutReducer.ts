@@ -1,15 +1,12 @@
-import { Reducer } from "redux";
-import { RESET_CHECKOUT, SET_CHECKOUT_PAYMENT_DETAILS, SET_CHECKOUT_SHIPPING_DETAILS } from "../../constants";
-import {
-  PaymentDetails,
-  ResetCheckoutPayload,
-  SetCheckoutPaymentDetailsPayload,
-  SetCheckoutShippingDetailsPayload,
-  ShippingDetails,
-} from "../actions/checkoutActions";
-import { ActionWithPayload } from ".";
+import { AnyAction } from "typescript-fsa";
+import { Payment, setPaymentDetails, setShippingDetails, Shipping } from "../actions/checkoutActions";
 
-const defaultState: CheckoutState = {
+export interface CheckoutState {
+  shipping: Shipping;
+  payment: Payment;
+}
+
+const initState: CheckoutState = {
   shipping: {},
   payment: {
     type: "paypal",
@@ -20,42 +17,24 @@ const defaultState: CheckoutState = {
   },
 };
 
-export interface CheckoutState {
-  shipping: ShippingDetails;
-  payment: PaymentDetails;
-}
-
-export type SetCheckoutShippingDetailsAction = ActionWithPayload<
-  typeof SET_CHECKOUT_SHIPPING_DETAILS,
-  SetCheckoutShippingDetailsPayload
->;
-
-export type SetCheckoutPaymentDetailsAction = ActionWithPayload<
-  typeof SET_CHECKOUT_PAYMENT_DETAILS,
-  SetCheckoutPaymentDetailsPayload
->;
-
-export type ResetCheckoutAction = ActionWithPayload<typeof RESET_CHECKOUT, ResetCheckoutPayload>;
-
-export type CheckoutAction = SetCheckoutPaymentDetailsAction | SetCheckoutShippingDetailsAction | ResetCheckoutAction;
-
-export type CheckoutReducer = Reducer<CheckoutState, CheckoutAction>;
-
-export const checkoutReducer: CheckoutReducer = (state = defaultState, action: CheckoutAction) => {
-  switch (action.type) {
-    case SET_CHECKOUT_SHIPPING_DETAILS:
-      return {
-        ...state,
-        shipping: action.payload,
-      };
-    case SET_CHECKOUT_PAYMENT_DETAILS:
-      return {
-        ...state,
-        payment: action.payload,
-      };
-    case RESET_CHECKOUT:
-      return defaultState;
-    default:
-      return state;
+export function checkoutReducer(state: CheckoutState | undefined, action: AnyAction): CheckoutState {
+  if (state === undefined) {
+    return initState;
   }
-};
+
+  if (setShippingDetails.match(action)) {
+    return {
+      ...state,
+      shipping: action.payload,
+    };
+  }
+
+  if (setPaymentDetails.match(action)) {
+    return {
+      ...state,
+      payment: action.payload,
+    };
+  }
+
+  return state;
+}

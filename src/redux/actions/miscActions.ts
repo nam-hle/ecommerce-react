@@ -1,29 +1,21 @@
-import { IS_AUTHENTICATING, LOADING, SET_AUTH_STATUS, SET_REQUEST_STATUS } from "../../constants";
+import actionCreatorFactory from "typescript-fsa";
+const factory = actionCreatorFactory("MISC");
 
+export const setLoading = factory<SetLoadingPayload>("LOADING");
 export type SetLoadingPayload = boolean;
 
-export const setLoading = (bool = true) => ({
-  type: LOADING,
-  payload: bool,
-});
-
+export const setAuthenticating = factory<SetAuthenticatingPayload>("IS_AUTHENTICATING");
 export type SetAuthenticatingPayload = boolean;
 
-export const setAuthenticating = (bool = true) => ({
-  type: IS_AUTHENTICATING,
-  payload: bool,
-});
-
+export const setRequestStatus = factory<SetRequestStatusPayload>("SET_REQUEST_STATUS");
 export type SetRequestStatusPayload = string | null;
 
-export const setRequestStatus = (status: string) => ({
-  type: SET_REQUEST_STATUS,
-  payload: status,
-});
+export const setAuthStatus = factory<SetAuthStatusPayload>("SET_AUTH_STATUS");
+export type SetAuthStatusPayload = AuthStatus;
 
-export type SetAuthStatusPayload = string | null;
-
-export const setAuthStatus = (status = null) => ({
-  type: SET_AUTH_STATUS,
-  payload: status,
-});
+export type AuthStatus = null | {
+  success: boolean;
+  isError?: boolean;
+  type: string;
+  message: string;
+};

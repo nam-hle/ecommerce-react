@@ -1,2 +1,1 @@
-export * from "./constants";
-export * as route from "./routes";
+export * from "./routes";

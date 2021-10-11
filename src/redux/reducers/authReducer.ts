@@ -1,34 +1,28 @@
-import { Reducer } from "redux";
-import { SIGNIN_SUCCESS, SIGNOUT_SUCCESS } from "../../constants";
-import { SignInSuccessPayload, SignOutSuccessPayload } from "../actions/authActions";
-import { ActionWithPayload } from "./index";
+import { AnyAction } from "typescript-fsa";
+import { signInSuccess, signOut } from "../actions/authActions";
 
 export type AuthState = {
   id: string;
   role: string;
-  provider: string;
+  provider?: string;
 } | null;
 
-const initState: AuthState = null;
-
-export type SignInSuccessAction = ActionWithPayload<typeof SIGNIN_SUCCESS, SignInSuccessPayload>;
-export type SignOutSuccessAction = ActionWithPayload<typeof SIGNOUT_SUCCESS, SignOutSuccessPayload>;
-
-export type AuthAction = SignInSuccessAction | SignOutSuccessAction;
-
-export type AuthReducer = Reducer<AuthState, AuthAction>;
-
-export const authReducer: AuthReducer = (state = initState, action: AuthAction) => {
-  switch (action.type) {
-    case SIGNIN_SUCCESS:
-      return {
-        id: action.payload.id,
-        role: action.payload.role,
-        provider: action.payload.provider,
-      };
-    case SIGNOUT_SUCCESS:
-      return null;
-    default:
-      return state;
+export function authReducer(state: AuthState | undefined, action: AnyAction): AuthState {
+  if (state === undefined) {
+    return null;
   }
-};
+
+  if (signInSuccess.match(action)) {
+    return {
+      id: action.payload.id,
+      role: action.payload.role,
+      provider: action.payload.provider,
+    };
+  }
+
+  if (signOut.done.match(action)) {
+    return null;
+  }
+
+  return state;
+}
