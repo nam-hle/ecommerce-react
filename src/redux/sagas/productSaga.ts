@@ -1,0 +1,228 @@
+import { all, call, put, select } from "redux-saga/effects";
+import { SagaIterator } from "redux-saga";
+import { AnyAction } from "typescript-fsa";
+import firebase from "../../services/firebase";
+import { history } from "../../routers/AppRouter";
+import { setLoading, setRequestStatus } from "../actions/miscActions";
+import { displayActionMessage } from "../../helpers/utils";
+import { ADMIN_PRODUCTS } from "../../constants";
+import {
+  addProduct,
+  clearSearchState,
+  editProduct,
+  getProducts,
+  removeProduct,
+  searchProduct,
+} from "../actions/productActions";
+import { Product } from "../reducers/productReducer";
+
+function* initRequest(): SagaIterator {
+  yield put(setLoading(true));
+  yield put(setRequestStatus(null));
+}
+
+export interface ProductError extends Error {}
+
+function* handleError(e: ProductError) {
+  yield put(setLoading(false));
+  yield put(setRequestStatus(e?.message || "Failed to fetch products"));
+  console.log("ERROR: ", e);
+}
+
+function* handleAction(location: string | undefined, message: string, status: string) {
+  if (location) {
+    yield call(history.push, location);
+  }
+  yield call(displayActionMessage, message, status);
+}
+
+function* productSaga(action: AnyAction): SagaIterator {
+  if (getProducts.started.match(action)) {
+    try {
+      yield call(initRequest);
+      const state = yield select();
+      const result: { items: Product[]; lastKey: string; total: number } = yield call(
+        firebase.getProducts,
+        action.payload
+      );
+
+      if (result.items.length === 0) {
+        handleError(new Error("No items found."));
+      } else {
+        yield put(
+          getProducts.done({
+            params: action.payload,
+            result: {
+              items: result.items,
+              lastRefKey: result.lastKey ? result.lastKey : state.products.lastRefKey,
+              total: result.total ? result.total : state.products.total,
+            },
+          })
+        );
+        yield put(setRequestStatus(""));
+      }
+      // yield put({ type: SET_LAST_REF_KEY, action.payload: result.lastKey });
+      yield put(setLoading(false));
+    } catch (e) {
+      console.log(e);
+      yield call(handleError, e as ProductError);
+    }
+  }
+
+  if (addProduct.started.match(action)) {
+    try {
+      yield call(initRequest);
+
+      const { imageCollection } = action.payload;
+      const key = yield call(firebase.generateKey);
+      const downloadURL = yield call(firebase.storeImage, key, "products", action.payload.image);
+      const image = { id: key, url: downloadURL };
+      let images: { id: string; url: string }[] = [];
+
+      if (imageCollection.length !== 0) {
+        const imageKeys = yield all(imageCollection.map(() => call(firebase.generateKey)));
+        const imageUrls: string[] = yield all(
+          imageCollection.map((img, i) => call(firebase.storeImage, imageKeys[i](), "products", img.file))
+        );
+        images = imageUrls.map((url, i) => ({ id: imageKeys[i](), url }));
+      }
+
+      const product = {
+        ...action.payload,
+        image: downloadURL,
+        imageCollection: [image, ...images],
+      };
+
+      yield call(firebase.addProduct, key, product);
+      yield put(
+        addProduct.done({
+          params: action.payload,
+          result: {
+            id: key,
+            ...product,
+          },
+        })
+      );
+      yield call(handleAction, ADMIN_PRODUCTS, "Item succesfully added", "success");
+      yield put(setLoading(false));
+    } catch (e) {
+      yield call(handleError, e as ProductError);
+      yield call(handleAction, undefined, `Item failed to add: ${(e as ProductError)?.message}`, "error");
+    }
+  }
+
+  if (editProduct.started.match(action)) {
+    try {
+      yield call(initRequest);
+
+      const { image, imageCollection } = action.payload.updates;
+      let newUpdates = { ...action.payload.updates };
+
+      if (image.constructor === File && typeof image === "object") {
+        try {
+          yield call(firebase.deleteImage, action.payload.id);
+        } catch (e) {
+          console.error("Failed to delete image ", e);
+        }
+
+        const url = yield call(firebase.storeImage, action.payload.id, "products", image);
+        newUpdates = { ...newUpdates, image: url };
+      }
+
+      if (imageCollection.length > 1) {
+        const existingUploads: { id: number; url: string }[] = [];
+        const newUploads: { file: string }[] = [];
+
+        imageCollection.forEach((img) => {
+          const file = img.file;
+          if (file) {
+            newUploads.push({ file });
+          } else {
+            existingUploads.push(img);
+          }
+        });
+
+        const imageKeys = yield all(newUploads.map(() => call(firebase.generateKey)));
+        const imageUrls: string[] = yield all(
+          newUploads.map((img, i) => call(firebase.storeImage, imageKeys[i](), "products", img.file))
+        );
+        const images = imageUrls.map((url, i) => ({ id: imageKeys[i](), url }));
+        newUpdates = { ...newUpdates, imageCollection: [...existingUploads, ...images] };
+      } else {
+        newUpdates = {
+          ...newUpdates,
+          imageCollection: [{ id: new Date().getTime(), url: newUpdates.image }],
+        };
+        // add image thumbnail to image collection from newUpdates to
+        // make sure you're adding the url not the file object.
+      }
+
+      yield call(firebase.editProduct, action.payload.id, newUpdates);
+      yield put(
+        editProduct.done({
+          result: {
+            id: action.payload.id,
+            updates: newUpdates,
+          },
+          params: action.payload,
+        })
+      );
+      yield call(handleAction, ADMIN_PRODUCTS, "Item succesfully edited", "success");
+      yield put(setLoading(false));
+    } catch (e) {
+      yield call(handleError, e as ProductError);
+      yield call(handleAction, undefined, `Item failed to edit: ${(e as ProductError).message}`, "error");
+    }
+  }
+
+  if (removeProduct.started.match(action)) {
+    try {
+      yield call(initRequest);
+      yield call(firebase.removeProduct, action.payload);
+      yield put(removeProduct.done({ params: action.payload }));
+      yield put(setLoading(false));
+      yield call(handleAction, ADMIN_PRODUCTS, "Item succesfully removed", "success");
+    } catch (e) {
+      yield call(handleError, e as ProductError);
+      yield call(handleAction, undefined, `Item failed to remove: ${(e as ProductError).message}`, "error");
+    }
+  }
+
+  if (searchProduct.started.match(action)) {
+    try {
+      yield call(initRequest);
+      // clear search data
+      yield put(clearSearchState);
+
+      const state = yield select();
+      const result: { products: Product[]; lastKey?: string; total?: number } = yield call(
+        firebase.searchProducts,
+        action.payload.searchKey
+      );
+
+      if (result.products.length === 0) {
+        yield call(handleError, new Error("No product found."));
+        yield put(clearSearchState());
+      } else {
+        yield put(
+          searchProduct.done({
+            result: {
+              items: result.products,
+              lastRefKey: result.lastKey ?? state.products.searchedProducts.lastRefKey,
+              total: result.total ?? state.products.searchedProducts.total,
+            },
+            params: action.payload,
+          })
+        );
+        yield put(setRequestStatus(""));
+      }
+      yield put(setLoading(false));
+    } catch (e) {
+      yield call(handleError, e as ProductError);
+    }
+  }
+
+  throw new Error(`Unexpected action type ${action.type}`);
+}
+
+export default productSaga;

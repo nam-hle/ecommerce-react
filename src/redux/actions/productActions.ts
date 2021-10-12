@@ -10,7 +10,7 @@ export const cancelGetProducts = factory<CancelGetProductsPayload>("CANCEL_GET_P
 export interface CancelGetProductsPayload {}
 
 export const addProduct = factory.async<AddProductPayload, AddProductSuccessPayload>("ADD_PRODUCT");
-export type AddProductPayload = Product;
+export type AddProductPayload = { imageCollection: { file: string }[]; image: string };
 export type AddProductSuccessPayload = Product;
 
 export const searchProduct = factory.async<SearchProductPayload, SearchProductSuccessPayload>("SEARCH_PRODUCT");
@@ -20,18 +20,18 @@ export interface SearchProductPayload {
 export type SearchProductSuccessPayload = SearchedProduct;
 
 export const clearSearchState = factory<ClearSearchStatePayload>("CLEAR_SEARCH_STATE");
-export interface ClearSearchStatePayload {}
+export type ClearSearchStatePayload = void;
 
 export const removeProduct = factory.async<RemoveProductPayload, RemoveProductSuccessPayload>("REMOVE_PRODUCT");
 export type RemoveProductPayload = string;
-export type RemoveProductSuccessPayload = string;
+export type RemoveProductSuccessPayload = string | undefined;
 
 export const editProduct = factory.async<EditProductPayload, EditProductSuccessPayload>("EDIT_PRODUCT");
 export interface EditProductPayload {
   id: string;
-  updates: any;
+  updates: { id: string; image: string; imageCollection: { file?: string; id: number; url: string }[] };
 }
 export interface EditProductSuccessPayload {
   id: string;
-  updates: any;
+  updates: Product;
 }
