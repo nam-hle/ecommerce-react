@@ -1,21 +1,20 @@
-/* eslint-disable react/forbid-prop-types */
-import { Boundary, MessageDisplay } from "components/common";
-import PropType from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setLoading } from "redux/actions/miscActions";
-import { getProducts } from "redux/actions/productActions";
 
-const ProductList = (props) => {
+import { setLoading, getProducts, Product, SearchedProduct } from "../../redux";
+import { Boundary, MessageDisplay } from "../common";
+
+export const ProductList: React.FC<ProductListProps> = (props) => {
   const { products, filteredProducts, isLoading, requestStatus, children } = props;
   const [isFetching, setFetching] = useState(false);
   const dispatch = useDispatch();
 
-  const fetchProducts = () => {
+  const fetchProducts = useCallback(() => {
     setFetching(true);
-    dispatch(getProducts(products.lastRefKey));
-  };
+    dispatch(getProducts.started(products.lastRefKey));
+  }, [dispatch, products.lastRefKey]);
 
+  // @ts-ignore
   useEffect(() => {
     if (products.items.length === 0 || !products.lastRefKey) {
       fetchProducts();
@@ -23,7 +22,7 @@ const ProductList = (props) => {
 
     window.scrollTo(0, 0);
     return () => dispatch(setLoading(false));
-  }, []);
+  }, [dispatch, fetchProducts, products.items.length, products.lastRefKey]);
 
   useEffect(() => {
     setFetching(false);
@@ -57,15 +56,13 @@ const ProductList = (props) => {
 };
 
 ProductList.defaultProps = {
-  requestStatus: null,
+  requestStatus: undefined,
 };
 
-ProductList.propTypes = {
-  products: PropType.object.isRequired,
-  filteredProducts: PropType.array.isRequired,
-  isLoading: PropType.bool.isRequired,
-  requestStatus: PropType.string,
-  children: PropType.oneOfType([PropType.arrayOf(PropType.node), PropType.node]).isRequired,
+type ProductListProps = {
+  products: SearchedProduct;
+  filteredProducts: Product[];
+  isLoading: boolean;
+  requestStatus?: { message: string };
+  children: React.ReactNode[] | React.ReactNode;
 };
-
-export default ProductList;

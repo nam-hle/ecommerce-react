@@ -1,27 +1,31 @@
-import { Filters } from "components/common";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { clearRecentSearch, removeSelectedRecent, setTextFilter } from "redux/actions/filterActions";
 
-const ProductSearch = () => {
+import { AppState, clearRecentSearch, FilterState, removeSelectedRecent, setTextFilter } from "../../redux";
+
+import { Filters } from "../common";
+
+export const ProductSearch = () => {
   const history = useHistory();
 
-  const { productsLength, filter, products, isLoading } = useSelector((state) => ({
-    filter: state.filter,
-    products: state.products.items,
-    isLoading: state.app.loading,
-    productsLength: state.products.length,
-  }));
+  const { productsLength, filter } = useSelector<AppState, { filter: FilterState; productsLength: number }>(
+    (state) => ({
+      filter: state.filter,
+      products: state.products.items,
+      isLoading: state.app.loading,
+      productsLength: state.products.items.length,
+    })
+  );
   const dispatch = useDispatch();
-  const searchInput = useRef(null);
+  const searchInput = useRef<HTMLInputElement | null>(null);
   let input = "";
 
   useEffect(() => {
-    searchInput.current.focus();
+    searchInput.current?.focus();
   }, []);
 
-  const onSearchChange = (e) => {
+  const onSearchChange = (e: any) => {
     const val = e.target.value.trim();
     input = val;
 
@@ -31,7 +35,7 @@ const ProductSearch = () => {
     }
   };
 
-  const onKeyUp = (e) => {
+  const onKeyUp = (e: any) => {
     if (e.keyCode === 13 && productsLength !== 0) {
       dispatch(setTextFilter(input));
       history.push("/");
@@ -39,7 +43,7 @@ const ProductSearch = () => {
   };
 
   const onClearRecentSearch = () => {
-    dispatch(clearRecentSearch());
+    dispatch(clearRecentSearch({}));
   };
 
   return (
@@ -68,8 +72,7 @@ const ProductSearch = () => {
               Clear
             </h5>
           </div>
-          {filter.recent.map((item, index) => (
-            // eslint-disable-next-line react/no-array-index-key
+          {filter.recent?.map((item, index) => (
             <div className="pill-wrapper" key={`${item}${index}`}>
               <div className="pill padding-right-l">
                 <h5
@@ -89,23 +92,15 @@ const ProductSearch = () => {
               </div>
             </div>
           ))}
-          {filter.recent.length === 0 && <h5 className="text-subtle">No recent searches</h5>}
+          {filter.recent?.length === 0 && <h5 className="text-subtle">No recent searches</h5>}
         </div>
         <div className="product-search-filter">
           <h5 className="margin-0">Choose Filters</h5>
         </div>
         <div className="product-search-filter-sub">
-          <Filters
-            dispatch={dispatch}
-            filter={filter}
-            isLoading={isLoading}
-            products={products}
-            productsLength={productsLength}
-          />
+          <Filters closeModal={() => {}} />
         </div>
       </div>
     </div>
   );
 };
-
-export default ProductSearch;

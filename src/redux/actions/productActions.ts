@@ -1,10 +1,10 @@
 import actionCreatorFactory from "typescript-fsa";
 
-import { Product, SearchedProduct } from "../reducers/productReducer";
+import { Product, SearchedProduct } from "../reducers";
 const factory = actionCreatorFactory("PRODUCT");
 
 export const getProducts = factory.async<GetProductsPayload, GetProductsSuccessPayload>("GET_PRODUCTS");
-export type GetProductsPayload = string;
+export type GetProductsPayload = string | null;
 export type GetProductsSuccessPayload = SearchedProduct;
 
 export const cancelGetProducts = factory<CancelGetProductsPayload>("CANCEL_GET_PRODUCTS");
@@ -12,10 +12,11 @@ export interface CancelGetProductsPayload {}
 
 export const addProduct = factory.async<AddProductPayload, AddProductSuccessPayload>("ADD_PRODUCT");
 export interface AddProductPayload extends Product {
-  imageCollection: { id: number; url: string; file: string }[];
+  imageCollection: ImageCollection;
   image: string;
 }
 export type AddProductSuccessPayload = Product;
+export type ImageCollection = { id: number; url: string; file: string }[];
 
 export const searchProduct = factory.async<SearchProductPayload, SearchProductSuccessPayload>("SEARCH_PRODUCT");
 export interface SearchProductPayload {
@@ -34,8 +35,8 @@ export const editProduct = factory.async<EditProductPayload, EditProductSuccessP
 export interface EditProductPayload {
   id: string;
   updates: Product & {
-    imageCollection: { file?: Blob; id: number; url: string }[];
-    image: Blob;
+    imageCollection: ImageCollection;
+    image: string;
   };
 }
 export interface EditProductSuccessPayload {

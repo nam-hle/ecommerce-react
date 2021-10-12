@@ -1,19 +1,18 @@
-import { Filter } from "../redux/reducers/filterReducer";
-import { Product } from "../redux/reducers/productReducer";
+import { Filter, Product } from "../reducers";
 
 export const selectFilter = (products: Product[], filter: Filter): Product[] => {
   if (!products || products.length === 0) {
     return [];
   }
 
-  const keyword = filter.keyword.toLowerCase();
+  const keyword = filter.keyword?.toLowerCase();
 
   return products
     .filter((product) => {
       const isInRange = filter.maxPrice ? product.price >= filter.minPrice && product.price <= filter.maxPrice : true;
-      const matchKeyword = product.keywords ? product.keywords.includes(keyword) : true;
+      const matchKeyword = product.keywords ? product.keywords.includes(keyword ?? "") : true;
       // const matchName = product.name ? product.name.toLowerCase().includes(keyword) : true;
-      const matchDescription = product.description ? product.description.toLowerCase().includes(keyword) : true;
+      const matchDescription = product.description ? product.description.toLowerCase().includes(keyword ?? "") : true;
       const matchBrand = product.brand ? product.brand.toLowerCase().includes(filter.brand) : true;
 
       return (matchKeyword || matchDescription) && matchBrand && isInRange;

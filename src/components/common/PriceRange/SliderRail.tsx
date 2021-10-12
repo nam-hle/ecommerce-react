@@ -1,8 +1,6 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import PropType from "prop-types";
 import React from "react";
 
-const railOuterStyle = {
+const railOuterStyle: React.CSSProperties = {
   position: "absolute",
   transform: "translate(0%, -50%)",
   width: "100%",
@@ -12,7 +10,7 @@ const railOuterStyle = {
   // border: '1px solid grey',
 };
 
-const railInnerStyle = {
+const railInnerStyle: React.CSSProperties = {
   position: "absolute",
   width: "100%",
   height: 14,
@@ -22,15 +20,13 @@ const railInnerStyle = {
   backgroundColor: "#d0d0d0",
 };
 
-const SliderRail = ({ getRailProps }) => (
+export const SliderRail: React.FC<SliderRailProps> = ({ getRailProps }) => (
   <div>
     <div style={railOuterStyle} {...getRailProps()} />
     <div style={railInnerStyle} />
   </div>
 );
 
-SliderRail.propTypes = {
-  getRailProps: PropType.func.isRequired,
+type SliderRailProps = {
+  getRailProps: () => void;
 };
-
-export default SliderRail;

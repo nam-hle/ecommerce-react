@@ -1,12 +1,14 @@
 import { CheckOutlined } from "@ant-design/icons";
-import { ImageLoader } from "components/common";
-import { displayMoney } from "helpers/utils";
-import PropType from "prop-types";
+
 import React from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useHistory } from "react-router-dom";
 
-const ProductItem = ({ product, isItemOnBasket, addToBasket }) => {
+import { displayMoney } from "../../helpers";
+import { Product } from "../../redux";
+import { ImageLoader } from "../common";
+
+export const ProductItem: React.FC<ProductItemProps> = ({ product, isItemOnBasket, addToBasket }) => {
   const history = useHistory();
 
   const onClickItem = () => {
@@ -74,11 +76,8 @@ ProductItem.defaultProps = {
   addToBasket: undefined,
 };
 
-ProductItem.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  product: PropType.object.isRequired,
-  isItemOnBasket: PropType.func,
-  addToBasket: PropType.func,
+type ProductItemProps = {
+  product: Product;
+  isItemOnBasket?: (id: string) => boolean;
+  addToBasket?: (product: Product) => void;
 };
-
-export default ProductItem;

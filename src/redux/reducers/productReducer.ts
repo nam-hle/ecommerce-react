@@ -8,13 +8,13 @@ import DocumentData = firebase.firestore.DocumentData;
 export interface Product extends DocumentData {
   id: string;
   price: number;
-  keywords: string[];
+  keywords?: string[];
   description: string;
   brand: string;
   name: string;
   quantity: number;
   maxQuantity: number;
-  selectedSize: string;
+  selectedSize: number;
   selectedColor: string;
   imageCollection: { id: number; url: string; file?: string }[];
   sizes: number[];

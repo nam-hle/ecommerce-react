@@ -1,10 +1,11 @@
-import { ImageLoader } from "components/common";
-import PropType from "prop-types";
 import React from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useHistory } from "react-router-dom";
 
-const ProductFeatured = ({ product }) => {
+import { Product } from "../../redux";
+import { ImageLoader } from "../common";
+
+export const ProductFeatured: React.FC<ProductFeaturedProps> = ({ product }) => {
   const history = useHistory();
   const onClickItem = () => {
     if (!product) {
@@ -19,7 +20,7 @@ const ProductFeatured = ({ product }) => {
       <div className="product-display" onClick={onClickItem} role="presentation">
         <div className="product-display-img">
           {product.image ? (
-            <ImageLoader className="product-card-img" src={product.image} />
+            <ImageLoader alt="" className="product-card-img" src={product.image} />
           ) : (
             <Skeleton width="100%" height="100%" />
           )}
@@ -33,13 +34,6 @@ const ProductFeatured = ({ product }) => {
   );
 };
 
-ProductFeatured.propTypes = {
-  product: PropType.shape({
-    image: PropType.string,
-    name: PropType.string,
-    id: PropType.string,
-    brand: PropType.string,
-  }).isRequired,
+type ProductFeaturedProps = {
+  product: Product;
 };
-
-export default ProductFeatured;

@@ -1,12 +1,14 @@
-import PropType from "prop-types";
 import React, { StrictMode } from "react";
 import { Provider } from "react-redux";
+import { Store } from "redux";
+import { Persistor } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { Preloader } from "./components/common";
+import { AppState } from "./redux";
 import AppRouter from "./routers/AppRouter";
 
-const App = ({ store, persistor }: { store: any; persistor: any }) => (
+const App: React.FC<AppProps> = ({ store, persistor }) => (
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={<Preloader />} persistor={persistor}>
@@ -16,9 +18,9 @@ const App = ({ store, persistor }: { store: any; persistor: any }) => (
   </StrictMode>
 );
 
-App.propTypes = {
-  store: PropType.any.isRequired,
-  persistor: PropType.any.isRequired,
+type AppProps = {
+  store: Store<AppState>;
+  persistor: Persistor;
 };
 
 export default App;

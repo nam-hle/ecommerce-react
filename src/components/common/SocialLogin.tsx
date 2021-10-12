@@ -1,22 +1,22 @@
 import { FacebookOutlined, GithubFilled, GoogleOutlined } from "@ant-design/icons";
-import PropType from "prop-types";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { signInWithFacebook, signInWithGithub, signInWithGoogle } from "redux/actions/authActions";
 
-const SocialLogin = ({ isLoading }) => {
+import { signInWithFacebook, signInWithGithub, signInWithGoogle } from "../../redux";
+
+export const SocialLogin: React.FC<SocialLoginProps> = ({ isLoading }) => {
   const dispatch = useDispatch();
 
   const onSignInWithGoogle = () => {
-    dispatch(signInWithGoogle());
+    dispatch(signInWithGoogle({}));
   };
 
   const onSignInWithFacebook = () => {
-    dispatch(signInWithFacebook());
+    dispatch(signInWithFacebook({}));
   };
 
   const onSignInWithGithub = () => {
-    dispatch(signInWithGithub());
+    dispatch(signInWithGithub({}));
   };
 
   return (
@@ -50,8 +50,6 @@ const SocialLogin = ({ isLoading }) => {
   );
 };
 
-SocialLogin.propTypes = {
-  isLoading: PropType.bool.isRequired,
+type SocialLoginProps = {
+  isLoading: boolean;
 };
-
-export default SocialLogin;

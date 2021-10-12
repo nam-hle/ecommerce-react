@@ -1,18 +1,17 @@
-import PropType from "prop-types";
 import React, { useState } from "react";
 import { Handles, Rail, Slider, Ticks, Tracks } from "react-compound-slider";
 
-import Handle from "./Handle";
-import SliderRail from "./SliderRail";
-import Tick from "./Tick";
-import Track from "./Track";
+import { Handle } from "./Handle";
+import { SliderRail } from "./SliderRail";
+import { Tick } from "./Tick";
+import { Track } from "./Track";
 
 const sliderStyle = {
   position: "relative",
   width: "100%",
 };
 
-const PriceRange = ({ min, max, initMin, initMax, productsCount, onPriceChange }) => {
+export const PriceRange: React.FC<PriceRangeProps> = ({ min, max, initMin, initMax, productsCount, onPriceChange }) => {
   const [state, setState] = useState({
     domain: [min, max],
     values: [initMin || min, initMax || max],
@@ -23,24 +22,24 @@ const PriceRange = ({ min, max, initMin, initMax, productsCount, onPriceChange }
     reversed: false,
   });
 
-  const onUpdate = (update) => {
+  const onUpdate = (update: ReadonlyArray<number>) => {
     setState(() => ({
       ...state,
-      update,
+      update: [...update],
       inputMin: update[0],
       inputMax: update[1],
     }));
   };
 
-  const onChange = (values) => {
+  const onChange = (values: ReadonlyArray<number>) => {
     setState(() => ({
       ...state,
-      values,
+      values: [...values],
       inputMin: values[0],
       inputMax: values[1],
     }));
     if (values[0] < values[1]) {
-      onPriceChange(...values);
+      onPriceChange(values);
     }
   };
 
@@ -121,13 +120,11 @@ PriceRange.defaultProps = {
   initMax: undefined,
 };
 
-PriceRange.propTypes = {
-  initMin: PropType.number,
-  initMax: PropType.number,
-  min: PropType.number.isRequired,
-  max: PropType.number.isRequired,
-  productsCount: PropType.number.isRequired,
-  onPriceChange: PropType.func.isRequired,
+type PriceRangeProps = {
+  initMin?: number;
+  initMax?: number;
+  min: number;
+  max: number;
+  productsCount: number;
+  onPriceChange: (values: readonly number[]) => void;
 };
-
-export default PriceRange;

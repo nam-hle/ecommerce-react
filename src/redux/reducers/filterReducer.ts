@@ -12,8 +12,8 @@ import {
 } from "../actions";
 
 export interface Filter {
-  recent: string[];
-  keyword: string;
+  recent?: string[];
+  keyword?: string;
   brand: string;
   minPrice: number;
   maxPrice: number;
@@ -40,9 +40,9 @@ export function filterReducer(state: FilterState | undefined, action: AnyAction)
     return {
       ...state,
       recent:
-        !!state.recent.find((n) => n === action.payload) || action.payload === ""
+        !!state.recent?.find((n) => n === action.payload) || action.payload === ""
           ? state.recent
-          : [action.payload, ...state.recent],
+          : [action.payload, ...(state.recent ?? [])],
       keyword: action.payload,
     };
   }
@@ -82,7 +82,7 @@ export function filterReducer(state: FilterState | undefined, action: AnyAction)
   if (removeSelectedRecent.match(action)) {
     return {
       ...state,
-      recent: state.recent.filter((item) => item !== action.payload),
+      recent: state.recent?.filter((item) => item !== action.payload),
     };
   }
 

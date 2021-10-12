@@ -1,13 +1,10 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import PropType from "prop-types";
 import React, { useState } from "react";
 
-const ImageLoader = ({ src, alt, className }) => {
-  const loadedImages = {};
-  const [loaded, setLoaded] = useState(loadedImages[src]);
+export const ImageLoader: React.FC<ImageLoaderProps> = ({ src, alt, className }) => {
+  const [loaded, setLoaded] = useState(false);
 
   const onLoad = () => {
-    loadedImages[src] = true;
     setLoaded(true);
   };
 
@@ -39,10 +36,8 @@ ImageLoader.defaultProps = {
   className: "image-loader",
 };
 
-ImageLoader.propTypes = {
-  src: PropType.string.isRequired,
-  alt: PropType.string.isRequired,
-  className: PropType.string,
+type ImageLoaderProps = {
+  src: string;
+  alt: string;
+  className?: string;
 };
-
-export default ImageLoader;

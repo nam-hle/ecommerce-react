@@ -1,13 +1,12 @@
-/* eslint-disable no-nested-ternary */
 import { CloseCircleOutlined } from "@ant-design/icons";
-import PropType from "prop-types";
 import React from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { applyFilter } from "redux/actions/filterActions";
 
-const ProductAppliedFilters = ({ filteredProductsCount }) => {
-  const filter = useSelector((state) => state.filter, shallowEqual);
-  const fields = ["brand", "minPrice", "maxPrice", "sortBy", "keyword"];
+import { applyFilter, AppState, FilterState } from "../../redux";
+
+export const ProductAppliedFilters: React.FC<ProductAppliedFiltersProps> = ({ filteredProductsCount }) => {
+  const filter = useSelector<AppState, FilterState>((state) => state.filter, shallowEqual);
+  const fields: (keyof FilterState)[] = ["brand", "minPrice", "maxPrice", "sortBy", "keyword"];
   const isFiltered = fields.some((key) => !!filter[key]);
   const dispatch = useDispatch();
 
@@ -109,8 +108,6 @@ ProductAppliedFilters.defaultProps = {
   filteredProductsCount: 0,
 };
 
-ProductAppliedFilters.propTypes = {
-  filteredProductsCount: PropType.number,
+type ProductAppliedFiltersProps = {
+  filteredProductsCount: number;
 };
-
-export default ProductAppliedFilters;

@@ -1,25 +1,27 @@
-/* eslint-disable indent */
-import * as ROUTE from "constants/routes";
-
 import { FilterOutlined, ShoppingOutlined } from "@ant-design/icons";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import UserAvatar from "views/account/components/UserAvatar";
 
 import logo from "../../../static/logo-full.png";
-import BasketToggle from "../basket/BasketToggle";
+import * as ROUTE from "../../constants/routes";
+import { AppState, AuthState } from "../../redux";
+import UserAvatar from "../../views/account/components/UserAvatar";
+import { BasketToggle } from "../basket";
 
-import Badge from "./Badge";
-import FiltersToggle from "./FiltersToggle";
-import MobileNavigation from "./MobileNavigation";
-import SearchBar from "./SearchBar";
+import { Badge } from "./Badge";
+import { FiltersToggle } from "./FiltersToggle";
+import { MobileNavigation } from "./MobileNavigation";
+import { SearchBar } from "./SearchBar";
 
-const Navigation = () => {
-  const navbar = useRef(null);
+export const Navigation = () => {
+  const navbar = useRef<HTMLElement | null>(null);
   const { pathname } = useLocation();
 
-  const store = useSelector((state) => ({
+  const store = useSelector<
+    AppState,
+    { basketLength: number; user: AuthState; isAuthenticating: boolean; isLoading: boolean }
+  >((state) => ({
     basketLength: state.basket.length,
     user: state.auth,
     isAuthenticating: state.app.isAuthenticating,
@@ -41,7 +43,7 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 
-  const onClickLink = (e) => {
+  const onClickLink = (e: React.MouseEvent) => {
     if (store.isAuthenticating) {
       e.preventDefault();
     }
@@ -61,14 +63,7 @@ const Navigation = () => {
     return null;
   }
   if (window.screen.width <= 800) {
-    return (
-      <MobileNavigation
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...store}
-        disabledPaths={basketDisabledpathnames}
-        pathname={pathname}
-      />
-    );
+    return <MobileNavigation {...store} disabledPaths={basketDisabledpathnames} />;
   }
   return (
     <nav className="navigation" ref={navbar}>
@@ -146,5 +141,3 @@ const Navigation = () => {
     </nav>
   );
 };
-
-export default Navigation;

@@ -1,20 +1,20 @@
-import { HOME, SIGNIN } from "constants/routes";
-
-import { BasketToggle } from "components/basket";
-import PropType from "prop-types";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import UserNav from "views/account/components/UserAvatar";
 
-import Badge from "./Badge";
-import FiltersToggle from "./FiltersToggle";
-import SearchBar from "./SearchBar";
+import { HOME, SIGNIN } from "../../constants";
+import { AuthState } from "../../redux";
+import UserNav from "../../views/account/components/UserAvatar";
+import { BasketToggle } from "../basket";
 
-const Navigation = (props) => {
+import { Badge } from "./Badge";
+import { FiltersToggle } from "./FiltersToggle";
+import { SearchBar } from "./SearchBar";
+
+export const MobileNavigation: React.FC<NavigationProps> = (props) => {
   const { isAuthenticating, basketLength, disabledPaths, user } = props;
   const { pathname } = useLocation();
 
-  const onClickLink = (e) => {
+  const onClickLink = (e: React.MouseEvent) => {
     if (isAuthenticating) {
       e.preventDefault();
     }
@@ -72,11 +72,9 @@ const Navigation = (props) => {
   );
 };
 
-Navigation.propTypes = {
-  isAuthenticating: PropType.bool.isRequired,
-  basketLength: PropType.number.isRequired,
-  disabledPaths: PropType.arrayOf(PropType.string).isRequired,
-  user: PropType.oneOfType([PropType.bool, PropType.object]).isRequired,
+type NavigationProps = {
+  isAuthenticating: boolean;
+  basketLength: number;
+  disabledPaths: string[];
+  user: null | AuthState;
 };
-
-export default Navigation;

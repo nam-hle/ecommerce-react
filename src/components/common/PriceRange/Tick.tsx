@@ -1,7 +1,6 @@
-import PropType from "prop-types";
 import React from "react";
 
-const Tick = ({ tick, count, format }) => (
+export const Tick: React.FC<TickProps> = ({ tick, count, format }) => (
   <div>
     <div
       style={{
@@ -23,23 +22,21 @@ const Tick = ({ tick, count, format }) => (
         width: `${100 / count}%`,
         left: `${tick.percent}%`,
       }}>
-      {format(tick.value)}
+      {format?.(tick.value)}
     </div>
   </div>
 );
 
-Tick.propTypes = {
-  tick: PropType.shape({
-    id: PropType.string.isRequired,
-    value: PropType.number.isRequired,
-    percent: PropType.number.isRequired,
-  }).isRequired,
-  count: PropType.number.isRequired,
-  format: PropType.func,
+type TickProps = {
+  tick: {
+    id: string;
+    value: number;
+    percent: number;
+  };
+  count: number;
+  format?: (value: number) => React.ReactNode;
 };
 
 Tick.defaultProps = {
   format: (d) => d,
 };
-
-export default Tick;

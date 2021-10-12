@@ -77,9 +77,13 @@ interface HandleProps {
     value: number;
     percent: number;
   };
-  getHandleProps: (id: string, callbacks: { onMouseEnter: () => void; onMouseLeave: () => void }) => void;
+  getHandleProps: MouseCallbacks;
   isActive: boolean;
   disabled?: boolean;
 }
 
-export default Handle;
+Handle.defaultProps = {
+  disabled: false,
+};
+
+type MouseCallbacks = (id: string, callbacks: { onMouseEnter: () => void; onMouseLeave: () => void }) => void;

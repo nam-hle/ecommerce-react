@@ -20,14 +20,14 @@ import { Product } from "../reducers";
 
 function* initRequest(): SagaIterator {
   yield put(setLoading(true));
-  yield put(setRequestStatus(null));
+  yield put(setRequestStatus(undefined));
 }
 
 export interface ProductError extends Error {}
 
 function* handleError(e: ProductError) {
   yield put(setLoading(false));
-  yield put(setRequestStatus(e?.message || "Failed to fetch products"));
+  yield put(setRequestStatus({ message: e.message || "Failed to fetch products" }));
   console.log("ERROR: ", e);
 }
 
@@ -61,9 +61,8 @@ export function* productSaga(action: AnyAction): SagaIterator {
             },
           })
         );
-        yield put(setRequestStatus(""));
+        yield put(setRequestStatus({ message: "" }));
       }
-      // yield put({ type: SET_LAST_REF_KEY, action.payload: result.lastKey });
       yield put(setLoading(false));
     } catch (e) {
       console.log(e);
@@ -216,7 +215,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
             params: action.payload,
           })
         );
-        yield put(setRequestStatus(""));
+        yield put(setRequestStatus({ message: "" }));
       }
       yield put(setLoading(false));
     } catch (e) {

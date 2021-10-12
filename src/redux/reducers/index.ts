@@ -14,7 +14,7 @@ export interface AppState {
   filter: FilterState;
   products: ProductState;
   profile: ProfileState;
-  user: UserState;
+  users: UserState;
   app: MiscState;
 }
 

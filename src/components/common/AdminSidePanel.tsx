@@ -1,9 +1,9 @@
-import { ADMIN_PRODUCTS } from "constants/routes";
-
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const SideNavigation = () => (
+import { ADMIN_PRODUCTS } from "../../constants";
+
+export const AdminSideBar = () => (
   <aside className="sidenavigation">
     <div className="sidenavigation-wrapper">
       <div className="sidenavigation-item">
@@ -17,5 +17,3 @@ const SideNavigation = () => (
     </div>
   </aside>
 );
-
-export default SideNavigation;

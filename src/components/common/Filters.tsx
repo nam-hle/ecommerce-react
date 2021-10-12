@@ -1,21 +1,22 @@
-/* eslint-disable no-nested-ternary */
-import { useDidMount } from "hooks";
-import PropType from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, withRouter } from "react-router-dom";
-import { applyFilter, resetFilter } from "redux/actions/filterActions";
-import { selectMax, selectMin } from "selectors/selector";
+import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
 
-import PriceRange from "./PriceRange";
+import { useDidMount } from "../../hooks";
+import { applyFilter, AppState, FilterState, ProductState, resetFilter, selectMax, selectMin } from "../../redux";
 
-const Filters = ({ closeModal }) => {
-  const { filter, isLoading, products } = useSelector((state) => ({
+import { PriceRange } from "./PriceRange";
+
+const _Filters: React.FC<FiltersProps> = ({ closeModal }) => {
+  const { filter, isLoading, products } = useSelector<
+    AppState,
+    { filter: FilterState; isLoading: boolean; products: ProductState["items"] }
+  >((state) => ({
     filter: state.filter,
     isLoading: state.app.loading,
     products: state.products.items,
   }));
-  const [field, setFilter] = useState({
+  const [field, setFilter] = useState<FilterState>({
     brand: filter.brand,
     minPrice: filter.minPrice,
     maxPrice: filter.maxPrice,
@@ -39,24 +40,24 @@ const Filters = ({ closeModal }) => {
 
     setFilter(filter);
     window.scrollTo(0, 0);
-  }, [filter]);
+  }, [closeModal, didMount, filter, history]);
 
-  const onPriceChange = (minVal, maxVal) => {
-    setFilter({ ...field, minPrice: minVal, maxPrice: maxVal });
+  const onPriceChange = (values: ReadonlyArray<number>) => {
+    setFilter({ ...field, minPrice: values[0], maxPrice: values[1] });
   };
 
-  const onBrandFilterChange = (e) => {
+  const onBrandFilterChange: React.ChangeEventHandler<{ value: string }> = (e) => {
     const val = e.target.value;
 
     setFilter({ ...field, brand: val });
   };
 
-  const onSortFilterChange = (e) => {
+  const onSortFilterChange: React.ChangeEventHandler<{ value: string }> = (e) => {
     setFilter({ ...field, sortBy: e.target.value });
   };
 
   const onApplyFilter = () => {
-    const isChanged = Object.keys(field).some((key) => field[key] !== filter[key]);
+    const isChanged = Object.entries(field).some(([fieldKey, fieldValue]) => fieldValue !== (filter as any)[fieldKey]);
 
     if (field.minPrice > field.maxPrice) {
       return;
@@ -72,8 +73,8 @@ const Filters = ({ closeModal }) => {
   const onResetFilter = () => {
     const filterFields = ["brand", "minPrice", "maxPrice", "sortBy"];
 
-    if (filterFields.some((key) => !!filter[key])) {
-      dispatch(resetFilter());
+    if (filterFields.some((key) => !!(filter as any)[key])) {
+      dispatch(resetFilter({}));
     } else {
       closeModal();
     }
@@ -131,7 +132,6 @@ const Filters = ({ closeModal }) => {
             max={max}
             initMin={field.minPrice}
             initMax={field.maxPrice}
-            isLoading={isLoading}
             onPriceChange={onPriceChange}
             productsCount={products.length}
           />
@@ -157,8 +157,8 @@ const Filters = ({ closeModal }) => {
   );
 };
 
-Filters.propTypes = {
-  closeModal: PropType.func.isRequired,
+type FiltersProps = RouteComponentProps & {
+  closeModal: () => void;
 };
 
-export default withRouter(Filters);
+export const Filters = withRouter(_Filters);

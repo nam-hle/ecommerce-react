@@ -1,12 +1,9 @@
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 
-import { AppliedFilters, ProductGrid, ProductList } from "../../components/product";
+import { ProductAppliedFilters, ProductGrid, ProductList } from "../../components/product";
 import { useDocumentTitle, useScrollTop } from "../../hooks";
-import { AppState } from "../../redux/reducers";
-import { MiscState } from "../../redux/reducers/miscReducer";
-import { Product, ProductState } from "../../redux/reducers/productReducer";
-import { selectFilter } from "../../selectors/selector";
+import { MiscState, AppState, Product, ProductState, selectFilter } from "../../redux";
 
 type ShopSelectorResult = {
   filteredProducts: Product[];
@@ -32,7 +29,7 @@ const Shop = () => {
   return (
     <main className="content">
       <section className="product-list-wrapper">
-        <AppliedFilters filteredProductsCount={store.filteredProducts.length} />
+        <ProductAppliedFilters filteredProductsCount={store.filteredProducts.length} />
         <ProductList {...store}>
           <ProductGrid products={store.filteredProducts} />
         </ProductList>

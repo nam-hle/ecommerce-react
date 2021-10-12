@@ -1,7 +1,7 @@
 import PropType from "prop-types";
 import React, { Component } from "react";
 
-class Boundary extends Component {
+export class Boundary extends Component {
   static getDerivedStateFromError() {
     return { hasError: true };
   }
@@ -37,5 +37,3 @@ class Boundary extends Component {
 Boundary.propTypes = {
   children: PropType.oneOfType([PropType.arrayOf(PropType.node), PropType.node]).isRequired,
 };
-
-export default Boundary;

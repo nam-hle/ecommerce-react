@@ -6,7 +6,7 @@ export interface MiscState {
   loading: boolean;
   isAuthenticating: boolean;
   authStatus: AuthStatus;
-  requestStatus: string | null;
+  requestStatus: { message: string } | undefined;
   theme: string;
 }
 
@@ -14,7 +14,7 @@ const initState: MiscState = {
   loading: false,
   isAuthenticating: false,
   authStatus: null,
-  requestStatus: null,
+  requestStatus: undefined,
   theme: "light",
 };
 

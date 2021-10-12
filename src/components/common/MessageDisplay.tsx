@@ -1,7 +1,6 @@
-import PropType from "prop-types";
 import React from "react";
 
-const MessageDisplay = ({ message, description, buttonLabel, action }) => (
+export const MessageDisplay: React.FC<MessageDisplayProps> = ({ message, description, buttonLabel, action }) => (
   <div className="loader">
     <h2 className="text-center" style={{ wordBreak: "break-all" }}>
       {message || "Message"}
@@ -22,11 +21,9 @@ MessageDisplay.defaultProps = {
   action: undefined,
 };
 
-MessageDisplay.propTypes = {
-  message: PropType.string.isRequired,
-  description: PropType.string,
-  buttonLabel: PropType.string,
-  action: PropType.func,
+type MessageDisplayProps = {
+  message: string;
+  description?: string;
+  buttonLabel?: string;
+  action?: () => void;
 };
-
-export default MessageDisplay;

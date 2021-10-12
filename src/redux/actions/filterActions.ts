@@ -26,4 +26,4 @@ export const removeSelectedRecent = factory<RemoveSelectedRecentPayload>("REMOVE
 export type RemoveSelectedRecentPayload = string;
 
 export const applyFilter = factory<ApplyFilterPayload>("APPLY_FILTER");
-export type ApplyFilterPayload = Filter;
+export type ApplyFilterPayload = Partial<Filter>;

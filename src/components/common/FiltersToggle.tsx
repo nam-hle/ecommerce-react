@@ -1,11 +1,11 @@
-import { useModal } from "hooks";
-import PropType from "prop-types";
 import React from "react";
 
-import Filters from "./Filters";
-import Modal from "./Modal";
+import { useModal } from "../../hooks";
 
-const FiltersToggle = ({ children }) => {
+import { Filters } from "./Filters";
+import { Modal } from "./Modal";
+
+export const FiltersToggle: React.FC<FiltersToggleProps> = ({ children }) => {
   const { isOpenModal, onOpenModal, onCloseModal } = useModal();
 
   return (
@@ -25,8 +25,6 @@ const FiltersToggle = ({ children }) => {
   );
 };
 
-FiltersToggle.propTypes = {
-  children: PropType.oneOfType([PropType.arrayOf(PropType.node), PropType.node]).isRequired,
+type FiltersToggleProps = {
+  children: React.ReactNode | React.ReactNode[];
 };
-
-export default FiltersToggle;

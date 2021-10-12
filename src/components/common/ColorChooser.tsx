@@ -1,10 +1,9 @@
-import PropType from "prop-types";
 import React, { useState } from "react";
 
-const ColorChooser = ({ availableColors, onSelectedColorChange }) => {
+export const ColorChooser: React.FC<ColorChooserProps> = ({ availableColors, onSelectedColorChange }) => {
   const [selectedColor, setSelectedColor] = useState("");
 
-  const setColor = (color) => {
+  const setColor = (color: string) => {
     setSelectedColor(color);
     onSelectedColorChange(color);
   };
@@ -23,9 +22,7 @@ const ColorChooser = ({ availableColors, onSelectedColorChange }) => {
   );
 };
 
-ColorChooser.propTypes = {
-  availableColors: PropType.arrayOf(PropType.string).isRequired,
-  onSelectedColorChange: PropType.func.isRequired,
+type ColorChooserProps = {
+  availableColors: string[];
+  onSelectedColorChange: (params: string) => void;
 };
-
-export default ColorChooser;

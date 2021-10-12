@@ -1,9 +1,8 @@
-import PropType from "prop-types";
 import React from "react";
 import AppModal from "react-modal";
 
-const Modal = ({ isOpen, onRequestClose, afterOpenModal, overrideStyle, children }) => {
-  const defaultStyle = {
+export const Modal: React.FC<ModalProps> = ({ isOpen, onRequestClose, afterOpenModal, overrideStyle, children }) => {
+  const defaultStyle: AppModal.Styles = {
     content: {
       top: "50%",
       left: "50%",
@@ -42,13 +41,10 @@ Modal.defaultProps = {
   afterOpenModal: () => {},
 };
 
-Modal.propTypes = {
-  isOpen: PropType.bool.isRequired,
-  onRequestClose: PropType.func.isRequired,
-  afterOpenModal: PropType.func,
-  // eslint-disable-next-line react/forbid-prop-types
-  overrideStyle: PropType.object,
-  children: PropType.oneOfType([PropType.arrayOf(PropType.node), PropType.node]).isRequired,
+type ModalProps = {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  afterOpenModal?: () => void;
+  overrideStyle?: React.CSSProperties;
+  children: React.ReactNode[] | React.ReactNode;
 };
-
-export default Modal;

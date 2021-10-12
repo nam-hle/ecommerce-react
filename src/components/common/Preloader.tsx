@@ -2,7 +2,7 @@ import React from "react";
 
 import logoWordmark from "../../../static/logo-wordmark.png";
 
-const Preloader = () => (
+export const Preloader = () => (
   <div className="preloader">
     <svg className="logo-symbol" viewBox="0 0 41.25 41.25">
       <circle cx="20.62" cy="20.62" r="20.62" />
@@ -11,5 +11,3 @@ const Preloader = () => (
     <img alt="Salinaka logo wordmark" src={logoWordmark} />
   </div>
 );
-
-export default Preloader;

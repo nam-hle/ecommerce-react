@@ -1,11 +1,10 @@
-import * as Route from "constants/routes";
-
 import React from "react";
 import { useLocation } from "react-router-dom";
 
 import logo from "../../../static/logo-full.png";
+import * as Route from "../../constants";
 
-const Footer = () => {
+export const Footer = () => {
   const { pathname } = useLocation();
 
   const visibleOnlyPath = [Route.HOME, Route.SHOP];
@@ -37,5 +36,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export default Footer;

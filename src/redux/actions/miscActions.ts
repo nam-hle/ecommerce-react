@@ -8,7 +8,7 @@ export const setAuthenticating = factory<SetAuthenticatingPayload>("IS_AUTHENTIC
 export type SetAuthenticatingPayload = boolean;
 
 export const setRequestStatus = factory<SetRequestStatusPayload>("SET_REQUEST_STATUS");
-export type SetRequestStatusPayload = string | null;
+export type SetRequestStatusPayload = { message: string } | undefined;
 
 export const setAuthStatus = factory<SetAuthStatusPayload>("SET_AUTH_STATUS");
 export type SetAuthStatusPayload = AuthStatus;
