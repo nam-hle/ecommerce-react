@@ -1,13 +1,16 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { LoadingOutlined } from "@ant-design/icons";
-import { Boundary, MessageDisplay } from "components/common";
-import { ProductGrid } from "components/product";
-import { useDidMount } from "hooks";
+
 import PropType from "prop-types";
+
 import React, { useEffect } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
-import { setRequestStatus } from "redux/actions/miscActions";
-import { searchProduct } from "redux/actions/productActions";
+
+import { Boundary, MessageDisplay } from "../../components/common";
+import { ProductGrid } from "../../components/product";
+import { useDidMount } from "../../hooks";
+
+import { setRequestStatus, searchProduct } from "../../redux";
 
 const Search = ({ match }) => {
   const { searchKey } = match.params;
@@ -24,13 +27,13 @@ const Search = ({ match }) => {
     if (didMount && !store.isLoading) {
       dispatch(searchProduct(searchKey));
     }
-  }, [searchKey]);
+  }, [didMount, dispatch, searchKey, store.isLoading]);
 
   useEffect(
     () => () => {
       dispatch(setRequestStatus(""));
     },
-    []
+    [dispatch]
   );
 
   if (store.requestStatus && !store.isLoading) {

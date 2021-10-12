@@ -1,3 +1,6 @@
+import { ReducersMapObject } from "redux";
+import { AnyAction } from "typescript-fsa";
+
 import { authReducer, AuthState } from "./authReducer";
 import { basketReducer, BasketState } from "./basketReducer";
 import { checkoutReducer, CheckoutState } from "./checkoutReducer";
@@ -18,7 +21,7 @@ export interface AppState {
   app: MiscState;
 }
 
-export const rootReducer = {
+export const rootReducer: ReducersMapObject<AppState, AnyAction> = {
   products: productReducer,
   basket: basketReducer,
   auth: authReducer,

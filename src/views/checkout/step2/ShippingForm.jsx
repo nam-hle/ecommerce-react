@@ -1,7 +1,7 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import { CustomInput, CustomMobileInput } from "components/formik";
 import { Field, useFormikContext } from "formik";
 import React from "react";
+
+import { CustomInput, CustomMobileInput } from "../../../components/formik";
 
 const ShippingForm = () => {
   const { values } = useFormikContext();

@@ -1,6 +1,7 @@
-import { useScrollTop } from "hooks";
 import PropType from "prop-types";
 import React from "react";
+
+import { useScrollTop } from "../../hooks";
 
 const Error = ({ history }) => {
   useScrollTop();

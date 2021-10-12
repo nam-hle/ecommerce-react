@@ -1,12 +1,13 @@
 /* eslint-disable indent */
-import { ACCOUNT_EDIT } from "constants/routes";
 
-import { ImageLoader } from "components/common";
-import { displayDate } from "helpers/utils";
 import PropType from "prop-types";
 import React from "react";
 import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
+
+import { ImageLoader } from "../../../components/common";
+import { ACCOUNT_EDIT } from "../../../constants/routes";
+import { displayDate } from "../../../helpers";
 
 const UserProfile = (props) => {
   const profile = useSelector((state) => state.profile);

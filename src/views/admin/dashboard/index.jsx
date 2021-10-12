@@ -1,5 +1,6 @@
-import { useDocumentTitle, useScrollTop } from "hooks";
 import React from "react";
+
+import { useDocumentTitle, useScrollTop } from "../../../hooks";
 
 const Dashboard = () => {
   useDocumentTitle("Welcome | Admin Dashboard");

@@ -1,8 +1,9 @@
-import { AdminNavigation, AdminSideBar } from "components/common";
 import PropType from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
+
+import { AdminNavigation, AdminSideBar } from "../components/common";
 
 const AdminRoute = ({ isAuth, role, component: Component, ...rest }) => (
   <Route

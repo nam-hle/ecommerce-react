@@ -1,11 +1,12 @@
-import { ACCOUNT } from "constants/routes";
-
 import { ArrowLeftOutlined, CheckOutlined, LoadingOutlined } from "@ant-design/icons";
-import { CustomInput, CustomMobileInput } from "components/formik";
+
 import { Field, useFormikContext } from "formik";
 import PropType from "prop-types";
 import React from "react";
 import { useHistory } from "react-router-dom";
+
+import { CustomInput, CustomMobileInput } from "../../../components/formik";
+import { ACCOUNT } from "../../../constants";
 
 const EditForm = ({ isLoading, authProvider }) => {
   const history = useHistory();

@@ -1,10 +1,11 @@
 /* eslint-disable no-nested-ternary */
-import { ADMIN_DASHBOARD, SIGNIN } from "constants/routes";
 
 import PropType from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
+
+import { ADMIN_DASHBOARD, SIGNIN } from "../constants/routes";
 
 const PrivateRoute = ({ isAuth, role, component: Component, ...rest }) => (
   <Route

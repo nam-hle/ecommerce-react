@@ -1,8 +1,10 @@
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
-import { Modal } from "components/common";
+
 import { useFormikContext } from "formik";
 import PropType from "prop-types";
 import React, { useState } from "react";
+
+import { Modal } from "../../../components/common";
 
 const ConfirmModal = ({ onConfirmUpdate, modal }) => {
   const [password, setPassword] = useState("");

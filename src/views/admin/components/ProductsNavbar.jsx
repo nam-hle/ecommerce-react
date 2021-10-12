@@ -1,10 +1,11 @@
-import { ADD_PRODUCT } from "constants/routes";
-
 import { FilterOutlined, PlusOutlined } from "@ant-design/icons";
-import { FiltersToggle, SearchBar } from "components/common";
+
 import PropType from "prop-types";
 import React from "react";
 import { useHistory } from "react-router-dom";
+
+import { FiltersToggle, SearchBar } from "../../../components/common";
+import { ADD_PRODUCT } from "../../../constants/routes";
 
 const ProductsNavbar = (props) => {
   const { productsCount, totalProductsCount } = props;

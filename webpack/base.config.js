@@ -15,11 +15,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: ["source-map-loader"],
-        enforce: "pre",
-      },
-      {
         test: /\.(sa|sc|c)ss$/,
         use: [
           {
@@ -78,10 +73,6 @@ module.exports = {
         ],
       },
     ],
-  },
-  resolve: {
-    modules: [resolve("lib"), "node_modules"],
-    extensions: ["*", ".js", ".jsx"],
   },
   plugins: [
     new MiniCssExtractPlugin({

@@ -1,12 +1,14 @@
-import { CHECKOUT_STEP_1 } from "constants/routes";
-
 import { Form, Formik } from "formik";
-import { displayActionMessage } from "helpers/utils";
-import { useDocumentTitle, useScrollTop } from "hooks";
+
 import PropType from "prop-types";
 import React from "react";
 import { Redirect } from "react-router-dom";
 import * as Yup from "yup";
+
+import { CHECKOUT_STEP_1 } from "../../../constants";
+
+import { displayActionMessage } from "../../../helpers";
+import { useDocumentTitle, useScrollTop } from "../../../hooks";
 
 import { StepTracker } from "../components";
 import withCheckout from "../hoc/withCheckout";

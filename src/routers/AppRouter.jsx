@@ -1,11 +1,11 @@
-import * as ROUTES from "constants/routes";
-
-import { Basket } from "components/basket";
-import { Footer, Navigation } from "components/common";
 import { createBrowserHistory } from "history";
 import React from "react";
 import { Route, Router, Switch } from "react-router-dom";
-import * as view from "views";
+
+import { Basket } from "../components/basket";
+import { Footer, Navigation } from "../components/common";
+import * as ROUTES from "../constants/routes";
+import * as view from "../views";
 
 import AdminRoute from "./AdminRoute";
 import ClientRoute from "./ClientRoute";

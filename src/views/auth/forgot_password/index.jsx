@@ -1,8 +1,11 @@
 import { CheckOutlined, LoadingOutlined } from "@ant-design/icons";
-import { useDidMount, useDocumentTitle, useScrollTop } from "hooks";
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPassword } from "redux/actions/authActions";
+
+import { useDidMount, useDocumentTitle, useScrollTop } from "../../../hooks";
+
+import { resetPassword } from "../../../redux";
 
 const ForgotPassword = () => {
   const { authStatus, isAuthenticating } = useSelector((state) => ({
@@ -22,7 +25,7 @@ const ForgotPassword = () => {
       setForgotPWStatus(authStatus);
       setIsSending(isAuthenticating);
     }
-  }, [authStatus, isAuthenticating]);
+  }, [authStatus, didMount, isAuthenticating]);
 
   const onEmailChange = (value, error) => {
     setField({ email: value, error });

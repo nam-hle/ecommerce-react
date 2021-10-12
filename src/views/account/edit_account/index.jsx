@@ -1,12 +1,15 @@
 import { EditOutlined, LoadingOutlined } from "@ant-design/icons";
-import { Boundary, ImageLoader } from "components/common";
+
 import { Formik } from "formik";
-import { useDocumentTitle, useFileHandler, useModal, useScrollTop } from "hooks";
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "redux/actions/miscActions";
-import { updateProfile } from "redux/actions/profileActions";
+
 import * as Yup from "yup";
+
+import { Boundary, ImageLoader } from "../../../components/common";
+import { useDocumentTitle, useFileHandler, useModal, useScrollTop } from "../../../hooks";
+import { setLoading, updateProfile } from "../../../redux";
 
 import ConfirmModal from "./ConfirmModal";
 import EditForm from "./EditForm";

@@ -1,16 +1,18 @@
-import { SIGNIN } from "constants/routes";
-
 import { ArrowRightOutlined, LoadingOutlined } from "@ant-design/icons";
-import { SocialLogin } from "components/common";
-import { CustomInput } from "components/formik";
+
 import { Field, Form, Formik } from "formik";
-import { useDocumentTitle, useScrollTop } from "hooks";
+
 import PropType from "prop-types";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "redux/actions/authActions";
-import { setAuthenticating, setAuthStatus } from "redux/actions/miscActions";
+
 import * as Yup from "yup";
+
+import { SocialLogin } from "../../../components/common";
+import { CustomInput } from "../../../components/formik";
+import { SIGNIN } from "../../../constants/routes";
+import { useDocumentTitle, useScrollTop } from "../../../hooks";
+import { signUp, setAuthenticating, setAuthStatus } from "../../../redux";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Email is not valid.").required("Email is required."),

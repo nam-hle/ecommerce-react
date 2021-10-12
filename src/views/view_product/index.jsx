@@ -1,13 +1,14 @@
-import { RECOMMENDED_PRODUCTS, SHOP } from "constants/routes";
-
 import { ArrowLeftOutlined, LoadingOutlined } from "@ant-design/icons";
-import { ColorChooser, ImageLoader, MessageDisplay } from "components/common";
-import { ProductShowcaseGrid } from "components/product";
-import { displayMoney } from "helpers/utils";
-import { useBasket, useDocumentTitle, useProduct, useRecommendedProducts, useScrollTop } from "hooks";
+
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Select from "react-select";
+
+import { ColorChooser, ImageLoader, MessageDisplay } from "../../components/common";
+import { ProductShowcase } from "../../components/product";
+import { RECOMMENDED_PRODUCTS, SHOP } from "../../constants/routes";
+import { displayMoney } from "../../helpers";
+import { useBasket, useDocumentTitle, useProduct, useRecommendedProducts, useScrollTop } from "../../hooks";
 
 const ViewProduct = () => {
   const { id } = useParams();
@@ -74,7 +75,7 @@ const ViewProduct = () => {
                     key={image.id}
                     onClick={() => setSelectedImage(image.url)}
                     role="presentation">
-                    <ImageLoader className="product-modal-image-collection-img" src={image.url} />
+                    <ImageLoader alt="" className="product-modal-image-collection-img" src={image.url} />
                   </div>
                 ))}
               </div>
@@ -138,7 +139,7 @@ const ViewProduct = () => {
             {errorFeatured && !isLoadingFeatured ? (
               <MessageDisplay message={error} action={fetchRecommendedProducts} buttonLabel="Try Again" />
             ) : (
-              <ProductShowcaseGrid products={recommendedProducts} skeletonCount={3} />
+              <ProductShowcase products={recommendedProducts} skeletonCount={3} />
             )}
           </div>
         </div>

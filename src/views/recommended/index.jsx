@@ -1,9 +1,9 @@
-import { MessageDisplay } from "components/common";
-import { ProductShowcaseGrid } from "components/product";
-import { useDocumentTitle, useRecommendedProducts, useScrollTop } from "hooks";
 import React from "react";
 
 import bannerImg from "../../../static/banner-girl-1.png";
+import { MessageDisplay } from "../../components/common";
+import { ProductShowcaseGrid } from "../../components/product";
+import { useDocumentTitle, useRecommendedProducts, useScrollTop } from "../../hooks";
 
 const RecommendedProducts = () => {
   useDocumentTitle("Recommended Products | Salinaka");

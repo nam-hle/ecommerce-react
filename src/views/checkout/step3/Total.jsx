@@ -1,13 +1,14 @@
-import { CHECKOUT_STEP_2 } from "constants/routes";
-
 import { ArrowLeftOutlined, CheckOutlined } from "@ant-design/icons";
 import { useFormikContext } from "formik";
-import { displayMoney } from "helpers/utils";
+
 import PropType from "prop-types";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { setPaymentDetails } from "redux/actions/checkoutActions";
+
+import { CHECKOUT_STEP_2 } from "../../../constants";
+import { displayMoney } from "../../../helpers";
+import { setPaymentDetails } from "../../../redux";
 
 const Total = ({ isInternational, subtotal }) => {
   const { values, submitForm } = useFormikContext();

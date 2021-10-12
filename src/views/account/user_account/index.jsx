@@ -1,6 +1,8 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { useDocumentTitle, useScrollTop } from "hooks";
+
 import React, { lazy, Suspense } from "react";
+
+import { useDocumentTitle, useScrollTop } from "../../../hooks";
 
 import UserTab from "../components/UserTab";
 
