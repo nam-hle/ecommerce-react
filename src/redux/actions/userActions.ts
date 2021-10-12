@@ -1,4 +1,5 @@
 import actionCreatorFactory from "typescript-fsa";
+
 import { User } from "../reducers/userReducer";
 
 const factory = actionCreatorFactory("USER");

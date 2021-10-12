@@ -1,6 +1,7 @@
-import { Handles, Rail, Slider, Ticks, Tracks } from "react-compound-slider";
-import React, { useState } from "react";
 import PropType from "prop-types";
+import React, { useState } from "react";
+import { Handles, Rail, Slider, Ticks, Tracks } from "react-compound-slider";
+
 import Handle from "./Handle";
 import SliderRail from "./SliderRail";
 import Tick from "./Tick";

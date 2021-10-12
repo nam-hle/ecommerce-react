@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 import { applyFilter, resetFilter } from "redux/actions/filterActions";
 import { selectMax, selectMin } from "selectors/selector";
+
 import PriceRange from "./PriceRange";
 
 const Filters = ({ closeModal }) => {

@@ -1,11 +1,11 @@
-import { all, call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
+import { all, call, put, select } from "redux-saga/effects";
 import { AnyAction } from "typescript-fsa";
-import firebase from "../../services/firebase";
-import { history } from "../../routers/AppRouter";
-import { setLoading, setRequestStatus } from "../actions/miscActions";
-import { displayActionMessage } from "../../helpers/utils";
+
 import { ADMIN_PRODUCTS } from "../../constants";
+import { displayActionMessage } from "../../helpers";
+import { history } from "../../routers/AppRouter";
+import firebase from "../../services/firebase";
 import {
   addProduct,
   clearSearchState,
@@ -13,8 +13,10 @@ import {
   getProducts,
   removeProduct,
   searchProduct,
-} from "../actions/productActions";
-import { Product } from "../reducers/productReducer";
+  setLoading,
+  setRequestStatus,
+} from "../actions";
+import { Product } from "../reducers";
 
 function* initRequest(): SagaIterator {
   yield put(setLoading(true));
@@ -36,7 +38,7 @@ function* handleAction(location: string | undefined, message: string, status: st
   yield call(displayActionMessage, message, status);
 }
 
-function* productSaga(action: AnyAction): SagaIterator {
+export function* productSaga(action: AnyAction): SagaIterator {
   if (getProducts.started.match(action)) {
     try {
       yield call(initRequest);
@@ -87,7 +89,7 @@ function* productSaga(action: AnyAction): SagaIterator {
         images = imageUrls.map((url, i) => ({ id: imageKeys[i](), url }));
       }
 
-      const product = {
+      const product: Product = {
         ...action.payload,
         image: downloadURL,
         imageCollection: [image, ...images],
@@ -98,8 +100,8 @@ function* productSaga(action: AnyAction): SagaIterator {
         addProduct.done({
           params: action.payload,
           result: {
-            id: key,
             ...product,
+            id: key,
           },
         })
       );
@@ -116,7 +118,7 @@ function* productSaga(action: AnyAction): SagaIterator {
       yield call(initRequest);
 
       const { image, imageCollection } = action.payload.updates;
-      let newUpdates = { ...action.payload.updates };
+      let newUpdates: Product = { ...action.payload.updates };
 
       if (image.constructor === File && typeof image === "object") {
         try {
@@ -224,5 +226,3 @@ function* productSaga(action: AnyAction): SagaIterator {
 
   throw new Error(`Unexpected action type ${action.type}`);
 }
-
-export default productSaga;

@@ -1,14 +1,17 @@
-import { useDidMount } from "hooks";
-import { useEffect, useState } from "react";
-import firebase from "services/firebase";
+import { useCallback, useEffect, useState } from "react";
 
-const useFeaturedProducts = (itemsCount) => {
-  const [featuredProducts, setFeaturedProducts] = useState([]);
+import { Product } from "../redux/reducers/productReducer";
+import firebase from "../services/firebase";
+
+import { useDidMount } from "./useDidMount";
+
+export const useFeaturedProducts = (itemsCount: number) => {
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const didMount = useDidMount(true);
 
-  const fetchFeaturedProducts = async () => {
+  const fetchFeaturedProducts = useCallback(async () => {
     try {
       setLoading(true);
       setError("");
@@ -21,11 +24,11 @@ const useFeaturedProducts = (itemsCount) => {
           setLoading(false);
         }
       } else {
-        const items = [];
+        const items: Product[] = [];
 
         docs.forEach((snap) => {
           const data = snap.data();
-          items.push({ id: snap.ref.id, ...data });
+          items.push({ ...data, id: snap.ref.id });
         });
 
         if (didMount) {
@@ -39,13 +42,13 @@ const useFeaturedProducts = (itemsCount) => {
         setLoading(false);
       }
     }
-  };
+  }, [didMount, itemsCount]);
 
   useEffect(() => {
     if (featuredProducts.length === 0 && didMount) {
       fetchFeaturedProducts();
     }
-  }, []);
+  }, [didMount, featuredProducts.length, fetchFeaturedProducts]);
 
   return {
     featuredProducts,
@@ -54,5 +57,3 @@ const useFeaturedProducts = (itemsCount) => {
     error,
   };
 };
-
-export default useFeaturedProducts;

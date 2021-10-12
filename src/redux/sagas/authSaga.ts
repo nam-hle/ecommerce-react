@@ -1,13 +1,12 @@
+import { SagaIterator } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 import { AnyAction } from "typescript-fsa";
-import { SagaIterator } from "redux-saga";
-import { resetCheckout } from "../actions/checkoutActions";
-import { resetFilter } from "../actions/filterActions";
-import { setAuthenticating, setAuthStatus, SetAuthStatusPayload } from "../actions/miscActions";
-import { clearProfile, setProfile } from "../actions/profileActions";
+
+import defaultAvatar from "../../../static/defaultAvatar.jpg";
+import defaultBanner from "../../../static/defaultBanner.jpg";
+import { SIGNIN as ROUTE_SIGNIN } from "../../constants";
 import { history } from "../../routers/AppRouter";
 import firebase from "../../services/firebase";
-import { clearBasket, setBasketItems } from "../actions/basketActions";
 import {
   onAuthStateChanged,
   resetPassword,
@@ -19,10 +18,16 @@ import {
   signInWithGoogle,
   signOut,
   signUp,
-} from "../actions/authActions";
-import { SIGNIN as ROUTE_SIGNIN } from "../../constants";
-import defaultAvatar from "../../../static/defaultAvatar.jpg";
-import defaultBanner from "../../../static/defaultBanner.jpg";
+  resetCheckout,
+  resetFilter,
+  setAuthenticating,
+  setAuthStatus,
+  SetAuthStatusPayload,
+  clearProfile,
+  setProfile,
+  clearBasket,
+  setBasketItems,
+} from "../actions";
 
 type AuthError = {
   code: string;
@@ -62,7 +67,7 @@ function* initRequest() {
   yield put(setAuthStatus(null));
 }
 
-function* authSaga(action: AnyAction): SagaIterator {
+export function* authSaga(action: AnyAction): SagaIterator {
   if (signIn.match(action)) {
     try {
       yield call(initRequest);
@@ -229,5 +234,3 @@ function* authSaga(action: AnyAction): SagaIterator {
 
   throw new Error("Unexpected Action Type.");
 }
-
-export default authSaga;

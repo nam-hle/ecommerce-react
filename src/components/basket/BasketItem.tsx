@@ -1,14 +1,19 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { BasketItemControl } from "components/basket";
-import { ImageLoader } from "components/common";
-import { displayMoney } from "helpers/utils";
-import PropType from "prop-types";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { removeFromBasket } from "redux/actions/basketActions";
 
-const BasketItem = ({ product }) => {
+import { displayMoney } from "../../helpers";
+import { Product, removeFromBasket } from "../../redux";
+import { ImageLoader } from "../common";
+
+import { BasketItemControl } from "./BasketItemControl";
+
+interface BasketItemProps {
+  product: Product;
+}
+
+export const BasketItem: React.FC<BasketItemProps> = ({ product }) => {
   const dispatch = useDispatch();
   const onRemoveFromBasket = () => dispatch(removeFromBasket(product.id));
 
@@ -57,28 +62,6 @@ const BasketItem = ({ product }) => {
       </div>
     </div>
   );
-};
-
-BasketItem.propTypes = {
-  product: PropType.shape({
-    id: PropType.string,
-    name: PropType.string,
-    brand: PropType.string,
-    price: PropType.number,
-    quantity: PropType.number,
-    maxQuantity: PropType.number,
-    description: PropType.string,
-    keywords: PropType.arrayOf(PropType.string),
-    selectedSize: PropType.string,
-    selectedColor: PropType.string,
-    imageCollection: PropType.arrayOf(PropType.string),
-    sizes: PropType.arrayOf(PropType.number),
-    image: PropType.string,
-    imageUrl: PropType.string,
-    isFeatured: PropType.bool,
-    isRecommended: PropType.bool,
-    availableColors: PropType.arrayOf(PropType.string),
-  }).isRequired,
 };
 
 export default BasketItem;

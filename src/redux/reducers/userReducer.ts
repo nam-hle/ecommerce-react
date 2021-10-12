@@ -1,5 +1,6 @@
 import { AnyAction } from "typescript-fsa";
-import { addUser, deleteUser, editUser } from "../actions/userActions";
+
+import { addUser, deleteUser, editUser } from "../actions";
 
 // const initState = [
 //   {

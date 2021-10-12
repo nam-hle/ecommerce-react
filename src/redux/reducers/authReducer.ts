@@ -1,5 +1,6 @@
 import { AnyAction } from "typescript-fsa";
-import { signInSuccess, signOut } from "../actions/authActions";
+
+import { signInSuccess, signOut } from "../actions";
 
 export type AuthState = {
   id: string;

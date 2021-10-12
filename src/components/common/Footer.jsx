@@ -1,6 +1,8 @@
 import * as Route from "constants/routes";
+
 import React from "react";
 import { useLocation } from "react-router-dom";
+
 import logo from "../../../static/logo-full.png";
 
 const Footer = () => {

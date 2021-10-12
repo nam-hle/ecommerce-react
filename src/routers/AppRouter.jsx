@@ -1,13 +1,15 @@
 import * as ROUTES from "constants/routes";
+
 import { Basket } from "components/basket";
 import { Footer, Navigation } from "components/common";
 import { createBrowserHistory } from "history";
 import React from "react";
 import { Route, Router, Switch } from "react-router-dom";
 import * as view from "views";
-import PublicRoute from "./PublicRoute";
-import ClientRoute from "./ClientRoute";
+
 import AdminRoute from "./AdminRoute";
+import ClientRoute from "./ClientRoute";
+import PublicRoute from "./PublicRoute";
 
 // Revert back to history v4.10.0 because
 // v5.0 breaks navigation

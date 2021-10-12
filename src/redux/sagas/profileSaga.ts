@@ -1,18 +1,18 @@
+import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { AnyAction } from "typescript-fsa";
-import { SagaIterator } from "redux-saga";
+
+import { ACCOUNT } from "../../constants";
+import { displayActionMessage } from "../../helpers";
 import { history } from "../../routers/AppRouter";
 import firebase from "../../services/firebase";
-import { displayActionMessage } from "../../helpers/utils";
-import { ACCOUNT } from "../../constants";
-import { setLoading } from "../actions/miscActions";
-import { updateEmail, updateProfile } from "../actions/profileActions";
+import { updateEmail, updateProfile, setLoading } from "../actions";
 
 interface ProfileError extends Error {
   code: string;
 }
 
-function* profileSaga(action: AnyAction): SagaIterator {
+export function* profileSaga(action: AnyAction): SagaIterator {
   if (updateEmail.match(action)) {
     try {
       yield put(setLoading(false));
@@ -72,5 +72,3 @@ function* profileSaga(action: AnyAction): SagaIterator {
 
   throw new Error("Unexpected action type.");
 }
-
-export default profileSaga;

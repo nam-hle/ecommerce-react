@@ -1,4 +1,5 @@
 import { ADMIN_DASHBOARD, SIGNIN, SIGNUP } from "constants/routes";
+
 import PropType from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
@@ -7,7 +8,6 @@ import { Redirect, Route } from "react-router-dom";
 const PublicRoute = ({ isAuth, role, component: Component, path, ...rest }) => (
   <Route
     {...rest}
-    // eslint-disable-next-line consistent-return
     render={(props) => {
       const { from } = props.location.state || { from: { pathname: "/" } };
 

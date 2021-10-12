@@ -9,7 +9,7 @@ import {
   setMaxPriceFilter,
   setMinPriceFilter,
   setTextFilter,
-} from "../actions/filterActions";
+} from "../actions";
 
 export interface Filter {
   recent: string[];

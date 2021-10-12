@@ -1,8 +1,8 @@
+import { cacheNames } from "workbox-core";
+import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { CacheFirst } from "workbox-strategies";
-import { ExpirationPlugin } from "workbox-expiration";
-import { cacheNames } from "workbox-core";
 
 precacheAndRoute(self.__WB_MANIFEST);
 let currentCacheNames = Object.assign({ precacheTemp: cacheNames.precache + "-temp" }, cacheNames);

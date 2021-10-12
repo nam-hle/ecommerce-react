@@ -1,6 +1,7 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-nested-ternary */
 import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from "constants/routes";
+
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Boundary } from "components/common";
 import { Form, Formik } from "formik";
@@ -11,10 +12,12 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setShippingDetails } from "redux/actions/checkoutActions";
 import * as Yup from "yup";
-import withCheckout from "../hoc/withCheckout";
+
 import { StepTracker } from "../components";
-import ShippingTotal from "./ShippingTotal";
+import withCheckout from "../hoc/withCheckout";
+
 import ShippingForm from "./ShippingForm";
+import ShippingTotal from "./ShippingTotal";
 
 const FormSchema = Yup.object().shape({
   fullname: Yup.string()

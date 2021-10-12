@@ -36,7 +36,14 @@ module.exports = {
     "deprecation/deprecation": "warn",
     "import/order": [
       "error",
-      { groups: ["builtin", "external", "parent", "sibling", "index", "internal", "object", "type"] },
+      {
+        groups: ["builtin", "external", "parent", "sibling", "index", "internal", "object", "type"],
+        "newlines-between": "always-and-inside-groups",
+        alphabetize: {
+          order: "asc",
+          caseInsensitive: true,
+        },
+      },
     ],
   },
 };

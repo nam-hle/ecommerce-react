@@ -1,6 +1,6 @@
 import { useLayoutEffect } from "react";
 
-const useDocumentTitle = (title) => {
+export const useDocumentTitle = (title: string) => {
   useLayoutEffect(() => {
     if (title) {
       document.title = title;
@@ -9,5 +9,3 @@ const useDocumentTitle = (title) => {
     }
   }, [title]);
 };
-
-export default useDocumentTitle;

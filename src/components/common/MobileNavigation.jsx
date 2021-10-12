@@ -1,12 +1,14 @@
 import { HOME, SIGNIN } from "constants/routes";
+
+import { BasketToggle } from "components/basket";
 import PropType from "prop-types";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import UserNav from "views/account/components/UserAvatar";
-import { BasketToggle } from "components/basket";
-import SearchBar from "./SearchBar";
-import FiltersToggle from "./FiltersToggle";
+
 import Badge from "./Badge";
+import FiltersToggle from "./FiltersToggle";
+import SearchBar from "./SearchBar";
 
 const Navigation = (props) => {
   const { isAuthenticating, basketLength, disabledPaths, user } = props;

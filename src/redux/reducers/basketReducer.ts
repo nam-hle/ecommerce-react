@@ -1,18 +1,10 @@
 import { AnyAction } from "typescript-fsa";
 
-import {
-  addQtyItem,
-  addToBasket,
-  clearBasket,
-  minusQtyItem,
-  removeFromBasket,
-  setBasketItems,
-} from "../actions/basketActions";
+import { addQtyItem, addToBasket, clearBasket, minusQtyItem, removeFromBasket, setBasketItems } from "../actions";
 
-export interface Item {
-  id: string;
-  quantity: number;
-}
+import { Product } from "./productReducer";
+
+export interface Item extends Product {}
 
 export type BasketState = Item[];
 

@@ -1,10 +1,12 @@
 import { FEATURED_PRODUCTS, RECOMMENDED_PRODUCTS, SHOP } from "constants/routes";
+
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { MessageDisplay } from "components/common";
 import { ProductShowcaseGrid } from "components/product";
 import { useDocumentTitle, useFeaturedProducts, useRecommendedProducts, useScrollTop } from "hooks";
 import React from "react";
 import { Link } from "react-router-dom";
+
 import bannerImg from "../../../static/banner-girl.png";
 
 const Home = () => {

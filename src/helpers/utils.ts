@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 export const displayDate = (timestamp: string) => {
   const date = new Date(timestamp);
 
@@ -42,7 +41,7 @@ export const calculateTotal = (arr: number[]) => {
 
   const total = arr.reduce((acc, val) => acc + val, 0);
 
-  return total.toFixed(2);
+  return Math.round(total * 100) / 100;
 };
 
 export const displayActionMessage = (msg: string, status = "info") => {

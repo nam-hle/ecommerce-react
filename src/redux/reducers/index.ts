@@ -1,4 +1,3 @@
-import { Action } from "redux";
 import { authReducer, AuthState } from "./authReducer";
 import { basketReducer, BasketState } from "./basketReducer";
 import { checkoutReducer, CheckoutState } from "./checkoutReducer";
@@ -7,11 +6,6 @@ import { miscReducer, MiscState } from "./miscReducer";
 import { productReducer, ProductState } from "./productReducer";
 import { profileReducer, ProfileState } from "./profileReducer";
 import { userReducer, UserState } from "./userReducer";
-
-export interface ActionWithPayload<Type, Payload> extends Action {
-  type: Type;
-  payload: Payload;
-}
 
 export interface AppState {
   auth: AuthState;
@@ -24,7 +18,7 @@ export interface AppState {
   app: MiscState;
 }
 
-const rootReducer = {
+export const rootReducer = {
   products: productReducer,
   basket: basketReducer,
   auth: authReducer,
@@ -35,4 +29,11 @@ const rootReducer = {
   app: miscReducer,
 };
 
-export default rootReducer;
+export * from "./authReducer";
+export * from "./basketReducer";
+export * from "./checkoutReducer";
+export * from "./filterReducer";
+export * from "./miscReducer";
+export * from "./productReducer";
+export * from "./profileReducer";
+export * from "./userReducer";

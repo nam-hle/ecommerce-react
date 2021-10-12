@@ -1,5 +1,5 @@
-import actionCreatorFactory from "typescript-fsa";
 import firebase from "firebase";
+import actionCreatorFactory from "typescript-fsa";
 
 const factory = actionCreatorFactory("AUTH");
 

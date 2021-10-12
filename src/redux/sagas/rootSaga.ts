@@ -1,5 +1,7 @@
+import { SagaIterator } from "redux-saga";
 import { takeLatest } from "redux-saga/effects";
 import { AnyAction } from "typescript-fsa";
+
 import {
   onAuthStateChanged,
   resetPassword,
@@ -10,14 +12,20 @@ import {
   signInWithGoogle,
   signOut,
   signUp,
-} from "../actions/authActions";
-import { searchProduct, removeProduct, addProduct, editProduct, getProducts } from "../actions/productActions";
-import { updateEmail, updateProfile } from "../actions/profileActions";
-import authSaga from "./authSaga";
-import productSaga from "./productSaga";
-import profileSaga from "./profileSaga";
+  searchProduct,
+  removeProduct,
+  addProduct,
+  editProduct,
+  getProducts,
+  updateEmail,
+  updateProfile,
+} from "../actions";
 
-function* rootSaga() {
+import { authSaga } from "./authSaga";
+import { productSaga } from "./productSaga";
+import { profileSaga } from "./profileSaga";
+
+export function* rootSaga(): SagaIterator {
   yield takeLatest((action: AnyAction) => {
     return [
       signIn,
@@ -56,5 +64,3 @@ function* rootSaga() {
     profileSaga
   );
 }
-
-export default rootSaga;

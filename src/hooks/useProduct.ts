@@ -1,15 +1,21 @@
-import { useDidMount } from "hooks";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import firebase from "services/firebase";
 
-const useProduct = (id) => {
+import { AppState } from "../redux/reducers";
+import { Product } from "../redux/reducers/productReducer";
+import firebase from "../services/firebase";
+
+import { useDidMount } from "./useDidMount";
+
+export const useProduct = (id: string) => {
   // get and check if product exists in store
-  const storeProduct = useSelector((state) => state.products.items.find((item) => item.id === id));
+  const storeProduct = useSelector<AppState, Product | undefined>((state) =>
+    state.products.items.find((item) => item.id === id)
+  );
 
   const [product, setProduct] = useState(storeProduct);
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const didMount = useDidMount(true);
 
   useEffect(() => {
@@ -17,10 +23,10 @@ const useProduct = (id) => {
       try {
         if (!product || product.id !== id) {
           setLoading(true);
-          const doc = await firebase.getSingleProduct(id);
+          const doc: { exists: boolean; ref: { id: string }; data: () => any } = await firebase.getSingleProduct(id);
 
           if (doc.exists) {
-            const data = { ...doc.data(), id: doc.ref.id };
+            const data: Product = { ...doc.data(), id: doc.ref.id };
 
             if (didMount) {
               setProduct(data);
@@ -30,16 +36,14 @@ const useProduct = (id) => {
             setError("Product not found.");
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         if (didMount) {
           setLoading(false);
           setError(err?.message || "Something went wrong.");
         }
       }
     })();
-  }, [id]);
+  }, [didMount, id, product]);
 
   return { product, isLoading, error };
 };
-
-export default useProduct;

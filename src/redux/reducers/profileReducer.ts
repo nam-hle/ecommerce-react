@@ -1,5 +1,6 @@
 import { AnyAction } from "typescript-fsa";
-import { clearProfile, setProfile, updateProfile } from "../actions/profileActions";
+
+import { clearProfile, setProfile, updateProfile } from "../actions";
 
 // const initState = {
 //   fullname: 'Pedro Juan',

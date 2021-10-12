@@ -1,5 +1,6 @@
 import { AnyAction } from "typescript-fsa";
-import { AuthStatus, setAuthenticating, setAuthStatus, setLoading, setRequestStatus } from "../actions/miscActions";
+
+import { AuthStatus, setAuthenticating, setAuthStatus, setLoading, setRequestStatus } from "../actions";
 
 export interface MiscState {
   loading: boolean;

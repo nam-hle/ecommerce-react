@@ -1,6 +1,7 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDocumentTitle, useScrollTop } from "hooks";
 import React, { lazy, Suspense } from "react";
+
 import UserTab from "../components/UserTab";
 
 const UserAccountTab = lazy(() => import("../components/UserAccountTab"));

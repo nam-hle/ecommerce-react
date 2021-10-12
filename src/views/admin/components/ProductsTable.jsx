@@ -1,6 +1,7 @@
 /* eslint-disable react/forbid-prop-types */
 import PropType from "prop-types";
 import React from "react";
+
 import { ProductItem } from ".";
 
 const ProductsTable = ({ filteredProducts }) => (

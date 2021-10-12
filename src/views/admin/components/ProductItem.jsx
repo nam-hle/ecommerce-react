@@ -1,4 +1,5 @@
 import { EDIT_PRODUCT } from "constants/routes";
+
 import { ImageLoader } from "components/common";
 import { displayActionMessage, displayDate, displayMoney } from "helpers/utils";
 import PropType from "prop-types";

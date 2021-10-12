@@ -1,5 +1,6 @@
 import { AnyAction } from "typescript-fsa";
-import { Payment, setPaymentDetails, setShippingDetails, Shipping } from "../actions/checkoutActions";
+
+import { Payment, setPaymentDetails, setShippingDetails, Shipping } from "../actions";
 
 export interface CheckoutState {
   shipping: Shipping;

@@ -2,13 +2,12 @@ import * as React from "react";
 import { render } from "react-dom";
 import WebFont from "webfontloader";
 
+import App from "./App";
 import { Preloader } from "./components/common";
 import "normalize.css/normalize.css";
 import "react-phone-input-2/lib/style.css";
-import { onAuthStateChanged } from "./redux/actions/authActions";
-import { createAppStore } from "./redux/store/store";
+import { onAuthStateChanged, createAppStore } from "./redux";
 import "../styles/style.scss";
-import App from "./App";
 import firebase from "./services/firebase";
 
 WebFont.load({

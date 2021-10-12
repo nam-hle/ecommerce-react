@@ -1,18 +1,22 @@
-/* eslint-disable max-len */
-import { CHECKOUT_STEP_1 } from "constants/routes";
-import { BasketItem, BasketToggle } from "components/basket";
-import { Boundary, Modal } from "components/common";
-import firebase from "firebase/firebase";
-import { calculateTotal, displayMoney } from "helpers/utils";
-import { useDidMount, useModal } from "hooks";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import { clearBasket } from "redux/actions/basketActions";
 
-const Basket = () => {
+import { CHECKOUT_STEP_1 } from "../../constants";
+
+import { calculateTotal, displayMoney } from "../../helpers";
+import { useDidMount, useModal } from "../../hooks";
+import { AppState, AuthState, BasketState, clearBasket } from "../../redux";
+import firebase from "../../services/firebase";
+import { Boundary, Modal } from "../common";
+
+import { BasketItem } from "./BasketItem";
+
+import { BasketToggle } from "./BasketToggle";
+
+export const Basket: React.FC = () => {
   const { isOpenModal, onOpenModal, onCloseModal } = useModal();
-  const { basket, user } = useSelector((state) => ({
+  const { basket, user } = useSelector<AppState, { user: AuthState; basket: BasketState }>((state) => ({
     basket: state.basket,
     user: state.auth,
   }));
@@ -32,7 +36,7 @@ const Basket = () => {
           console.log(e);
         });
     }
-  }, [basket.length]);
+  }, [basket, basket.length, didMount]);
 
   const onCheckOut = () => {
     if (basket.length !== 0 && user) {
@@ -51,7 +55,7 @@ const Basket = () => {
 
   const onClearBasket = () => {
     if (basket.length !== 0) {
-      dispatch(clearBasket());
+      dispatch(clearBasket({}));
     }
   };
 
@@ -101,13 +105,7 @@ const Basket = () => {
             </div>
           )}
           {basket.map((product, i) => (
-            <BasketItem
-              // eslint-disable-next-line react/no-array-index-key
-              key={`${product.id}_${i}`}
-              product={product}
-              basket={basket}
-              dispatch={dispatch}
-            />
+            <BasketItem key={`${product.id}_${i}`} product={product} />
           ))}
         </div>
         <div className="basket-checkout">
@@ -129,5 +127,3 @@ const Basket = () => {
     </Boundary>
   );
 };
-
-export default Basket;

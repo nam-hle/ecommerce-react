@@ -1,16 +1,28 @@
+import firebase from "firebase";
 import { AnyAction } from "typescript-fsa";
 
-import {
-  addProduct,
-  clearSearchState,
-  editProduct,
-  getProducts,
-  removeProduct,
-  searchProduct,
-} from "../actions/productActions";
+import { addProduct, clearSearchState, editProduct, getProducts, removeProduct, searchProduct } from "../actions";
 
-export interface Product {
+import DocumentData = firebase.firestore.DocumentData;
+
+export interface Product extends DocumentData {
   id: string;
+  price: number;
+  keywords: string[];
+  description: string;
+  brand: string;
+  name: string;
+  quantity: number;
+  maxQuantity: number;
+  selectedSize: string;
+  selectedColor: string;
+  imageCollection: { id: number; url: string; file?: string }[];
+  sizes: number[];
+  image: string;
+  imageUrl: string;
+  isFeatured: boolean;
+  isRecommended: boolean;
+  availableColors: string[];
 }
 
 export interface SearchedProduct {

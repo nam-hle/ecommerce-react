@@ -1,4 +1,5 @@
 import { CHECKOUT_STEP_2 } from "constants/routes";
+
 import { ArrowLeftOutlined, CheckOutlined } from "@ant-design/icons";
 import { useFormikContext } from "formik";
 import { displayMoney } from "helpers/utils";

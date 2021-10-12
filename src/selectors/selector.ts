@@ -1,6 +1,7 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable no-else-return */
-export const selectFilter = (products, filter) => {
+import { Filter } from "../redux/reducers/filterReducer";
+import { Product } from "../redux/reducers/productReducer";
+
+export const selectFilter = (products: Product[], filter: Filter): Product[] => {
   if (!products || products.length === 0) {
     return [];
   }
@@ -31,7 +32,7 @@ export const selectFilter = (products, filter) => {
 };
 
 // Select product with highest price
-export const selectMax = (products) => {
+export const selectMax = (products: Product[]): number => {
   if (!products || products.length === 0) {
     return 0;
   }
@@ -48,7 +49,7 @@ export const selectMax = (products) => {
 };
 
 // Select product with lowest price
-export const selectMin = (products) => {
+export const selectMin = (products: Product[]): number => {
   if (!products || products.length === 0) {
     return 0;
   }

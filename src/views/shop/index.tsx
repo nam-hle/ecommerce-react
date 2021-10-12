@@ -1,15 +1,25 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { AppliedFilters, ProductGrid, ProductList } from "components/product";
-import { useDocumentTitle, useScrollTop } from "hooks";
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
-import { selectFilter } from "selectors/selector";
+
+import { AppliedFilters, ProductGrid, ProductList } from "../../components/product";
+import { useDocumentTitle, useScrollTop } from "../../hooks";
+import { AppState } from "../../redux/reducers";
+import { MiscState } from "../../redux/reducers/miscReducer";
+import { Product, ProductState } from "../../redux/reducers/productReducer";
+import { selectFilter } from "../../selectors/selector";
+
+type ShopSelectorResult = {
+  filteredProducts: Product[];
+  products: ProductState;
+  requestStatus: MiscState["requestStatus"];
+  isLoading: MiscState["loading"];
+};
 
 const Shop = () => {
   useDocumentTitle("Shop | Salinaka");
   useScrollTop();
 
-  const store = useSelector(
+  const store = useSelector<AppState, ShopSelectorResult>(
     (state) => ({
       filteredProducts: selectFilter(state.products.items, state.filter),
       products: state.products,
