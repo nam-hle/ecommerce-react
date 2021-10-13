@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 
 import { ImageLoader } from "../../../components/common";
-import { EDIT_PRODUCT } from "../../../constants/routes";
+import { EDIT_PRODUCT } from "../../../constants";
 import { displayActionMessage, displayDate, displayMoney } from "../../../helpers";
 import { removeProduct } from "../../../redux";
 

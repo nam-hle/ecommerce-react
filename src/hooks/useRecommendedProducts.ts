@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { Product } from "../redux/reducers/productReducer";
+import { Product } from "../redux";
 import firebase from "../services/firebase";
 
 import { useDidMount } from "./useDidMount";

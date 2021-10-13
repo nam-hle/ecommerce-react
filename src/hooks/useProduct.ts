@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { AppState } from "../redux/reducers";
-import { Product } from "../redux/reducers/productReducer";
+import { Product, AppState } from "../redux";
 import firebase from "../services/firebase";
 
 import { useDidMount } from "./useDidMount";

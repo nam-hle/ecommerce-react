@@ -10,7 +10,7 @@ import * as Yup from "yup";
 
 import { SocialLogin } from "../../../components/common";
 import { CustomInput } from "../../../components/formik";
-import { SIGNIN } from "../../../constants/routes";
+import { SIGNIN } from "../../../constants";
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
 import { signUp, setAuthenticating, setAuthStatus } from "../../../redux";
 
@@ -38,7 +38,7 @@ const SignUp = ({ history }) => {
       dispatch(setAuthStatus(null));
       dispatch(setAuthenticating(false));
     },
-    []
+    [dispatch]
   );
 
   const onClickSignIn = () => history.push(SIGNIN);

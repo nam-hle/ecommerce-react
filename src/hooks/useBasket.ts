@@ -1,10 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { displayActionMessage } from "../helpers/utils";
-import { addToBasket as dispatchAddToBasket, removeFromBasket } from "../redux/actions/basketActions";
-import { AppState } from "../redux/reducers";
-import { BasketState } from "../redux/reducers/basketReducer";
-import { Product } from "../redux/reducers/productReducer";
+import { displayActionMessage } from "../helpers";
+import { AppState, BasketState, Product, addToBasket as dispatchAddToBasket, removeFromBasket } from "../redux";
 
 export const useBasket = () => {
   const basket = useSelector<AppState, BasketState>((state) => state.basket);

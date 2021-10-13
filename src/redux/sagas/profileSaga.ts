@@ -24,6 +24,7 @@ export function* profileSaga(action: AnyAction): SagaIterator {
     } catch (e) {
       console.log((e as ProfileError).message);
     }
+    return;
   }
 
   if (updateProfile.started.match(action)) {
@@ -68,6 +69,7 @@ export function* profileSaga(action: AnyAction): SagaIterator {
         yield call(displayActionMessage, `:( Failed to update profile. ${(e as ProfileError).message ?? ""}`, "error");
       }
     }
+    return;
   }
 
   throw new Error("Unexpected action type.");

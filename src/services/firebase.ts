@@ -4,7 +4,7 @@ import "firebase/firestore";
 import "firebase/storage";
 import firebase from "firebase/app";
 
-import { BasketState, Profile, Product } from "../redux/reducers";
+import { BasketState, Profile, Product } from "../redux";
 
 import firebaseConfig from "./config";
 

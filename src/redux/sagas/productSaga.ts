@@ -43,19 +43,19 @@ export function* productSaga(action: AnyAction): SagaIterator {
     try {
       yield call(initRequest);
       const state = yield select();
-      const result: { items: Product[]; lastKey: string; total: number } = yield call(
+      const result: { items?: Product[]; lastKey: string; total: number } = yield call(
         firebase.getProducts,
         action.payload
       );
 
-      if (result.items.length === 0) {
+      if (result.items?.length === 0) {
         handleError(new Error("No items found."));
       } else {
         yield put(
           getProducts.done({
             params: action.payload,
             result: {
-              items: result.items,
+              items: result.items ?? [],
               lastRefKey: result.lastKey ? result.lastKey : state.products.lastRefKey,
               total: result.total ? result.total : state.products.total,
             },
@@ -68,6 +68,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
       console.log(e);
       yield call(handleError, e as ProductError);
     }
+    return;
   }
 
   if (addProduct.started.match(action)) {
@@ -110,6 +111,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
       yield call(handleError, e as ProductError);
       yield call(handleAction, undefined, `Item failed to add: ${(e as ProductError)?.message}`, "error");
     }
+    return;
   }
 
   if (editProduct.started.match(action)) {
@@ -174,6 +176,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
       yield call(handleError, e as ProductError);
       yield call(handleAction, undefined, `Item failed to edit: ${(e as ProductError).message}`, "error");
     }
+    return;
   }
 
   if (removeProduct.started.match(action)) {
@@ -187,6 +190,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
       yield call(handleError, e as ProductError);
       yield call(handleAction, undefined, `Item failed to remove: ${(e as ProductError).message}`, "error");
     }
+    return;
   }
 
   if (searchProduct.started.match(action)) {
@@ -221,6 +225,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
     } catch (e) {
       yield call(handleError, e as ProductError);
     }
+    return;
   }
 
   throw new Error(`Unexpected action type ${action.type}`);

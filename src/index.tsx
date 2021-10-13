@@ -23,6 +23,7 @@ const root = document.getElementById("app");
 render(<Preloader />, root);
 
 firebase.auth.onAuthStateChanged((user) => {
+  console.log({ user });
   if (user) {
     store.dispatch(onAuthStateChanged.done({ params: {}, result: user }));
   } else {

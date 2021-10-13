@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import bannerImg from "../../../static/banner-girl.png";
 import { MessageDisplay } from "../../components/common";
-import { ProductShowcaseGrid } from "../../components/product";
+import { ProductShowcase } from "../../components/product";
 import { FEATURED_PRODUCTS, RECOMMENDED_PRODUCTS, SHOP } from "../../constants";
 import { useDocumentTitle, useFeaturedProducts, useRecommendedProducts, useScrollTop } from "../../hooks";
 
@@ -59,7 +59,7 @@ const Home = () => {
           {errorFeatured && !isLoadingFeatured ? (
             <MessageDisplay message={errorFeatured} action={fetchFeaturedProducts} buttonLabel="Try Again" />
           ) : (
-            <ProductShowcaseGrid products={featuredProducts} skeletonCount={6} />
+            <ProductShowcase products={featuredProducts} skeletonCount={6} />
           )}
         </div>
         <div className="display">
@@ -70,7 +70,7 @@ const Home = () => {
           {errorRecommended && !isLoadingRecommended ? (
             <MessageDisplay message={errorRecommended} action={fetchRecommendedProducts} buttonLabel="Try Again" />
           ) : (
-            <ProductShowcaseGrid products={recommendedProducts} skeletonCount={6} />
+            <ProductShowcase products={recommendedProducts} skeletonCount={6} />
           )}
         </div>
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 import bannerImg from "../../../static/banner-girl-1.png";
 import { MessageDisplay } from "../../components/common";
-import { ProductShowcaseGrid } from "../../components/product";
+import { ProductShowcase } from "../../components/product";
 import { useDocumentTitle, useRecommendedProducts, useScrollTop } from "../../hooks";
 
 const RecommendedProducts = () => {
@@ -27,7 +27,7 @@ const RecommendedProducts = () => {
             {error && !isLoading ? (
               <MessageDisplay message={error} action={fetchRecommendedProducts} buttonLabel="Try Again" />
             ) : (
-              <ProductShowcaseGrid products={recommendedProducts} skeletonCount={6} />
+              <ProductShowcase products={recommendedProducts} skeletonCount={6} />
             )}
           </div>
         </div>

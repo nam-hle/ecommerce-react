@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import { ImageLoader } from "../../../components/common";
-import { ACCOUNT_EDIT } from "../../../constants/routes";
+import { ACCOUNT_EDIT } from "../../../constants";
 import { displayDate } from "../../../helpers";
 
 const UserProfile = (props) => {

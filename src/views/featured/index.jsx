@@ -2,7 +2,7 @@ import React from "react";
 
 import bannerImg from "../../../static/banner-guy.png";
 import { MessageDisplay } from "../../components/common";
-import { ProductShowcaseGrid } from "../../components/product";
+import { ProductShowcase } from "../../components/product";
 import { useDocumentTitle, useFeaturedProducts, useScrollTop } from "../../hooks";
 
 const FeaturedProducts = () => {
@@ -27,7 +27,7 @@ const FeaturedProducts = () => {
             {error && !isLoading ? (
               <MessageDisplay message={error} action={fetchFeaturedProducts} buttonLabel="Try Again" />
             ) : (
-              <ProductShowcaseGrid products={featuredProducts} skeletonCount={6} />
+              <ProductShowcase products={featuredProducts} skeletonCount={6} />
             )}
           </div>
         </div>

@@ -6,7 +6,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 
-import { ACCOUNT } from "../../../constants/routes";
+import { ACCOUNT } from "../../../constants";
 
 import { signOut } from "../../../redux";
 

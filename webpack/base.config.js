@@ -6,7 +6,7 @@ const resolve = (dir) => {
 };
 
 module.exports = {
-  entry: ["@babel/polyfill", resolve("lib/index.js")],
+  entry: ["@babel/polyfill", resolve("lib/index.jsx")],
   output: {
     path: resolve("dist"),
     filename: "js/[name].bundle.js",
@@ -14,6 +14,13 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
@@ -73,6 +80,13 @@ module.exports = {
         ],
       },
     ],
+  },
+  resolve: {
+    modules: [resolve("lib"), "node_modules"],
+    extensions: ["*", ".js", ".jsx"],
+    alias: {
+      redux: path.resolve(resolve("node_modules"), "redux"),
+    },
   },
   plugins: [
     new MiniCssExtractPlugin({

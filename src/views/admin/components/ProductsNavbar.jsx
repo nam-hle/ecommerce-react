@@ -5,7 +5,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 import { FiltersToggle, SearchBar } from "../../../components/common";
-import { ADD_PRODUCT } from "../../../constants/routes";
+import { ADD_PRODUCT } from "../../../constants";
 
 const ProductsNavbar = (props) => {
   const { productsCount, totalProductsCount } = props;

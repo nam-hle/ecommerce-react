@@ -68,6 +68,7 @@ function* initRequest() {
 }
 
 export function* authSaga(action: AnyAction): SagaIterator {
+  console.log("@@@@@", action);
   if (signIn.match(action)) {
     try {
       yield call(initRequest);
@@ -75,6 +76,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
     } catch (e: unknown) {
       yield call(handleError, e as AuthError);
     }
+    return;
   }
 
   if (signInWithGoogle.match(action)) {
@@ -84,6 +86,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
     } catch (e) {
       yield call(handleError, e as AuthError);
     }
+    return;
   }
 
   if (signInWithFacebook.match(action)) {
@@ -93,6 +96,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
     } catch (e) {
       yield call(handleError, e as AuthError);
     }
+    return;
   }
 
   if (signInWithGithub.match(action)) {
@@ -102,6 +106,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
     } catch (e) {
       yield call(handleError, e as AuthError);
     }
+    return;
   }
 
   if (signUp.match(action)) {
@@ -131,6 +136,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
     } catch (e) {
       yield call(handleError, e as AuthError);
     }
+    return;
   }
 
   if (signOut.started.match(action)) {
@@ -147,6 +153,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
     } catch (e) {
       console.log(e);
     }
+    return;
   }
 
   if (resetPassword.match(action)) {
@@ -165,6 +172,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
     } catch (e) {
       yield call(handleError, { code: "auth/reset-password-error" });
     }
+    return;
   }
 
   if (onAuthStateChanged.done.match(action)) {
@@ -217,11 +225,16 @@ export function* authSaga(action: AnyAction): SagaIterator {
       })
     );
     yield put(setAuthenticating(false));
+    return;
   }
 
   if (onAuthStateChanged.failed.match(action)) {
-    yield put(clearProfile);
-    yield put(signOut.done);
+    console.log("here");
+    console.log(clearProfile({}));
+    console.log(signOut.done({ params: {}, result: {} }));
+    yield put(clearProfile({}));
+    yield put(signOut.done({ params: {}, result: {} }));
+    return;
   }
 
   if (setAuthPersistence.match(action)) {
@@ -230,7 +243,10 @@ export function* authSaga(action: AnyAction): SagaIterator {
     } catch (e) {
       console.log(e);
     }
+    return;
   }
 
-  throw new Error("Unexpected Action Type.");
+  console.log("===>", action);
+
+  throw new Error("AuthSaga.ts/Unexpected Action Type.");
 }

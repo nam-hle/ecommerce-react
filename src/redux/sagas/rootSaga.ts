@@ -44,18 +44,9 @@ export function* rootSaga(): SagaIterator {
 
   yield takeLatest(
     (action: AnyAction) =>
-      [
-        addProduct.started,
-        addProduct.done,
-        searchProduct.started,
-        searchProduct.done,
-        removeProduct.started,
-        removeProduct.done,
-        editProduct.started,
-        editProduct.done,
-        getProducts.started,
-        getProducts.done,
-      ].some((a) => a.match(action)),
+      [addProduct.started, searchProduct.started, removeProduct.started, editProduct.started, getProducts.started].some(
+        (a) => a.match(action)
+      ),
     productSaga
   );
 

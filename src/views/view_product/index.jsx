@@ -6,7 +6,7 @@ import Select from "react-select";
 
 import { ColorChooser, ImageLoader, MessageDisplay } from "../../components/common";
 import { ProductShowcase } from "../../components/product";
-import { RECOMMENDED_PRODUCTS, SHOP } from "../../constants/routes";
+import { RECOMMENDED_PRODUCTS, SHOP } from "../../constants";
 import { displayMoney } from "../../helpers";
 import { useBasket, useDocumentTitle, useProduct, useRecommendedProducts, useScrollTop } from "../../hooks";
 
