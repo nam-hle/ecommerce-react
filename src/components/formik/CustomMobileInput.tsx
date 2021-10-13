@@ -56,4 +56,6 @@ type CustomMobileInputProps = {
   label?: string;
   placeholder?: string;
   defaultValue: { value: string };
+  name?: string;
+  disabled?: boolean;
 };

@@ -2,21 +2,21 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 import React, { lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
-import { addProduct } from "../../../redux";
+import { addProduct, AppState, Product } from "../../../redux";
 
 const ProductForm = lazy(() => import("../components/ProductForm"));
 
-export const AddProduct: React.FC<AddProductProps> = () => {
+const _AddProduct: React.FC<AddProductProps> = () => {
   useScrollTop();
   useDocumentTitle("Add New Product | Salinaka");
-  const isLoading = useSelector((state) => state.app.loading);
+  const isLoading = useSelector<AppState, boolean>((state) => state.app.loading);
   const dispatch = useDispatch();
 
-  export const onSubmit: React.FC<onSubmitProps> = (product) => {
-    dispatch(addProduct(product));
+  const onSubmit = (product: Product) => {
+    dispatch(addProduct.started(product));
   };
 
   return (
@@ -53,4 +53,6 @@ export const AddProduct: React.FC<AddProductProps> = () => {
   );
 };
 
-export default withRouter(AddProduct);
+type AddProductProps = RouteComponentProps;
+
+export const AddProduct = withRouter(_AddProduct);

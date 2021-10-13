@@ -81,4 +81,6 @@ type CustomCreatableSelectProps = {
   isMulti?: boolean;
   type?: string;
   iid?: string;
+  name?: string;
+  disabled?: boolean;
 };

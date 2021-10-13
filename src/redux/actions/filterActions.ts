@@ -1,6 +1,6 @@
 import actionCreatorFactory from "typescript-fsa";
 
-import { Filter } from "../reducers/filterReducer";
+import { Filter } from "../reducers";
 
 const factory = actionCreatorFactory("FILTER");
 

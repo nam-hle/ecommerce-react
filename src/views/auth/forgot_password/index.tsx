@@ -5,18 +5,21 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useDidMount, useDocumentTitle, useScrollTop } from "../../../hooks";
 
-import { resetPassword } from "../../../redux";
+import { AppState, MiscState, resetPassword } from "../../../redux";
 
-export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
-  const { authStatus, isAuthenticating } = useSelector((state) => ({
+export const ForgotPassword: React.FC = () => {
+  const { authStatus, isAuthenticating } = useSelector<
+    AppState,
+    { isAuthenticating: boolean; authStatus: MiscState["authStatus"] }
+  >((state) => ({
     isAuthenticating: state.app.isAuthenticating,
     authStatus: state.app.authStatus,
   }));
   const dispatch = useDispatch();
   const didMount = useDidMount();
-  const [forgotPWStatus, setForgotPWStatus] = useState({});
+  const [forgotPWStatus, setForgotPWStatus] = useState<MiscState["authStatus"]>(null);
   const [isSendingForgotPWRequest, setIsSending] = useState(false);
-  const [field, setField] = useState({});
+  const [field, setField] = useState<{ email?: string; error?: string }>({});
 
   useScrollTop();
   useDocumentTitle("Forgot Password | Salinaka");
@@ -27,11 +30,11 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
     }
   }, [authStatus, didMount, isAuthenticating]);
 
-  export const onEmailChange: React.FC<onEmailChangeProps> = (value, error) => {
+  const onEmailChange = (value: string, error: string) => {
     setField({ email: value, error });
   };
 
-  export const onSubmitEmail: React.FC<onSubmitEmailProps> = () => {
+  const onSubmitEmail = () => {
     if (!!field.email && !field.error) {
       dispatch(resetPassword(field.email));
     }
@@ -39,8 +42,10 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 
   return (
     <div className="forgot_password">
-      {forgotPWStatus.message && (
-        <h5 className={`text-center ${authStatus?.success ? "toast-success" : "toast-error"}`}>{authStatus.message}</h5>
+      {forgotPWStatus?.message && (
+        <h5 className={`text-center ${authStatus?.success ? "toast-success" : "toast-error"}`}>
+          {authStatus?.message}
+        </h5>
       )}
       <h3>Forgot Your Password?</h3>
       <p>Enter your email address and we will send you a password reset email.</p>
@@ -51,6 +56,7 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
         className="input-form"
         label="* Email"
         maxLength={40}
+        // @ts-ignore
         onChange={onEmailChange}
         placeholder="Enter your email"
         readOnly={isSendingForgotPWRequest || authStatus?.success}
@@ -71,5 +77,3 @@ export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
     </div>
   );
 };
-
-export default ForgotPassword;

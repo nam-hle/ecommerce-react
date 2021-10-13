@@ -1,28 +1,28 @@
 import firebase from "firebase";
 import { AnyAction } from "typescript-fsa";
 
-import { addProduct, clearSearchState, editProduct, getProducts, removeProduct, searchProduct } from "../actions";
+import { ProductForm } from "../../views/admin/components/ProductForm";
+
+import {
+  addProduct,
+  clearSearchState,
+  editProduct,
+  getProducts,
+  ImageCollection,
+  removeProduct,
+  searchProduct,
+} from "../actions";
 
 import DocumentData = firebase.firestore.DocumentData;
 
-export interface Product extends DocumentData {
+export interface Product extends DocumentData, ProductForm {
   id: string;
-  price: number;
-  keywords?: string[];
-  description: string;
-  brand: string;
-  name: string;
-  quantity: number;
-  maxQuantity: number;
-  selectedSize: number;
-  selectedColor: string;
-  imageCollection: { id: number; url: string; file?: string }[];
-  sizes: number[];
   image: string;
+  imageCollection: ImageCollection;
   imageUrl: string;
-  isFeatured: boolean;
-  isRecommended: boolean;
-  availableColors: string[];
+  quantity: number;
+  selectedColor: string;
+  selectedSize: number;
 }
 
 export interface SearchedProduct {

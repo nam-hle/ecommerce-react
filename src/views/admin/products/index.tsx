@@ -1,20 +1,29 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { Boundary } from "../../../components/common";
 import { ProductAppliedFilters, ProductList } from "../../../components/product";
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
-import { selectFilter } from "../../../redux";
+import { AppState, MiscState, Product, ProductState, selectFilter } from "../../../redux";
 
-import { ProductsNavbar } from "../components";
-import ProductsTable from "../components/ProductsTable";
+import { ProductsNavbar, ProductsTable } from "../components";
 
-export const Products: React.FC<ProductsProps> = () => {
+type ProductsProps = RouteComponentProps;
+
+const _Products: React.FC<ProductsProps> = () => {
   useDocumentTitle("Product List | Salinaka Admin");
   useScrollTop();
 
-  const store = useSelector((state) => ({
+  const store = useSelector<
+    AppState,
+    {
+      filteredProducts: Product[];
+      requestStatus: MiscState["requestStatus"];
+      isLoading: boolean;
+      products: ProductState;
+    }
+  >((state) => ({
     filteredProducts: selectFilter(state.products.items, state.filter),
     requestStatus: state.app.requestStatus,
     isLoading: state.app.loading,
@@ -26,7 +35,7 @@ export const Products: React.FC<ProductsProps> = () => {
       <ProductsNavbar productsCount={store.products.items.length} totalProductsCount={store.products.total} />
       <div className="product-admin-items">
         <ProductList {...store}>
-          <ProductAppliedFilters filter={store.filter} />
+          <ProductAppliedFilters filteredProductsCount={store.filteredProducts.length} />
           <ProductsTable filteredProducts={store.filteredProducts} />
         </ProductList>
       </div>
@@ -34,4 +43,4 @@ export const Products: React.FC<ProductsProps> = () => {
   );
 };
 
-export default withRouter(Products);
+export const Products = withRouter(_Products);

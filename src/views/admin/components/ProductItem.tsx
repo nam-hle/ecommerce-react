@@ -1,35 +1,34 @@
-import PropType from "prop-types";
 import React, { useRef } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useDispatch } from "react-redux";
-import { useHistory, withRouter } from "react-router-dom";
+import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
 
 import { ImageLoader } from "../../../components/common";
 import { EDIT_PRODUCT } from "../../../constants";
 import { displayActionMessage, displayDate, displayMoney } from "../../../helpers";
-import { removeProduct } from "../../../redux";
+import { Product, removeProduct } from "../../../redux";
 
-export const ProductItem : React.FC<ProductItemProps> = ({ product }) => {
+const _ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const productRef = useRef(null);
+  const productRef = useRef<HTMLDivElement | null>(null);
 
-  export const onClickEdit : React.FC<onClickEditProps> = () => {
+  const onClickEdit = () => {
     history.push(`${EDIT_PRODUCT}/${product.id}`);
   };
 
-  export const onDeleteProduct : React.FC<onDeleteProductProps> = () => {
-    productRef.current.classList.toggle("item-active");
+  const onDeleteProduct = () => {
+    productRef.current?.classList.toggle("item-active");
   };
 
-  export const onConfirmDelete : React.FC<onConfirmDeleteProps> = () => {
-    dispatch(removeProduct(product.id));
+  const onConfirmDelete = () => {
+    dispatch(removeProduct.started(product.id));
     displayActionMessage("Item successfully deleted");
-    productRef.current.classList.remove("item-active");
+    productRef.current?.classList.remove("item-active");
   };
 
-  export const onCancelDelete : React.FC<onCancelDeleteProps> = () => {
-    productRef.current.classList.remove("item-active");
+  const onCancelDelete = () => {
+    productRef.current?.classList.remove("item-active");
   };
 
   return (
@@ -85,24 +84,8 @@ export const ProductItem : React.FC<ProductItemProps> = ({ product }) => {
   );
 };
 
-type ProductItemProps = {
-  product: PropType.shape({
-    id?: string,
-    name?: string,
-    brand?: string,
-    price?: number,
-    maxQuantity?: number,
-    description?: string,
-    keywords: PropType.arrayOf(PropType.string),
-    imageCollection: PropType.arrayOf(PropType.object),
-    sizes: PropType.arrayOf(PropType.string),
-    image?: string,
-    imageUrl?: string,
-    isFeatured?: bool,
-    isRecommended?: bool,
-    dateAdded?: number,
-    availableColors: PropType.arrayOf(PropType.string),
-  }).isRequired,
+type ProductItemProps = RouteComponentProps & {
+  product: Product;
 };
 
-export default withRouter(ProductItem);
+export const ProductItem = withRouter(_ProductItem);

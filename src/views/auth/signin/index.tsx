@@ -2,7 +2,6 @@ import { ArrowRightOutlined, LoadingOutlined } from "@ant-design/icons";
 
 import { Field, Form, Formik } from "formik";
 
-import PropType from "prop-types";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -12,15 +11,18 @@ import { SocialLogin } from "../../../components/common";
 import { CustomInput } from "../../../components/formik";
 import { FORGOT_PASSWORD, SIGNUP } from "../../../constants";
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
-import { signIn, setAuthenticating, setAuthStatus } from "../../../redux";
+import { signIn, setAuthenticating, setAuthStatus, AppState, AuthStatus, MiscState } from "../../../redux";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Email is not valid.").required("Email is required."),
   password: Yup.string().required("Password is required."),
 });
 
-export const SignIn : React.FC<SignInProps> = ({ history }) => {
-  const { authStatus, isAuthenticating } = useSelector((state) => ({
+export const SignIn: React.FC<SignInProps> = ({ history }) => {
+  const { authStatus, isAuthenticating } = useSelector<
+    AppState,
+    { authStatus: AuthStatus; isAuthenticating: MiscState["isAuthenticating"] }
+  >((state) => ({
     authStatus: state.app.authStatus,
     isAuthenticating: state.app.isAuthenticating,
   }));
@@ -38,13 +40,13 @@ export const SignIn : React.FC<SignInProps> = ({ history }) => {
     [dispatch]
   );
 
-  export const onSignUp : React.FC<onSignUpProps> = () => history.push(SIGNUP);
+  const onSignUp = () => history.push(SIGNUP);
 
-  export const onSubmitForm : React.FC<onSubmitFormProps> = (form) => {
-    dispatch(signIn(form.email, form.password));
+  const onSubmitForm = (form: { email: string; password: string }) => {
+    dispatch(signIn.started(form));
   };
 
-  export const onClickLink : React.FC<onClickLinkProps> = (e) => {
+  const onClickLink = (e: any) => {
     if (isAuthenticating) {
       e.preventDefault();
     }
@@ -138,9 +140,9 @@ export const SignIn : React.FC<SignInProps> = ({ history }) => {
 };
 
 type SignInProps = {
-  history: PropType.shape({
-    push?: func,
-  }).isRequired,
+  history: {
+    push: (path: string) => void;
+  };
 };
 
 export default SignIn;

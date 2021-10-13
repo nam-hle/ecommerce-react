@@ -3,10 +3,15 @@ import actionCreatorFactory from "typescript-fsa";
 
 const factory = actionCreatorFactory("AUTH");
 
-export const signIn = factory<SignInPayload>("SIGN_IN");
+export const signIn = factory.async<SignInPayload, SignInSuccessPayload>("SIGN_IN");
 export interface SignInPayload {
   email: string;
   password: string;
+}
+export interface SignInSuccessPayload {
+  id: string;
+  role: string;
+  provider: string | undefined;
 }
 
 export const signInWithGoogle = factory<SignInWithGooglePayload>("SIGN_IN_WITH_GOOGLE");
@@ -23,13 +28,6 @@ export interface SignUpPayload {
   email: string;
   password: string;
   fullname: string;
-}
-
-export const signInSuccess = factory<SignInSuccessPayload>("SIGN_IN_SUCCESS");
-export interface SignInSuccessPayload {
-  id: string;
-  role: string;
-  provider: string | undefined;
 }
 
 export const setAuthPersistence = factory<SetAuthPersistencePayload>("SET_AUTH_PERSISTENCE");

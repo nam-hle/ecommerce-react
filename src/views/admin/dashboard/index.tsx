@@ -2,7 +2,7 @@ import React from "react";
 
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
 
-export const Dashboard: React.FC<DashboardProps> = () => {
+export const Dashboard: React.FC = () => {
   useDocumentTitle("Welcome | Admin Dashboard");
   useScrollTop();
 
@@ -12,5 +12,3 @@ export const Dashboard: React.FC<DashboardProps> = () => {
     </div>
   );
 };
-
-export default Dashboard;

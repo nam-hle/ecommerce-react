@@ -1,7 +1,7 @@
 import PropType from "prop-types";
 import React, { useState } from "react";
 
-const UserTab = (props) => {
+export const UserTab = (props) => {
   const { children } = props;
   const [activeTab, setActiveTab] = useState(children[0].props.index || 0);
   const onClickTabItem = (index) => setActiveTab(index);
@@ -37,5 +37,3 @@ const UserTab = (props) => {
 UserTab.propTypes = {
   children: PropType.oneOfType([PropType.arrayOf(PropType.node), PropType.node]).isRequired,
 };
-
-export default UserTab;

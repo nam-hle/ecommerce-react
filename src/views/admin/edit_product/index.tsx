@@ -1,24 +1,22 @@
 import { LoadingOutlined } from "@ant-design/icons";
-
-import PropType from "prop-types";
 import React, { lazy, Suspense } from "react";
 import { useDispatch } from "react-redux";
-import { Redirect, withRouter } from "react-router-dom";
+import { Redirect, RouteComponentProps, withRouter } from "react-router-dom";
 
 import { useDocumentTitle, useProduct, useScrollTop } from "../../../hooks";
-
 import { editProduct } from "../../../redux";
+import { ProductFormSchema } from "../components/ProductForm";
 
 const ProductForm = lazy(() => import("../components/ProductForm"));
 
-export const EditProduct : React.FC<EditProductProps> = ({ match }) => {
+const _EditProduct: React.FC<EditProductProps> = ({ match }) => {
   useDocumentTitle("Edit Product | Salinaka");
   useScrollTop();
-  const { product, error, isLoading } = useProduct(match.params.id);
+  const { product, error, isLoading } = useProduct(match.params.id ?? "");
   const dispatch = useDispatch();
 
-  export const onSubmitForm : React.FC<onSubmitFormProps> = (updates) => {
-    dispatch(editProduct(product.id, updates));
+  const onSubmitForm = (updates: ProductFormSchema) => {
+    dispatch(editProduct.started({ id: product?.id ?? "", updates }));
   };
 
   return (
@@ -41,12 +39,10 @@ export const EditProduct : React.FC<EditProductProps> = ({ match }) => {
   );
 };
 
-type EditProductProps = {
-  match: PropType.shape({
-    params: PropType.shape({
-      id?: string,
-    }),
-  }).isRequired,
+type EditProductProps = RouteComponentProps & {
+  match: {
+    params: { id?: string };
+  };
 };
 
-export default withRouter(EditProduct);
+export const EditProduct = withRouter(_EditProduct);

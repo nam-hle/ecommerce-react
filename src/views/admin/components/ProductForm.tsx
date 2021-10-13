@@ -1,15 +1,14 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import { CheckOutlined, LoadingOutlined } from "@ant-design/icons";
 
 import { Field, FieldArray, Form, Formik } from "formik";
 
-import PropType from "prop-types";
 import React from "react";
 import * as Yup from "yup";
 
 import { ImageLoader } from "../../../components/common";
 import { CustomColorInput, CustomCreatableSelect, CustomInput, CustomTextarea } from "../../../components/formik";
 import { useFileHandler } from "../../../hooks";
+import { ImageCollection } from "../../../redux";
 
 // Default brand names that I used. You can use what you want
 const brandOptions = [
@@ -40,7 +39,20 @@ const FormSchema = Yup.object().shape({
   availableColors: Yup.array().of(Yup.string().required()).min(1, "Please add a default color for this product."),
 });
 
-export const ProductForm : React.FC<ProductFormProps> = ({ product, onSubmit, isLoading }) => {
+export type ProductFormSchema = {
+  availableColors: string[];
+  brand: string;
+  description: string;
+  isFeatured: boolean;
+  isRecommended: boolean;
+  keywords?: string[];
+  maxQuantity: number;
+  name: string;
+  price: number;
+  sizes: number[];
+};
+
+export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isLoading }) => {
   const initFormikValues = {
     name: product?.name || "",
     brand: product?.brand || "",
@@ -59,7 +71,7 @@ export const ProductForm : React.FC<ProductFormProps> = ({ product, onSubmit, is
     imageCollection: product?.imageCollection || [],
   });
 
-  export const onSubmitForm : React.FC<onSubmitFormProps> = (form) => {
+  const onSubmitForm = (form: ProductFormSchema) => {
     if (imageFile.image.file || product.imageUrl) {
       onSubmit({
         ...form,
@@ -144,19 +156,20 @@ export const ProductForm : React.FC<ProductFormProps> = ({ product, onSubmit, is
               <div className="d-flex">
                 <div className="product-form-field">
                   <CustomCreatableSelect
-                    defaultValue={values.keywords.map((key) => ({ value: key, label: key }))}
+                    defaultValue={values.keywords?.map((key) => ({ value: key, label: key })) ?? {}}
                     name="keywords"
                     iid="keywords"
                     isMulti
                     disabled={isLoading}
                     placeholder="Create/Select Keywords"
                     label="* Keywords"
+                    options={[]}
                   />
                 </div>
                 &nbsp;
                 <div className="product-form-field">
                   <CustomCreatableSelect
-                    defaultValue={values.keywords.map((key) => ({ value: key, label: key }))}
+                    defaultValue={values.keywords?.map((key) => ({ value: key, label: key })) ?? {}}
                     name="sizes"
                     iid="sizes"
                     type="number"
@@ -164,10 +177,12 @@ export const ProductForm : React.FC<ProductFormProps> = ({ product, onSubmit, is
                     disabled={isLoading}
                     placeholder="Create/Select Sizes"
                     label="* Sizes (Millimeter)"
+                    options={[]}
                   />
                 </div>
               </div>
               <div className="product-form-field">
+                {/* @ts-ignore */}
                 <FieldArray name="availableColors" disabled={isLoading} component={CustomColorInput} />
               </div>
               <div className="product-form-field">
@@ -278,23 +293,16 @@ export const ProductForm : React.FC<ProductFormProps> = ({ product, onSubmit, is
 };
 
 type ProductFormProps = {
-  product: PropType.shape({
-    name?: string,
-    brand?: string,
-    price?: number,
-    maxQuantity?: number,
-    description?: string,
-    keywords: PropType.arrayOf(PropType.string),
-    imageCollection: PropType.arrayOf(PropType.object),
-    sizes: PropType.arrayOf(PropType.string),
-    image?: string,
-    imageUrl?: string,
-    isFeatured?: bool,
-    isRecommended?: bool,
-    availableColors: PropType.arrayOf(PropType.string),
-  }).isRequired,
-  onSubmit: func,
-  isLoading: bool,
+  product: ProductFormSchema & { imageCollection: ImageCollection; imageUrl: string; image: string };
+  onSubmit: (
+    params: ProductFormSchema & {
+      quantity: number;
+      // of name here instead in firebase functions
+      name_lower: string;
+      dateAdded: number;
+      image: string;
+      imageCollection: ImageCollection[];
+    }
+  ) => void;
+  isLoading: boolean;
 };
-
-export default ProductForm;

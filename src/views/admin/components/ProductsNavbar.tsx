@@ -1,6 +1,5 @@
 import { FilterOutlined, PlusOutlined } from "@ant-design/icons";
 
-import PropType from "prop-types";
 import React from "react";
 import { useHistory } from "react-router-dom";
 
@@ -31,8 +30,8 @@ export const ProductsNavbar: React.FC<ProductsNavbarProps> = (props) => {
 };
 
 type ProductsNavbarProps = {
-  productsCount: number,
-  totalProductsCount: number,
+  productsCount: number;
+  totalProductsCount: number;
 };
 
 export default ProductsNavbar;

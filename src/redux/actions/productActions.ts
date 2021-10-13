@@ -1,5 +1,7 @@
 import actionCreatorFactory from "typescript-fsa";
 
+import { ProductFormSchema } from "../../views/admin/components/ProductForm";
+
 import { Product, SearchedProduct } from "../reducers";
 const factory = actionCreatorFactory("PRODUCT");
 
@@ -16,7 +18,7 @@ export interface AddProductPayload extends Product {
   image: string;
 }
 export type AddProductSuccessPayload = Product;
-export type ImageCollection = { id: number; url: string; file: string }[];
+export type ImageCollection = { id: number; url: string; file?: string }[];
 
 export const searchProduct = factory.async<SearchProductPayload, SearchProductSuccessPayload>("SEARCH_PRODUCT");
 export interface SearchProductPayload {
@@ -34,12 +36,12 @@ export type RemoveProductSuccessPayload = string | undefined;
 export const editProduct = factory.async<EditProductPayload, EditProductSuccessPayload>("EDIT_PRODUCT");
 export interface EditProductPayload {
   id: string;
-  updates: Product & {
-    imageCollection: ImageCollection;
-    image: string;
+  updates: ProductFormSchema & {
+    imageCollection?: ImageCollection;
+    image?: string;
   };
 }
 export interface EditProductSuccessPayload {
   id: string;
-  updates: Product;
+  updates: ProductFormSchema;
 }
