@@ -3,7 +3,7 @@ import React from "react";
 
 import { useScrollTop } from "../../hooks";
 
-const PageNotFound = ({ history }) => {
+export const PageNotFound : React.FC<PageNotFoundProps> = ({ history }) => {
   useScrollTop();
 
   return (
@@ -17,9 +17,9 @@ const PageNotFound = ({ history }) => {
   );
 };
 
-PageNotFound.propTypes = {
+type PageNotFoundProps = {
   history: PropType.shape({
-    goBack: PropType.func,
+    goBack?: func,
   }).isRequired,
 };
 

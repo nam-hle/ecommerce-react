@@ -10,7 +10,7 @@ import { selectFilter } from "../../../redux";
 import { ProductsNavbar } from "../components";
 import ProductsTable from "../components/ProductsTable";
 
-const Products = () => {
+export const Products: React.FC<ProductsProps> = () => {
   useDocumentTitle("Product List | Salinaka Admin");
   useScrollTop();
 

@@ -1,8 +1,6 @@
 import React from "react";
 
-// Just add this feature if you want :P
-
-const UserWishListTab = () => (
+export const UserWishListTab = () => (
   <div className="loader" style={{ minHeight: "80vh" }}>
     <h3>My Wish List</h3>
     <strong>
@@ -10,5 +8,3 @@ const UserWishListTab = () => (
     </strong>
   </div>
 );
-
-export default UserWishListTab;

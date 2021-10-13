@@ -9,10 +9,10 @@ import * as Yup from "yup";
 
 import { Boundary, ImageLoader } from "../../../components/common";
 import { useDocumentTitle, useFileHandler, useModal, useScrollTop } from "../../../hooks";
-import { setLoading, updateProfile } from "../../../redux";
+import { AppState, AuthState, Credentials, ProfileState, setLoading, updateProfile } from "../../../redux";
 
-import ConfirmModal from "./ConfirmModal";
-import EditForm from "./EditForm";
+import { ConfirmModal } from "./ConfirmModal";
+import { EditForm } from "./EditForm";
 
 const FormSchema = Yup.object().shape({
   fullname: Yup.string()
@@ -29,7 +29,19 @@ const FormSchema = Yup.object().shape({
   }),
 });
 
-const EditProfile = () => {
+export type EditAccountForm = {
+  fullname: string;
+  email: string;
+  address?: string;
+  mobile?: {
+    country?: string;
+    countryCode?: string;
+    dialCode?: string;
+    value?: string;
+  };
+};
+
+export const EditProfile: React.FC = () => {
   useDocumentTitle("Edit Account | Salinaka");
   useScrollTop();
 
@@ -43,7 +55,10 @@ const EditProfile = () => {
     [dispatch]
   );
 
-  const { profile, auth, isLoading } = useSelector((state) => ({
+  const { profile, auth, isLoading } = useSelector<
+    AppState,
+    { profile: ProfileState; auth: AuthState; isLoading: boolean }
+  >((state) => ({
     profile: state.profile,
     auth: state.auth,
     isLoading: state.app.loading,
@@ -58,9 +73,9 @@ const EditProfile = () => {
 
   const { imageFile, isFileLoading, onFileChange } = useFileHandler({ avatar: {}, banner: {} });
 
-  const update = (form, credentials = {}) => {
+  const update = (form: EditAccountForm, credentials: Credentials = {}) => {
     dispatch(
-      updateProfile({
+      updateProfile.started({
         updates: {
           fullname: form.fullname,
           email: form.email,
@@ -78,14 +93,15 @@ const EditProfile = () => {
     );
   };
 
-  const onConfirmUpdate = (form, password) => {
+  const onConfirmUpdate = (form: EditAccountForm, password: string | undefined) => {
     if (password) {
       update(form, { email: form.email, password });
     }
   };
 
-  const onSubmitUpdate = (form) => {
+  const onSubmitUpdate = (form: EditAccountForm) => {
     // check if data has changed
+    // @ts-ignore
     const fieldsChanged = Object.keys(form).some((key) => profile[key] !== form[key]);
 
     if (fieldsChanged || Boolean(imageFile.banner.file || imageFile.avatar.file)) {
@@ -154,7 +170,7 @@ const EditProfile = () => {
                   )}
                 </div>
               </div>
-              <EditForm authProvider={auth.provider} isLoading={isLoading} />
+              <EditForm authProvider={auth?.provider ?? "unknown"} isLoading={isLoading} />
               <ConfirmModal onConfirmUpdate={onConfirmUpdate} modal={modal} />
             </>
           )}
@@ -163,5 +179,3 @@ const EditProfile = () => {
     </Boundary>
   );
 };
-
-export default EditProfile;

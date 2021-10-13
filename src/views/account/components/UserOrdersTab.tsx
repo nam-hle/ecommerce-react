@@ -1,8 +1,6 @@
 import React from "react";
 
-// Just add this feature if you want :P
-
-const UserOrdersTab = () => (
+export const UserOrdersTab = () => (
   <div className="loader" style={{ minHeight: "80vh" }}>
     <h3>My Orders</h3>
     <strong>
@@ -10,5 +8,3 @@ const UserOrdersTab = () => (
     </strong>
   </div>
 );
-
-export default UserOrdersTab;

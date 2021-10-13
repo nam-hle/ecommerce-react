@@ -6,34 +6,30 @@ import { useDocumentTitle, useScrollTop } from "../../../hooks";
 
 import UserTab from "../components/UserTab";
 
-const UserAccountTab = lazy(() => import("../components/UserAccountTab"));
-const UserWishListTab = lazy(() => import("../components/UserWishListTab"));
-const UserOrdersTab = lazy(() => import("../components/UserOrdersTab"));
-
-const Loader = () => (
+export const Loader: React.FC = () => (
   <div className="loader" style={{ minHeight: "80vh" }}>
     <LoadingOutlined />
     <h6>Loading ... </h6>
   </div>
 );
 
-const UserAccount = () => {
+export const UserAccount: React.FC = () => {
   useScrollTop();
   useDocumentTitle("My Account | Salinaka");
 
   return (
     <UserTab>
-      <div index={0} label="Account">
+      <div key={0}>
         <Suspense fallback={<Loader />}>
           <UserAccountTab />
         </Suspense>
       </div>
-      <div index={1} label="My Wish List">
+      <div key={1}>
         <Suspense fallback={<Loader />}>
           <UserWishListTab />
         </Suspense>
       </div>
-      <div index={2} label="My Orders">
+      <div key={2}>
         <Suspense fallback={<Loader />}>
           <UserOrdersTab />
         </Suspense>

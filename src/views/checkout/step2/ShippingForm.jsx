@@ -3,7 +3,7 @@ import React from "react";
 
 import { CustomInput, CustomMobileInput } from "../../../components/formik";
 
-const ShippingForm = () => {
+export const ShippingForm: React.FC<ShippingFormProps> = () => {
   const { values } = useFormikContext();
   return (
     <div className="checkout-shipping-wrapper">

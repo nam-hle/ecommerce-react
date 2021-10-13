@@ -39,7 +39,7 @@ const FormSchema = Yup.object().shape({
   isDone: Yup.boolean(),
 });
 
-const ShippingDetails = ({ profile, shipping, subtotal }) => {
+export const ShippingDetails : React.FC<ShippingDetailsProps> = ({ profile, shipping, subtotal }) => {
   useDocumentTitle("Check Out Step 2 | Salinaka");
   useScrollTop();
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
     isDone: shipping.isDone || false,
   };
 
-  const onSubmitForm = (form) => {
+  export const onSubmitForm : React.FC<onSubmitFormProps> = (form) => {
     dispatch(
       setShippingDetails({
         fullname: form.fullname,
@@ -106,21 +106,21 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
   );
 };
 
-ShippingDetails.propTypes = {
-  subtotal: PropType.number.isRequired,
+type ShippingDetailsProps = {
+  subtotal: number,
   profile: PropType.shape({
-    fullname: PropType.string,
-    email: PropType.string,
-    address: PropType.string,
-    mobile: PropType.object,
+    fullname?: string,
+    email?: string,
+    address?: string,
+    mobile?: object,
   }).isRequired,
   shipping: PropType.shape({
-    fullname: PropType.string,
-    email: PropType.string,
-    address: PropType.string,
-    mobile: PropType.object,
-    isInternational: PropType.bool,
-    isDone: PropType.bool,
+    fullname?: string,
+    email?: string,
+    address?: string,
+    mobile?: object,
+    isInternational?: bool,
+    isDone?: bool,
   }).isRequired,
 };
 

@@ -11,13 +11,13 @@ import { editProduct } from "../../../redux";
 
 const ProductForm = lazy(() => import("../components/ProductForm"));
 
-const EditProduct = ({ match }) => {
+export const EditProduct : React.FC<EditProductProps> = ({ match }) => {
   useDocumentTitle("Edit Product | Salinaka");
   useScrollTop();
   const { product, error, isLoading } = useProduct(match.params.id);
   const dispatch = useDispatch();
 
-  const onSubmitForm = (updates) => {
+  export const onSubmitForm : React.FC<onSubmitFormProps> = (updates) => {
     dispatch(editProduct(product.id, updates));
   };
 
@@ -41,10 +41,10 @@ const EditProduct = ({ match }) => {
   );
 };
 
-EditProduct.propTypes = {
+type EditProductProps = {
   match: PropType.shape({
     params: PropType.shape({
-      id: PropType.string,
+      id?: string,
     }),
   }).isRequired,
 };

@@ -1,16 +1,15 @@
-/* eslint-disable react/forbid-prop-types */
 import { useField } from "formik";
-import PropType from "prop-types";
 import React from "react";
 import PhoneInput from "react-phone-input-2";
 
-const CustomMobileInput = (props) => {
+export const CustomMobileInput: React.FC<CustomMobileInputProps> = (props) => {
+  // @ts-ignore
   const [field, meta, helpers] = useField(props);
   const { label, placeholder, defaultValue } = props;
   const { touched, error } = meta;
   const { setValue } = helpers;
 
-  const handleChange = (value, data) => {
+  const handleChange = (value: string, data: { dialCode: number; countryCode: number; name: string }) => {
     const mob = {
       dialCode: data.dialCode,
       countryCode: data.countryCode,
@@ -24,6 +23,7 @@ const CustomMobileInput = (props) => {
   return (
     <div className="input-group">
       {touched && error ? (
+        // @ts-ignore
         <span className="label-input label-error">{error?.value || error?.dialCode}</span>
       ) : (
         <label className="label-input" htmlFor={field.name}>
@@ -31,6 +31,7 @@ const CustomMobileInput = (props) => {
         </label>
       )}
       <PhoneInput
+        // @ts-ignore
         name={field.name}
         country="ph"
         inputClass="input-form d-block"
@@ -51,10 +52,8 @@ CustomMobileInput.defaultProps = {
   placeholder: "09254461351",
 };
 
-CustomMobileInput.propTypes = {
-  label: PropType.string,
-  placeholder: PropType.string,
-  defaultValue: PropType.object.isRequired,
+type CustomMobileInputProps = {
+  label?: string;
+  placeholder?: string;
+  defaultValue: { value: string };
 };
-
-export default CustomMobileInput;

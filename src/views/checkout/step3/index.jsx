@@ -31,7 +31,7 @@ const FormSchema = Yup.object().shape({
   type: Yup.string().required("Please select paymend mode"),
 });
 
-const Payment = ({ shipping, payment, subtotal }) => {
+export const Payment : React.FC<PaymentProps> = ({ shipping, payment, subtotal }) => {
   useDocumentTitle("Check Out Final Step | Salinaka");
   useScrollTop();
 
@@ -43,7 +43,7 @@ const Payment = ({ shipping, payment, subtotal }) => {
     type: payment.type || "paypal",
   };
 
-  const onConfirm = () => {
+  export const onConfirm : React.FC<onConfirmProps> = () => {
     displayActionMessage("Feature not ready yet :)", "info");
   };
 
@@ -75,19 +75,19 @@ const Payment = ({ shipping, payment, subtotal }) => {
   );
 };
 
-Payment.propTypes = {
+type PaymentProps = {
   shipping: PropType.shape({
-    isDone: PropType.bool,
-    isInternational: PropType.bool,
+    isDone?: bool,
+    isInternational?: bool,
   }).isRequired,
   payment: PropType.shape({
-    name: PropType.string,
-    cardnumber: PropType.string,
-    expiry: PropType.string,
-    ccv: PropType.string,
-    type: PropType.string,
+    name?: string,
+    cardnumber?: string,
+    expiry?: string,
+    ccv?: string,
+    type?: string,
   }).isRequired,
-  subtotal: PropType.number.isRequired,
+  subtotal: number,
 };
 
 export default withCheckout(Payment);

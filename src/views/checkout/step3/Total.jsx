@@ -10,12 +10,12 @@ import { CHECKOUT_STEP_2 } from "../../../constants";
 import { displayMoney } from "../../../helpers";
 import { setPaymentDetails } from "../../../redux";
 
-const Total = ({ isInternational, subtotal }) => {
+export const Total: React.FC<TotalProps> = ({ isInternational, subtotal }) => {
   const { values, submitForm } = useFormikContext();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const onClickBack = () => {
+  export const onClickBack: React.FC<onClickBackProps> = () => {
     // destructure to only select left fields omitting cardnumber and ccv
     const { cardnumber, ccv, ...rest } = values;
 
@@ -44,9 +44,9 @@ const Total = ({ isInternational, subtotal }) => {
   );
 };
 
-Total.propTypes = {
-  isInternational: PropType.bool.isRequired,
-  subtotal: PropType.number.isRequired,
+type TotalProps = {
+  isInternational: boolean,
+  subtotal: number,
 };
 
 export default Total;

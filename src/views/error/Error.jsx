@@ -3,7 +3,7 @@ import React from "react";
 
 import { useScrollTop } from "../../hooks";
 
-const Error = ({ history }) => {
+export const Error : React.FC<ErrorProps> = ({ history }) => {
   useScrollTop();
 
   return (
@@ -17,9 +17,9 @@ const Error = ({ history }) => {
   );
 };
 
-Error.propTypes = {
+type ErrorProps = {
   history: PropType.shape({
-    push: PropType.func,
+    push?: func,
   }).isRequired,
 };
 

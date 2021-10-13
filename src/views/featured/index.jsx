@@ -5,7 +5,7 @@ import { MessageDisplay } from "../../components/common";
 import { ProductShowcase } from "../../components/product";
 import { useDocumentTitle, useFeaturedProducts, useScrollTop } from "../../hooks";
 
-const FeaturedProducts = () => {
+export const FeaturedProducts: React.FC<FeaturedProductsProps> = () => {
   useDocumentTitle("Featured Products | Salinaka");
   useScrollTop();
 

@@ -1,14 +1,13 @@
 import { ArrowLeftOutlined, CheckOutlined, LoadingOutlined } from "@ant-design/icons";
 
 import { Field, useFormikContext } from "formik";
-import PropType from "prop-types";
 import React from "react";
 import { useHistory } from "react-router-dom";
 
 import { CustomInput, CustomMobileInput } from "../../../components/formik";
 import { ACCOUNT } from "../../../constants";
 
-const EditForm = ({ isLoading, authProvider }) => {
+export const EditForm: React.FC<EditFormProps> = ({ isLoading, authProvider }) => {
   const history = useHistory();
   const { values, submitForm } = useFormikContext();
 
@@ -41,7 +40,7 @@ const EditForm = ({ isLoading, authProvider }) => {
         style={{ textTransform: "capitalize" }}
       />
       <CustomMobileInput
-        defaultValue={values.mobile}
+        defaultValue={(values as any).mobile}
         name="mobile"
         disabled={isLoading}
         label="Mobile Number (Will be used for checkout)"
@@ -66,9 +65,7 @@ const EditForm = ({ isLoading, authProvider }) => {
   );
 };
 
-EditForm.propTypes = {
-  isLoading: PropType.bool.isRequired,
-  authProvider: PropType.string.isRequired,
+type EditFormProps = {
+  isLoading: boolean;
+  authProvider: string;
 };
-
-export default EditForm;

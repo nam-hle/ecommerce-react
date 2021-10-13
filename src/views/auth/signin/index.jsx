@@ -19,7 +19,7 @@ const SignInSchema = Yup.object().shape({
   password: Yup.string().required("Password is required."),
 });
 
-const SignIn = ({ history }) => {
+export const SignIn : React.FC<SignInProps> = ({ history }) => {
   const { authStatus, isAuthenticating } = useSelector((state) => ({
     authStatus: state.app.authStatus,
     isAuthenticating: state.app.isAuthenticating,
@@ -38,13 +38,13 @@ const SignIn = ({ history }) => {
     [dispatch]
   );
 
-  const onSignUp = () => history.push(SIGNUP);
+  export const onSignUp : React.FC<onSignUpProps> = () => history.push(SIGNUP);
 
-  const onSubmitForm = (form) => {
+  export const onSubmitForm : React.FC<onSubmitFormProps> = (form) => {
     dispatch(signIn(form.email, form.password));
   };
 
-  const onClickLink = (e) => {
+  export const onClickLink : React.FC<onClickLinkProps> = (e) => {
     if (isAuthenticating) {
       e.preventDefault();
     }
@@ -137,9 +137,9 @@ const SignIn = ({ history }) => {
   );
 };
 
-SignIn.propTypes = {
+type SignInProps = {
   history: PropType.shape({
-    push: PropType.func,
+    push?: func,
   }).isRequired,
 };
 

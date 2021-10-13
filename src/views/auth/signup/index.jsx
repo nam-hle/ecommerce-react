@@ -23,7 +23,7 @@ const SignInSchema = Yup.object().shape({
   fullname: Yup.string().required("Full name is required.").min(4, "Name should be at least 4 characters."),
 });
 
-const SignUp = ({ history }) => {
+export const SignUp : React.FC<SignUpProps> = ({ history }) => {
   const { isAuthenticating, authStatus } = useSelector((state) => ({
     isAuthenticating: state.app.isAuthenticating,
     authStatus: state.app.authStatus,
@@ -41,9 +41,9 @@ const SignUp = ({ history }) => {
     [dispatch]
   );
 
-  const onClickSignIn = () => history.push(SIGNIN);
+  export const onClickSignIn : React.FC<onClickSignInProps> = () => history.push(SIGNIN);
 
-  const onFormSubmit = (form) => {
+  export const onFormSubmit : React.FC<onFormSubmitProps> = (form) => {
     dispatch(
       signUp({
         fullname: form.fullname.trim(),
@@ -146,9 +146,9 @@ const SignUp = ({ history }) => {
   );
 };
 
-SignUp.propTypes = {
+type SignUpProps = {
   history: PropType.shape({
-    push: PropType.func,
+    push?: func,
   }).isRequired,
 };
 

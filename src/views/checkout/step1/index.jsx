@@ -13,13 +13,13 @@ import { useDocumentTitle, useScrollTop } from "../../../hooks";
 import { StepTracker } from "../components";
 import withCheckout from "../hoc/withCheckout";
 
-const OrderSummary = ({ basket, subtotal }) => {
+export const OrderSummary : React.FC<OrderSummaryProps> = ({ basket, subtotal }) => {
   useDocumentTitle("Check Out Step 1 | Salinaka");
   useScrollTop();
   const dispatch = useDispatch();
   const history = useHistory();
-  const onClickPrevious = () => history.push("/");
-  const onClickNext = () => history.push(CHECKOUT_STEP_2);
+  export const onClickPrevious : React.FC<onClickPreviousProps> = () => history.push("/");
+  export const onClickNext : React.FC<onClickNextProps> = () => history.push(CHECKOUT_STEP_2);
 
   return (
     <div className="checkout">
@@ -54,9 +54,9 @@ const OrderSummary = ({ basket, subtotal }) => {
   );
 };
 
-OrderSummary.propTypes = {
+type OrderSummaryProps = {
   basket: PropType.arrayOf(PropType.object).isRequired,
-  subtotal: PropType.number.isRequired,
+  subtotal: number,
 };
 
 export default withCheckout(OrderSummary);

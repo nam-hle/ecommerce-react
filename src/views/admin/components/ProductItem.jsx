@@ -9,26 +9,26 @@ import { EDIT_PRODUCT } from "../../../constants";
 import { displayActionMessage, displayDate, displayMoney } from "../../../helpers";
 import { removeProduct } from "../../../redux";
 
-const ProductItem = ({ product }) => {
+export const ProductItem : React.FC<ProductItemProps> = ({ product }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const productRef = useRef(null);
 
-  const onClickEdit = () => {
+  export const onClickEdit : React.FC<onClickEditProps> = () => {
     history.push(`${EDIT_PRODUCT}/${product.id}`);
   };
 
-  const onDeleteProduct = () => {
+  export const onDeleteProduct : React.FC<onDeleteProductProps> = () => {
     productRef.current.classList.toggle("item-active");
   };
 
-  const onConfirmDelete = () => {
+  export const onConfirmDelete : React.FC<onConfirmDeleteProps> = () => {
     dispatch(removeProduct(product.id));
     displayActionMessage("Item successfully deleted");
     productRef.current.classList.remove("item-active");
   };
 
-  const onCancelDelete = () => {
+  export const onCancelDelete : React.FC<onCancelDeleteProps> = () => {
     productRef.current.classList.remove("item-active");
   };
 
@@ -85,22 +85,22 @@ const ProductItem = ({ product }) => {
   );
 };
 
-ProductItem.propTypes = {
+type ProductItemProps = {
   product: PropType.shape({
-    id: PropType.string,
-    name: PropType.string,
-    brand: PropType.string,
-    price: PropType.number,
-    maxQuantity: PropType.number,
-    description: PropType.string,
+    id?: string,
+    name?: string,
+    brand?: string,
+    price?: number,
+    maxQuantity?: number,
+    description?: string,
     keywords: PropType.arrayOf(PropType.string),
     imageCollection: PropType.arrayOf(PropType.object),
     sizes: PropType.arrayOf(PropType.string),
-    image: PropType.string,
-    imageUrl: PropType.string,
-    isFeatured: PropType.bool,
-    isRecommended: PropType.bool,
-    dateAdded: PropType.number,
+    image?: string,
+    imageUrl?: string,
+    isFeatured?: bool,
+    isRecommended?: bool,
+    dateAdded?: number,
     availableColors: PropType.arrayOf(PropType.string),
   }).isRequired,
 };

@@ -20,6 +20,7 @@ export interface Profile {
   avatar?: any;
   banner?: any;
   dateJoined?: string;
+  role?: string;
 }
 
 export interface File {

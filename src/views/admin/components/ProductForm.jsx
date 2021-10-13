@@ -40,7 +40,7 @@ const FormSchema = Yup.object().shape({
   availableColors: Yup.array().of(Yup.string().required()).min(1, "Please add a default color for this product."),
 });
 
-const ProductForm = ({ product, onSubmit, isLoading }) => {
+export const ProductForm : React.FC<ProductFormProps> = ({ product, onSubmit, isLoading }) => {
   const initFormikValues = {
     name: product?.name || "",
     brand: product?.brand || "",
@@ -59,7 +59,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
     imageCollection: product?.imageCollection || [],
   });
 
-  const onSubmitForm = (form) => {
+  export const onSubmitForm : React.FC<onSubmitFormProps> = (form) => {
     if (imageFile.image.file || product.imageUrl) {
       onSubmit({
         ...form,
@@ -277,24 +277,24 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
   );
 };
 
-ProductForm.propTypes = {
+type ProductFormProps = {
   product: PropType.shape({
-    name: PropType.string,
-    brand: PropType.string,
-    price: PropType.number,
-    maxQuantity: PropType.number,
-    description: PropType.string,
+    name?: string,
+    brand?: string,
+    price?: number,
+    maxQuantity?: number,
+    description?: string,
     keywords: PropType.arrayOf(PropType.string),
     imageCollection: PropType.arrayOf(PropType.object),
     sizes: PropType.arrayOf(PropType.string),
-    image: PropType.string,
-    imageUrl: PropType.string,
-    isFeatured: PropType.bool,
-    isRecommended: PropType.bool,
+    image?: string,
+    imageUrl?: string,
+    isFeatured?: bool,
+    isRecommended?: bool,
     availableColors: PropType.arrayOf(PropType.string),
   }).isRequired,
-  onSubmit: PropType.func.isRequired,
-  isLoading: PropType.bool.isRequired,
+  onSubmit: func,
+  isLoading: bool,
 };
 
 export default ProductForm;

@@ -9,13 +9,13 @@ import { addProduct } from "../../../redux";
 
 const ProductForm = lazy(() => import("../components/ProductForm"));
 
-const AddProduct = () => {
+export const AddProduct: React.FC<AddProductProps> = () => {
   useScrollTop();
   useDocumentTitle("Add New Product | Salinaka");
   const isLoading = useSelector((state) => state.app.loading);
   const dispatch = useDispatch();
 
-  const onSubmit = (product) => {
+  export const onSubmit: React.FC<onSubmitProps> = (product) => {
     dispatch(addProduct(product));
   };
 

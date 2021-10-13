@@ -10,7 +10,7 @@ import { RECOMMENDED_PRODUCTS, SHOP } from "../../constants";
 import { displayMoney } from "../../helpers";
 import { useBasket, useDocumentTitle, useProduct, useRecommendedProducts, useScrollTop } from "../../hooks";
 
-const ViewProduct = () => {
+export const ViewProduct: React.FC<ViewProductProps> = () => {
   const { id } = useParams();
   const { product, isLoading, error } = useProduct(id);
   const { addToBasket, isItemOnBasket } = useBasket(id);
@@ -33,18 +33,18 @@ const ViewProduct = () => {
     setSelectedImage(product?.image);
   }, [product]);
 
-  const onSelectedSizeChange = (newValue) => {
+  export const onSelectedSizeChange: React.FC<onSelectedSizeChangeProps> = (newValue) => {
     setSelectedSize(newValue.value);
   };
 
-  const onSelectedColorChange = (color) => {
+  export const onSelectedColorChange: React.FC<onSelectedColorChangeProps> = (color) => {
     setSelectedColor(color);
     if (colorOverlay.current) {
       colorOverlay.current.value = color;
     }
   };
 
-  const handleAddToBasket = () => {
+  export const handleAddToBasket: React.FC<handleAddToBasketProps> = () => {
     addToBasket({ ...product, selectedColor, selectedSize: selectedSize || product.sizes[0] });
   };
 

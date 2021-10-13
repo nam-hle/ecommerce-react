@@ -1,11 +1,10 @@
-import PropType from "prop-types";
 import React from "react";
 
-const InputColor = (props) => {
+export const CustomColorInput: React.FC<InputColorProps> = (props) => {
   const { name, form, push, remove } = props;
   const [selectedColor, setSelectedColor] = React.useState("");
 
-  const handleColorChange = (e) => {
+  const handleColorChange = (e: any) => {
     const val = e.target.value;
     setSelectedColor(val);
   };
@@ -63,15 +62,13 @@ const InputColor = (props) => {
   );
 };
 
-InputColor.propTypes = {
-  name: PropType.string.isRequired,
-  form: PropType.shape({
-    values: PropType.object,
-    touched: PropType.object,
-    errors: PropType.object,
-  }).isRequired,
-  push: PropType.func.isRequired,
-  remove: PropType.func.isRequired,
+type InputColorProps = {
+  name: string;
+  form: {
+    values: Record<string, string[]>;
+    touched: Record<string, any>;
+    errors: Record<string, any>;
+  };
+  push: (path: string) => void;
+  remove: (index: number) => void;
 };
-
-export default InputColor;

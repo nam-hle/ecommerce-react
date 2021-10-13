@@ -4,14 +4,14 @@ import React, { useEffect, useRef } from "react";
 
 import { CustomInput } from "../../../components/formik";
 
-const CreditPayment = () => {
+export const CreditPayment: React.FC<CreditPaymentProps> = () => {
   const { values, setValues } = useFormikContext();
   const collapseContainerRef = useRef(null);
   const cardInputRef = useRef(null);
   const containerRef = useRef(null);
   const checkboxContainerRef = useRef(null);
 
-  const toggleCollapse = () => {
+  export const toggleCollapse: React.FC<toggleCollapseProps> = () => {
     const cn = containerRef.current;
     const cb = checkboxContainerRef.current;
     const cl = collapseContainerRef.current;
@@ -31,14 +31,14 @@ const CreditPayment = () => {
     toggleCollapse();
   }, [values.type]);
 
-  const onCreditModeChange = (e) => {
+  export const onCreditModeChange: React.FC<onCreditModeChangeProps> = (e) => {
     if (e.target.checked) {
       setValues({ ...values, type: "credit" });
       toggleCollapse();
     }
   };
 
-  const handleOnlyNumberInput = (e) => {
+  export const handleOnlyNumberInput: React.FC<handleOnlyNumberInputProps> = (e) => {
     const { key } = e.nativeEvent;
     if (/\D/.test(key) && key !== "Backspace") {
       e.preventDefault();

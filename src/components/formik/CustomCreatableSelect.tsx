@@ -1,25 +1,24 @@
-/* eslint-disable react/forbid-prop-types */
 import { useField } from "formik";
-import PropType from "prop-types";
 import React from "react";
 import CreatableSelect from "react-select/creatable";
 
-const CustomCreatableSelect = (props) => {
+export const CustomCreatableSelect: React.FC<CustomCreatableSelectProps> = (props) => {
+  // @ts-ignore
   const [field, meta, helpers] = useField(props);
   const { options, defaultValue, label, placeholder, isMulti, type, iid } = props;
   const { touched, error } = meta;
   const { setValue } = helpers;
 
-  const handleChange = (newValue) => {
+  const handleChange = (newValue: { value: string }) => {
     if (Array.isArray(newValue)) {
       const arr = newValue.map((fieldKey) => fieldKey.value);
       setValue(arr);
     } else {
-      setValue(newValue.value);
+      setValue(newValue?.value);
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: any) => {
     if (type === "number") {
       const { key } = e.nativeEvent;
       if (/\D/.test(key) && key !== "Backspace") {
@@ -41,6 +40,7 @@ const CustomCreatableSelect = (props) => {
         isMulti={isMulti}
         placeholder={placeholder}
         name={field.name}
+        // @ts-ignore
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         defaultValue={defaultValue}
@@ -73,14 +73,12 @@ CustomCreatableSelect.defaultProps = {
   type: "string",
 };
 
-CustomCreatableSelect.propTypes = {
-  options: PropType.arrayOf(PropType.object),
-  defaultValue: PropType.oneOfType([PropType.object, PropType.array]).isRequired,
-  label: PropType.string.isRequired,
-  placeholder: PropType.string,
-  isMulti: PropType.bool,
-  type: PropType.string,
-  iid: PropType.string,
+type CustomCreatableSelectProps = {
+  options: object[];
+  defaultValue: object | object[];
+  label: string;
+  placeholder?: string;
+  isMulti?: boolean;
+  type?: string;
+  iid?: string;
 };
-
-export default CustomCreatableSelect;

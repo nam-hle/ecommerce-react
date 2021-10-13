@@ -1,7 +1,7 @@
 import { useFormikContext } from "formik";
 import React from "react";
 
-const PayPalPayment = () => {
+export const PayPalPayment: React.FC<PayPalPaymentProps> = () => {
   const { values, setValues } = useFormikContext();
 
   return (

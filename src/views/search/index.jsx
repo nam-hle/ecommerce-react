@@ -12,7 +12,7 @@ import { useDidMount } from "../../hooks";
 
 import { setRequestStatus, searchProduct } from "../../redux";
 
-const Search = ({ match }) => {
+export const Search : React.FC<SearchProps> = ({ match }) => {
   const { searchKey } = match.params;
   const dispatch = useDispatch();
   const didMount = useDidMount(true);
@@ -78,10 +78,10 @@ const Search = ({ match }) => {
   );
 };
 
-Search.propTypes = {
+type SearchProps = {
   match: PropType.shape({
     params: PropType.shape({
-      searchKey: PropType.string,
+      searchKey?: string,
     }),
   }).isRequired,
 };

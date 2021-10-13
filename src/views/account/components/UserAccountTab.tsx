@@ -1,16 +1,14 @@
-/* eslint-disable indent */
-
-import PropType from "prop-types";
 import React from "react";
 import { useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { ImageLoader } from "../../../components/common";
 import { ACCOUNT_EDIT } from "../../../constants";
 import { displayDate } from "../../../helpers";
+import { AppState, ProfileState } from "../../../redux";
 
-const UserProfile = (props) => {
-  const profile = useSelector((state) => state.profile);
+const _UserProfile: React.FC<UserProfileProps> = (props) => {
+  const profile = useSelector<AppState, ProfileState>((state) => state.profile);
 
   return (
     <div className="user-profile">
@@ -57,10 +55,10 @@ const UserProfile = (props) => {
   );
 };
 
-UserProfile.propTypes = {
-  history: PropType.shape({
-    push: PropType.func,
-  }).isRequired,
+type UserProfileProps = RouteComponentProps & {
+  history: {
+    push: (path: string) => void;
+  };
 };
 
-export default withRouter(UserProfile);
+export const UserAccountTab = withRouter(_UserProfile);

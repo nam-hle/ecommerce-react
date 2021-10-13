@@ -1,28 +1,29 @@
 /* eslint-disable indent */
 
 import { DownOutlined, LoadingOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
-import PropTypes from "prop-types";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 
 import { ACCOUNT } from "../../../constants";
 
-import { signOut } from "../../../redux";
+import { AppState, ProfileState, signOut } from "../../../redux";
 
-const UserNav = () => {
-  const { profile, isAuthenticating } = useSelector((state) => ({
-    profile: state.profile,
-    isAuthenticating: state.app.isAuthenticating,
-  }));
-  const userNav = useRef(null);
+const _UserNav: React.FC<UserNav> = () => {
+  const { profile, isAuthenticating } = useSelector<AppState, { profile: ProfileState; isAuthenticating: boolean }>(
+    (state) => ({
+      profile: state.profile,
+      isAuthenticating: state.app.isAuthenticating,
+    })
+  );
+  const userNav = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch();
 
-  const toggleDropdown = (e) => {
+  const toggleDropdown = (e: any) => {
     const closest = e.target.closest("div.user-nav");
 
     try {
-      if (!closest && userNav.current.classList.contains("user-sub-open")) {
+      if (!closest && userNav.current?.classList.contains("user-sub-open")) {
         userNav.current.classList.remove("user-sub-open");
       }
     } catch (err) {
@@ -37,7 +38,7 @@ const UserNav = () => {
   }, []);
 
   const onClickNav = () => {
-    userNav.current.classList.toggle("user-sub-open");
+    userNav.current?.classList.toggle("user-sub-open");
   };
 
   return isAuthenticating ? (
@@ -60,7 +61,10 @@ const UserNav = () => {
             <UserOutlined />
           </Link>
         )}
-        <h6 className="user-nav-sub-link margin-0 d-flex" onClick={() => dispatch(signOut())} role="presentation">
+        <h6
+          className="user-nav-sub-link margin-0 d-flex"
+          onClick={() => dispatch(signOut.started({}))}
+          role="presentation">
           Sign Out
           <LogoutOutlined />
         </h6>
@@ -69,8 +73,6 @@ const UserNav = () => {
   );
 };
 
-UserNav.propType = {
-  profile: PropTypes.object.isRequired,
-};
+type UserNav = RouteComponentProps;
 
-export default withRouter(UserNav);
+export const UserAvatar = withRouter(_UserNav);

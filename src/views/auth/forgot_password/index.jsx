@@ -7,7 +7,7 @@ import { useDidMount, useDocumentTitle, useScrollTop } from "../../../hooks";
 
 import { resetPassword } from "../../../redux";
 
-const ForgotPassword = () => {
+export const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
   const { authStatus, isAuthenticating } = useSelector((state) => ({
     isAuthenticating: state.app.isAuthenticating,
     authStatus: state.app.authStatus,
@@ -27,11 +27,11 @@ const ForgotPassword = () => {
     }
   }, [authStatus, didMount, isAuthenticating]);
 
-  const onEmailChange = (value, error) => {
+  export const onEmailChange: React.FC<onEmailChangeProps> = (value, error) => {
     setField({ email: value, error });
   };
 
-  const onSubmitEmail = () => {
+  export const onSubmitEmail: React.FC<onSubmitEmailProps> = () => {
     if (!!field.email && !field.error) {
       dispatch(resetPassword(field.email));
     }

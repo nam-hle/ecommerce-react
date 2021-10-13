@@ -6,7 +6,7 @@ import { SIGNIN } from "../../../constants";
 
 import { calculateTotal } from "../../../helpers";
 
-const withCheckout = (Component) =>
+export const withCheckout: React.FC<withCheckoutProps> = (Component) =>
   withRouter((props) => {
     const state = useSelector((store) => ({
       isAuth: !!store.auth.id && !!store.auth.role,

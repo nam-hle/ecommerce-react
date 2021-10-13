@@ -5,7 +5,7 @@ import React from "react";
 
 import { displayMoney } from "../../../helpers";
 
-const ShippingTotal = ({ subtotal }) => {
+export const ShippingTotal: React.FC<ShippingTotalProps> = ({ subtotal }) => {
   const { values } = useFormikContext();
 
   return (
@@ -46,8 +46,8 @@ const ShippingTotal = ({ subtotal }) => {
   );
 };
 
-ShippingTotal.propTypes = {
-  subtotal: PropType.number.isRequired,
+type ShippingTotalProps = {
+  subtotal: number,
 };
 
 export default ShippingTotal;

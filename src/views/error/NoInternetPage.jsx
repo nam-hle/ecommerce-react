@@ -2,7 +2,7 @@ import React from "react";
 
 import { useScrollTop } from "../../hooks";
 
-const NoInternet = () => {
+export const NoInternet: React.FC<NoInternetProps> = () => {
   useScrollTop();
 
   return (

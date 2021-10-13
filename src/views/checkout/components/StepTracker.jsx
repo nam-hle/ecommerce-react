@@ -1,9 +1,10 @@
 import PropType from "prop-types";
 import React from "react";
 
-const StepTracker = ({ current }) => {
+export const StepTracker: React.FC<StepTrackerProps> = ({ current }) => {
   // eslint-disable-next-line no-nested-ternary
-  const className = (step) => (current === step ? "is-active-step" : step < current ? "is-done-step" : "");
+  export const className: React.FC<classNameProps> = (step) =>
+    current === step ? "is-active-step" : step < current ? "is-done-step" : "";
 
   return (
     <div className="checkout-header">
@@ -37,8 +38,8 @@ const StepTracker = ({ current }) => {
   );
 };
 
-StepTracker.propTypes = {
-  current: PropType.number.isRequired,
+type StepTrackerProps = {
+  current: number,
 };
 
 export default StepTracker;

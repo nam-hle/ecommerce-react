@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { FiltersToggle, SearchBar } from "../../../components/common";
 import { ADD_PRODUCT } from "../../../constants";
 
-const ProductsNavbar = (props) => {
+export const ProductsNavbar: React.FC<ProductsNavbarProps> = (props) => {
   const { productsCount, totalProductsCount } = props;
   const history = useHistory();
 
@@ -30,9 +30,9 @@ const ProductsNavbar = (props) => {
   );
 };
 
-ProductsNavbar.propTypes = {
-  productsCount: PropType.number.isRequired,
-  totalProductsCount: PropType.number.isRequired,
+type ProductsNavbarProps = {
+  productsCount: number,
+  totalProductsCount: number,
 };
 
 export default ProductsNavbar;

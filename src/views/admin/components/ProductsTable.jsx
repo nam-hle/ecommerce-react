@@ -3,7 +3,7 @@ import React from "react";
 
 import { ProductItem } from ".";
 
-const ProductsTable = ({ filteredProducts }) => (
+export const ProductsTable: React.FC<ProductsTableProps> = ({ filteredProducts }) => (
   <div>
     {filteredProducts.length > 0 && (
       <div className="grid grid-product grid-count-6">
@@ -37,8 +37,8 @@ const ProductsTable = ({ filteredProducts }) => (
   </div>
 );
 
-ProductsTable.propTypes = {
-  filteredProducts: PropType.array.isRequired,
+type ProductsTableProps = {
+  filteredProducts: array,
 };
 
 export default ProductsTable;
