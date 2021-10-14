@@ -1,7 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
 
-import PropType from "prop-types";
-
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -10,13 +8,16 @@ import { Boundary, MessageDisplay } from "../../components/common";
 import { ProductGrid } from "../../components/product";
 import { useDidMount } from "../../hooks";
 
-import { setRequestStatus, searchProduct } from "../../redux";
+import { setRequestStatus, searchProduct, AppState, Product, BasketState, MiscState } from "../../redux";
 
-export const Search : React.FC<SearchProps> = ({ match }) => {
+export const Search: React.FC<SearchProps> = ({ match }) => {
   const { searchKey } = match.params;
   const dispatch = useDispatch();
   const didMount = useDidMount(true);
-  const store = useSelector((state) => ({
+  const store = useSelector<
+    AppState,
+    { isLoading: boolean; products: Product[]; basket: BasketState; requestStatus: MiscState["requestStatus"] }
+  >((state) => ({
     isLoading: state.app.loading,
     products: state.products.searchedProducts.items,
     basket: state.basket,
@@ -24,14 +25,14 @@ export const Search : React.FC<SearchProps> = ({ match }) => {
   }));
 
   useEffect(() => {
-    if (didMount && !store.isLoading) {
-      dispatch(searchProduct(searchKey));
+    if (didMount && !store.isLoading && searchKey) {
+      dispatch(searchProduct.started({ searchKey }));
     }
   }, [didMount, dispatch, searchKey, store.isLoading]);
 
   useEffect(
     () => () => {
-      dispatch(setRequestStatus(""));
+      dispatch(setRequestStatus({ message: "" }));
     },
     [dispatch]
   );
@@ -39,7 +40,7 @@ export const Search : React.FC<SearchProps> = ({ match }) => {
   if (store.requestStatus && !store.isLoading) {
     return (
       <main className="content">
-        <MessageDisplay message={store.requestStatus} desc="Try using correct filters or keyword." />
+        <MessageDisplay message={store.requestStatus.message} description="Try using correct filters or keyword." />
       </main>
     );
   }
@@ -79,11 +80,7 @@ export const Search : React.FC<SearchProps> = ({ match }) => {
 };
 
 type SearchProps = {
-  match: PropType.shape({
-    params: PropType.shape({
-      searchKey?: string,
-    }),
-  }).isRequired,
+  match: {
+    params: { searchKey?: string };
+  };
 };
-
-export default Search;

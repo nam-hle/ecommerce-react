@@ -5,11 +5,11 @@ import { MessageDisplay } from "../../components/common";
 import { ProductShowcase } from "../../components/product";
 import { useDocumentTitle, useRecommendedProducts, useScrollTop } from "../../hooks";
 
-export const RecommendedProducts: React.FC<RecommendedProductsProps> = () => {
+export const RecommendedProducts: React.FC = () => {
   useDocumentTitle("Recommended Products | Salinaka");
   useScrollTop();
 
-  const { recommendedProducts, fetchRecommendedProducts, isLoading, error } = useRecommendedProducts();
+  const { recommendedProducts, fetchRecommendedProducts, isLoading, error } = useRecommendedProducts(12);
 
   return (
     <main className="content">
@@ -35,5 +35,3 @@ export const RecommendedProducts: React.FC<RecommendedProductsProps> = () => {
     </main>
   );
 };
-
-export default RecommendedProducts;

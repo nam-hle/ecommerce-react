@@ -1,8 +1,10 @@
 import { useFormikContext } from "formik";
 import React from "react";
 
-export const PayPalPayment: React.FC<PayPalPaymentProps> = () => {
-  const { values, setValues } = useFormikContext();
+import { Payment } from "../../../redux";
+
+export const PayPalPayment: React.FC = () => {
+  const { values, setValues } = useFormikContext<Payment>();
 
   return (
     <div className={`checkout-fieldset-collapse ${values.type === "paypal" ? "is-selected-payment" : ""}`}>
@@ -31,5 +33,3 @@ export const PayPalPayment: React.FC<PayPalPaymentProps> = () => {
     </div>
   );
 };
-
-export default PayPalPayment;

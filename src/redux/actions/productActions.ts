@@ -18,7 +18,8 @@ export interface AddProductPayload extends Product {
   image: string;
 }
 export type AddProductSuccessPayload = Product;
-export type ImageCollection = { id: number; url: string; file?: string }[];
+export type ImageCollection = File[];
+export type File = { id: string; file: string; url: string };
 
 export const searchProduct = factory.async<SearchProductPayload, SearchProductSuccessPayload>("SEARCH_PRODUCT");
 export interface SearchProductPayload {

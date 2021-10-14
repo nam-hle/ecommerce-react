@@ -1,9 +1,8 @@
-import PropType from "prop-types";
 import React from "react";
 
 import { useScrollTop } from "../../hooks";
 
-export const PageNotFound : React.FC<PageNotFoundProps> = ({ history }) => {
+export const PageNotFound: React.FC<PageNotFoundProps> = ({ history }) => {
   useScrollTop();
 
   return (
@@ -18,9 +17,7 @@ export const PageNotFound : React.FC<PageNotFoundProps> = ({ history }) => {
 };
 
 type PageNotFoundProps = {
-  history: PropType.shape({
-    goBack?: func,
-  }).isRequired,
+  history: {
+    goBack: () => void;
+  };
 };
-
-export default PageNotFound;

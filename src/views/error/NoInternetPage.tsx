@@ -2,7 +2,7 @@ import React from "react";
 
 import { useScrollTop } from "../../hooks";
 
-export const NoInternet: React.FC<NoInternetProps> = () => {
+export const NoInternet = () => {
   useScrollTop();
 
   return (
@@ -10,11 +10,9 @@ export const NoInternet: React.FC<NoInternetProps> = () => {
       <h1>:( No Internet Connection.</h1>
       <p>Please check you network connectivity and try again.</p>
       <br />
-      <button className="button" onClick={() => window.location.reload(true)} type="button">
+      <button className="button" onClick={() => window.location.reload()} type="button">
         Try Again
       </button>
     </div>
   );
 };
-
-export default NoInternet;

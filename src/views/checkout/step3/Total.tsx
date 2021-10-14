@@ -1,21 +1,20 @@
 import { ArrowLeftOutlined, CheckOutlined } from "@ant-design/icons";
 import { useFormikContext } from "formik";
 
-import PropType from "prop-types";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { CHECKOUT_STEP_2 } from "../../../constants";
 import { displayMoney } from "../../../helpers";
-import { setPaymentDetails } from "../../../redux";
+import { Payment, setPaymentDetails } from "../../../redux";
 
 export const Total: React.FC<TotalProps> = ({ isInternational, subtotal }) => {
-  const { values, submitForm } = useFormikContext();
+  const { values, submitForm } = useFormikContext<Payment>();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  export const onClickBack: React.FC<onClickBackProps> = () => {
+  const onClickBack = () => {
     // destructure to only select left fields omitting cardnumber and ccv
     const { cardnumber, ccv, ...rest } = values;
 
@@ -31,7 +30,7 @@ export const Total: React.FC<TotalProps> = ({ isInternational, subtotal }) => {
       </div>
       <br />
       <div className="checkout-shipping-action">
-        <button className="button button-muted" onClick={() => onClickBack(values)} type="button">
+        <button className="button button-muted" onClick={() => onClickBack()} type="button">
           <ArrowLeftOutlined />
           &nbsp; Go Back
         </button>
@@ -45,8 +44,6 @@ export const Total: React.FC<TotalProps> = ({ isInternational, subtotal }) => {
 };
 
 type TotalProps = {
-  isInternational: boolean,
-  subtotal: number,
+  isInternational: boolean;
+  subtotal: number;
 };
-
-export default Total;

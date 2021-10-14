@@ -33,5 +33,3 @@ type ProductsNavbarProps = {
   productsCount: number;
   totalProductsCount: number;
 };
-
-export default ProductsNavbar;

@@ -144,5 +144,3 @@ type SignInProps = {
     push: (path: string) => void;
   };
 };
-
-export default SignIn;

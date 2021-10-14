@@ -1,44 +1,44 @@
-/* eslint-disable no-else-return */
 import { Field, useFormikContext } from "formik";
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 
 import { CustomInput } from "../../../components/formik";
+import { Payment } from "../../../redux";
 
-export const CreditPayment: React.FC<CreditPaymentProps> = () => {
-  const { values, setValues } = useFormikContext();
-  const collapseContainerRef = useRef(null);
-  const cardInputRef = useRef(null);
-  const containerRef = useRef(null);
-  const checkboxContainerRef = useRef(null);
+export const CreditPayment: React.FC = () => {
+  const { values, setValues } = useFormikContext<Payment>();
+  const collapseContainerRef = useRef<HTMLDivElement | null>(null);
+  const cardInputRef = useRef<HTMLElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const checkboxContainerRef = useRef<HTMLDivElement | null>(null);
 
-  export const toggleCollapse: React.FC<toggleCollapseProps> = () => {
+  const toggleCollapse = useCallback(() => {
     const cn = containerRef.current;
     const cb = checkboxContainerRef.current;
     const cl = collapseContainerRef.current;
 
     if (cb && cn && cl) {
       if (values.type === "credit") {
-        cardInputRef.current.focus();
+        cardInputRef.current?.focus();
         cn.style.height = `${cb.offsetHeight + cl.offsetHeight}px`;
       } else {
-        cardInputRef.current.blur();
+        cardInputRef.current?.blur();
         cn.style.height = `${cb.offsetHeight}px`;
       }
     }
-  };
+  }, [values.type]);
 
   useEffect(() => {
     toggleCollapse();
-  }, [values.type]);
+  }, [toggleCollapse, values.type]);
 
-  export const onCreditModeChange: React.FC<onCreditModeChangeProps> = (e) => {
+  const onCreditModeChange = (e: any) => {
     if (e.target.checked) {
       setValues({ ...values, type: "credit" });
       toggleCollapse();
     }
   };
 
-  export const handleOnlyNumberInput: React.FC<handleOnlyNumberInputProps> = (e) => {
+  const handleOnlyNumberInput = (e: any) => {
     const { key } = e.nativeEvent;
     if (/\D/.test(key) && key !== "Backspace") {
       e.preventDefault();
@@ -141,5 +141,3 @@ export const CreditPayment: React.FC<CreditPaymentProps> = () => {
     </>
   );
 };
-
-export default CreditPayment;

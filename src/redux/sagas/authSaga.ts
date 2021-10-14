@@ -12,7 +12,6 @@ import {
   resetPassword,
   setAuthPersistence,
   signIn,
-  signInSuccess,
   signInWithFacebook,
   signInWithGithub,
   signInWithGoogle,
@@ -68,8 +67,7 @@ function* initRequest() {
 }
 
 export function* authSaga(action: AnyAction): SagaIterator {
-  console.log("@@@@@", action);
-  if (signIn.match(action)) {
+  if (signIn.started.match(action)) {
     try {
       yield call(initRequest);
       yield call(firebase.signIn, action.payload.email, action.payload.password);
@@ -186,10 +184,14 @@ export function* authSaga(action: AnyAction): SagaIterator {
       yield put(setBasketItems(user.basket));
       yield put(setBasketItems(user.basket));
       yield put(
-        signInSuccess({
-          id: action.payload.result.uid,
-          role: user.role,
-          provider: action.payload.result.providerData[0]?.providerId,
+        signIn.done({
+          // @ts-ignore
+          params: {},
+          result: {
+            id: action.payload.result.uid,
+            role: user.role,
+            provider: action.payload.result.providerData[0]?.providerId,
+          },
         })
       );
     } else if (action.payload.result.providerData[0]?.providerId !== "password" && !snapshot.data()) {
@@ -208,11 +210,16 @@ export function* authSaga(action: AnyAction): SagaIterator {
       yield call(firebase.addUser, action.payload.result.uid, user);
       yield put(setProfile(user));
       yield put(
-        signInSuccess({
-          id: action.payload.result.uid,
-          role: user.role,
-          provider: action.payload.result.providerData[0]?.providerId,
-        })
+        signIn.done(
+          // @ts-ignore
+          {
+            result: {
+              id: action.payload.result.uid,
+              role: user.role,
+              provider: action.payload.result.providerData[0]?.providerId,
+            },
+          }
+        )
       );
     }
 

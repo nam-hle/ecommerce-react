@@ -20,8 +20,12 @@ export interface UpdateEmailPayload {
 export const updateProfile = factory.async<UpdateProfilePayload, UpdateProfileSuccessPayload>("UPDATE_PROFILE");
 export interface UpdateProfilePayload {
   updates: Profile;
-  files: { avatarFile: string; bannerFile: string };
+  files: ProfileFiles;
   credentials: Credentials;
+}
+export interface ProfileFiles {
+  avatarFile?: string;
+  bannerFile?: string;
 }
 export interface Credentials {
   email?: string;

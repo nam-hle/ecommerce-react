@@ -1,6 +1,5 @@
 import { Form, Formik } from "formik";
 
-import PropType from "prop-types";
 import React from "react";
 import { Redirect } from "react-router-dom";
 import * as Yup from "yup";
@@ -10,12 +9,13 @@ import { CHECKOUT_STEP_1 } from "../../../constants";
 import { displayActionMessage } from "../../../helpers";
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
 
+import { Shipping, Payment as PaymentType } from "../../../redux";
 import { StepTracker } from "../components";
-import withCheckout from "../hoc/withCheckout";
+import { withCheckout } from "../hoc/withCheckout";
 
-import CreditPayment from "./CreditPayment";
-import PayPalPayment from "./PayPalPayment";
-import Total from "./Total";
+import { CreditPayment } from "./CreditPayment";
+import { PayPalPayment } from "./PayPalPayment";
+import { Total } from "./Total";
 
 const FormSchema = Yup.object().shape({
   name: Yup.string().min(4, "Name should be at least 4 characters.").required("Name is required"),
@@ -31,7 +31,7 @@ const FormSchema = Yup.object().shape({
   type: Yup.string().required("Please select paymend mode"),
 });
 
-export const Payment : React.FC<PaymentProps> = ({ shipping, payment, subtotal }) => {
+const Payment: React.FC<PaymentProps> = ({ shipping, payment, subtotal }) => {
   useDocumentTitle("Check Out Final Step | Salinaka");
   useScrollTop();
 
@@ -43,7 +43,7 @@ export const Payment : React.FC<PaymentProps> = ({ shipping, payment, subtotal }
     type: payment.type || "paypal",
   };
 
-  export const onConfirm : React.FC<onConfirmProps> = () => {
+  const onConfirm = () => {
     displayActionMessage("Feature not ready yet :)", "info");
   };
 
@@ -67,7 +67,7 @@ export const Payment : React.FC<PaymentProps> = ({ shipping, payment, subtotal }
           <Form className="checkout-step-3">
             <CreditPayment />
             <PayPalPayment />
-            <Total isInternational={shipping.isInternational} subtotal={subtotal} />
+            <Total isInternational={!!shipping.isInternational} subtotal={subtotal} />
           </Form>
         )}
       </Formik>
@@ -76,18 +76,9 @@ export const Payment : React.FC<PaymentProps> = ({ shipping, payment, subtotal }
 };
 
 type PaymentProps = {
-  shipping: PropType.shape({
-    isDone?: bool,
-    isInternational?: bool,
-  }).isRequired,
-  payment: PropType.shape({
-    name?: string,
-    cardnumber?: string,
-    expiry?: string,
-    ccv?: string,
-    type?: string,
-  }).isRequired,
-  subtotal: number,
+  shipping: Shipping;
+  payment: PaymentType;
+  subtotal: number;
 };
 
-export default withCheckout(Payment);
+export const CheckOutStep3 = withCheckout(Payment);

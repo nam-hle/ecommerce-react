@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import logo from "../../../static/logo-full.png";
 import { ADMIN_DASHBOARD } from "../../constants";
 import { ProfileState, AppState } from "../../redux";
-import UserAvatar from "../../views/account/components/UserAvatar";
+import { UserAvatar } from "../../views/account/components/UserAvatar";
 
 export const AdminNavigation = () => {
   const { isAuthenticating, profile } = useSelector<AppState, { isAuthenticating: boolean; profile: ProfileState }>(

@@ -2,7 +2,7 @@ import * as React from "react";
 import { render } from "react-dom";
 import WebFont from "webfontloader";
 
-import App from "./App";
+import { App } from "./App";
 import { Preloader } from "./components/common";
 import "normalize.css/normalize.css";
 import "react-phone-input-2/lib/style.css";

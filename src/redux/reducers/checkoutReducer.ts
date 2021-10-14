@@ -8,7 +8,12 @@ export interface CheckoutState {
 }
 
 const initState: CheckoutState = {
-  shipping: {},
+  shipping: {
+    fullname: "",
+    email: "",
+    address: "",
+    mobile: "",
+  },
   payment: {
     type: "paypal",
     name: "",

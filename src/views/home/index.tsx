@@ -10,7 +10,7 @@ import { ProductShowcase } from "../../components/product";
 import { FEATURED_PRODUCTS, RECOMMENDED_PRODUCTS, SHOP } from "../../constants";
 import { useDocumentTitle, useFeaturedProducts, useRecommendedProducts, useScrollTop } from "../../hooks";
 
-export const Home: React.FC<HomeProps> = () => {
+export const Home: React.FC = () => {
   useDocumentTitle("Salinaka | Home");
   useScrollTop();
 
@@ -77,5 +77,3 @@ export const Home: React.FC<HomeProps> = () => {
     </main>
   );
 };
-
-export default Home;

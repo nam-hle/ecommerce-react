@@ -5,11 +5,21 @@ import { Redirect, withRouter } from "react-router-dom";
 import { SIGNIN } from "../../../constants";
 
 import { calculateTotal } from "../../../helpers";
+import { AppState, BasketState, CheckoutState, ProfileState } from "../../../redux";
 
-export const withCheckout: React.FC<withCheckoutProps> = (Component) =>
+export const withCheckout = (Component: any) =>
   withRouter((props) => {
-    const state = useSelector((store) => ({
-      isAuth: !!store.auth.id && !!store.auth.role,
+    const state = useSelector<
+      AppState,
+      {
+        isAuth: boolean;
+        basket: BasketState;
+        shipping: CheckoutState["shipping"];
+        payment: CheckoutState["payment"];
+        profile: ProfileState;
+      }
+    >((store) => ({
+      isAuth: !!store.auth?.id && !!store.auth?.role,
       basket: store.basket,
       shipping: store.checkout.shipping,
       payment: store.checkout.payment,
@@ -28,7 +38,6 @@ export const withCheckout: React.FC<withCheckoutProps> = (Component) =>
     if (state.isAuth && state.basket.length !== 0) {
       return (
         <Component
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...props}
           basket={state.basket}
           payment={state.payment}
@@ -40,5 +49,3 @@ export const withCheckout: React.FC<withCheckoutProps> = (Component) =>
     }
     return null;
   });
-
-export default withCheckout;

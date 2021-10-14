@@ -10,6 +10,7 @@ import {
   addProduct,
   clearSearchState,
   editProduct,
+  EditProductPayload,
   getProducts,
   removeProduct,
   searchProduct,
@@ -119,9 +120,9 @@ export function* productSaga(action: AnyAction): SagaIterator {
       yield call(initRequest);
 
       const { image, imageCollection } = action.payload.updates;
-      let newUpdates: Product = { ...action.payload.updates };
+      let newUpdates: EditProductPayload["updates"] = { ...action.payload.updates };
 
-      if (image.constructor === File && typeof image === "object") {
+      if (image?.constructor === File && typeof image === "object") {
         try {
           yield call(firebase.deleteImage, action.payload.id);
         } catch (e) {
@@ -133,7 +134,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
       }
 
       if (imageCollection.length > 1) {
-        const existingUploads: { id: number; url: string }[] = [];
+        const existingUploads: File[] = [];
         const newUploads: { file: string }[] = [];
 
         imageCollection.forEach((img) => {
@@ -154,7 +155,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
       } else {
         newUpdates = {
           ...newUpdates,
-          imageCollection: [{ id: new Date().getTime(), url: newUpdates.image }],
+          imageCollection: [{ id: new Date().getTime().toString(), file: "", url: newUpdates.image }],
         };
         // add image thumbnail to image collection from newUpdates to
         // make sure you're adding the url not the file object.

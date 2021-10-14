@@ -11,6 +11,7 @@ import { BasketItemControl } from "./BasketItemControl";
 
 interface BasketItemProps {
   product: Product;
+  basket: Product[];
 }
 
 export const BasketItem: React.FC<BasketItemProps> = ({ product }) => {
@@ -63,5 +64,3 @@ export const BasketItem: React.FC<BasketItemProps> = ({ product }) => {
     </div>
   );
 };
-
-export default BasketItem;

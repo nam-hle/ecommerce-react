@@ -1,8 +1,6 @@
 import { ArrowRightOutlined, ShopOutlined } from "@ant-design/icons";
 
-import PropType from "prop-types";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { BasketItem } from "../../../components/basket";
@@ -10,16 +8,16 @@ import { CHECKOUT_STEP_2 } from "../../../constants";
 import { displayMoney } from "../../../helpers";
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
 
+import { Product } from "../../../redux";
 import { StepTracker } from "../components";
-import withCheckout from "../hoc/withCheckout";
+import { withCheckout } from "../hoc/withCheckout";
 
-export const OrderSummary : React.FC<OrderSummaryProps> = ({ basket, subtotal }) => {
+const OrderSummary: React.FC<OrderSummaryProps> = ({ basket, subtotal }) => {
   useDocumentTitle("Check Out Step 1 | Salinaka");
   useScrollTop();
-  const dispatch = useDispatch();
   const history = useHistory();
-  export const onClickPrevious : React.FC<onClickPreviousProps> = () => history.push("/");
-  export const onClickNext : React.FC<onClickNextProps> = () => history.push(CHECKOUT_STEP_2);
+  const onClickPrevious = () => history.push("/");
+  const onClickNext = () => history.push(CHECKOUT_STEP_2);
 
   return (
     <div className="checkout">
@@ -30,7 +28,7 @@ export const OrderSummary : React.FC<OrderSummaryProps> = ({ basket, subtotal })
         <br />
         <div className="checkout-items">
           {basket.map((product) => (
-            <BasketItem basket={basket} dispatch={dispatch} key={product.id} product={product} />
+            <BasketItem basket={basket} key={product.id} product={product} />
           ))}
         </div>
         <br />
@@ -55,8 +53,8 @@ export const OrderSummary : React.FC<OrderSummaryProps> = ({ basket, subtotal })
 };
 
 type OrderSummaryProps = {
-  basket: PropType.arrayOf(PropType.object).isRequired,
-  subtotal: number,
+  basket: Product[];
+  subtotal: number;
 };
 
-export default withCheckout(OrderSummary);
+export const CheckOutStep1 = withCheckout(OrderSummary);

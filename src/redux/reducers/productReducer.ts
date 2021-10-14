@@ -1,7 +1,7 @@
 import firebase from "firebase";
 import { AnyAction } from "typescript-fsa";
 
-import { ProductForm } from "../../views/admin/components/ProductForm";
+import { ProductFormSchema } from "../../views/admin/components/ProductForm";
 
 import {
   addProduct,
@@ -15,14 +15,14 @@ import {
 
 import DocumentData = firebase.firestore.DocumentData;
 
-export interface Product extends DocumentData, ProductForm {
+export interface Product extends DocumentData, ProductFormSchema {
   id: string;
   image: string;
   imageCollection: ImageCollection;
   imageUrl: string;
   quantity: number;
-  selectedColor: string;
-  selectedSize: number;
+  selectedColor?: string;
+  selectedSize?: number;
 }
 
 export interface SearchedProduct {

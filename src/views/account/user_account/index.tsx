@@ -46,5 +46,3 @@ export const UserAccount: React.FC = () => {
     </UserTab>
   );
 };
-
-export default UserAccount;

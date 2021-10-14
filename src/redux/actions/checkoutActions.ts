@@ -6,16 +6,16 @@ export const setShippingDetails = factory<SetCheckoutShippingPayload>("SET_CHECK
 export type SetCheckoutShippingPayload = Shipping;
 
 export interface Shipping {
-  fullname?: string;
-  email?: string;
-  address?: string;
-  mobile?: string;
+  fullname: string;
+  email: string;
+  address: string;
+  mobile: string;
   isInternational?: boolean;
   isDone?: boolean;
 }
 
 export const setPaymentDetails = factory<SetCheckoutPaymentPayload>("SET_CHECKOUT_PAYMENT_DETAILS");
-export type SetCheckoutPaymentPayload = Payment;
+export type SetCheckoutPaymentPayload = Omit<Payment, "cardnumber" | "ccv">;
 export interface Payment {
   type: string;
   name: string;

@@ -2,7 +2,6 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 
 import { Form, Formik } from "formik";
 
-import PropType from "prop-types";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -12,13 +11,13 @@ import * as Yup from "yup";
 import { Boundary } from "../../../components/common";
 import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from "../../../constants";
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
-import { setShippingDetails } from "../../../redux";
+import { Profile, setShippingDetails, Shipping } from "../../../redux";
 
 import { StepTracker } from "../components";
-import withCheckout from "../hoc/withCheckout";
+import { withCheckout } from "../hoc/withCheckout";
 
-import ShippingForm from "./ShippingForm";
-import ShippingTotal from "./ShippingTotal";
+import { ShippingForm } from "./ShippingForm";
+import { ShippingTotal } from "./ShippingTotal";
 
 const FormSchema = Yup.object().shape({
   fullname: Yup.string()
@@ -39,7 +38,7 @@ const FormSchema = Yup.object().shape({
   isDone: Yup.boolean(),
 });
 
-export const ShippingDetails : React.FC<ShippingDetailsProps> = ({ profile, shipping, subtotal }) => {
+const _ShippingDetails: React.FC<ShippingDetailsProps> = ({ profile, shipping, subtotal }) => {
   useDocumentTitle("Check Out Step 2 | Salinaka");
   useScrollTop();
   const dispatch = useDispatch();
@@ -54,7 +53,7 @@ export const ShippingDetails : React.FC<ShippingDetailsProps> = ({ profile, ship
     isDone: shipping.isDone || false,
   };
 
-  export const onSubmitForm : React.FC<onSubmitFormProps> = (form) => {
+  const onSubmitForm = (form: Shipping) => {
     dispatch(
       setShippingDetails({
         fullname: form.fullname,
@@ -107,21 +106,9 @@ export const ShippingDetails : React.FC<ShippingDetailsProps> = ({ profile, ship
 };
 
 type ShippingDetailsProps = {
-  subtotal: number,
-  profile: PropType.shape({
-    fullname?: string,
-    email?: string,
-    address?: string,
-    mobile?: object,
-  }).isRequired,
-  shipping: PropType.shape({
-    fullname?: string,
-    email?: string,
-    address?: string,
-    mobile?: object,
-    isInternational?: bool,
-    isDone?: bool,
-  }).isRequired,
+  subtotal: number;
+  profile: Profile;
+  shipping: Shipping;
 };
 
-export default withCheckout(ShippingDetails);
+export const CheckOutStep2 = withCheckout(_ShippingDetails);

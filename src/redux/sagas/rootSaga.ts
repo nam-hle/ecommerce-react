@@ -28,7 +28,7 @@ import { profileSaga } from "./profileSaga";
 export function* rootSaga(): SagaIterator {
   yield takeLatest((action: AnyAction) => {
     return [
-      signIn,
+      signIn.started,
       signUp,
       signOut.started,
       signInWithFacebook,

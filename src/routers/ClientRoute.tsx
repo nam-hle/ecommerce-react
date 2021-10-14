@@ -1,16 +1,14 @@
-/* eslint-disable no-nested-ternary */
-
-import PropType from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 
 import { ADMIN_DASHBOARD, SIGNIN } from "../constants";
+import { AppState } from "../redux";
 
-const PrivateRoute = ({ isAuth, role, component: Component, ...rest }) => (
+const _ClientRoute: React.FC<ClientRouteProps> = ({ isAuth, role, component: Component, ...rest }) => (
   <Route
     {...rest}
-    component={(props) => {
+    component={(props: JSX.IntrinsicAttributes) => {
       if (isAuth && role === "USER") {
         return (
           <main className="content">
@@ -27,7 +25,7 @@ const PrivateRoute = ({ isAuth, role, component: Component, ...rest }) => (
         <Redirect
           to={{
             pathname: SIGNIN,
-            state: { from: props.location },
+            state: { from: (props as any).location },
           }}
         />
       );
@@ -35,21 +33,24 @@ const PrivateRoute = ({ isAuth, role, component: Component, ...rest }) => (
   />
 );
 
-PrivateRoute.defaultProps = {
+_ClientRoute.defaultProps = {
   isAuth: false,
   role: "USER",
+  exact: false,
 };
 
-PrivateRoute.propTypes = {
-  isAuth: PropType.bool,
-  role: PropType.string,
-  component: PropType.func.isRequired,
-  rest: PropType.any,
+type ClientRouteProps = {
+  isAuth?: boolean;
+  role?: string;
+  location?: any;
+  component: any;
+  exact?: boolean;
+  path: string;
 };
 
-const mapStateToProps = ({ auth }) => ({
-  isAuth: !!auth,
-  role: auth?.role || "",
+const mapStateToProps = (params: AppState) => ({
+  isAuth: !!params.auth,
+  role: params.auth?.role || "",
 });
 
-export default connect(mapStateToProps)(PrivateRoute);
+export const ClientRoute = connect(mapStateToProps)(_ClientRoute);

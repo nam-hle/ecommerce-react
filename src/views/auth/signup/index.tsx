@@ -2,7 +2,6 @@ import { ArrowRightOutlined, LoadingOutlined } from "@ant-design/icons";
 
 import { Field, Form, Formik } from "formik";
 
-import PropType from "prop-types";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,7 +11,7 @@ import { SocialLogin } from "../../../components/common";
 import { CustomInput } from "../../../components/formik";
 import { SIGNIN } from "../../../constants";
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
-import { signUp, setAuthenticating, setAuthStatus } from "../../../redux";
+import { signUp, setAuthenticating, setAuthStatus, AppState, MiscState } from "../../../redux";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Email is not valid.").required("Email is required."),
@@ -23,8 +22,17 @@ const SignInSchema = Yup.object().shape({
   fullname: Yup.string().required("Full name is required.").min(4, "Name should be at least 4 characters."),
 });
 
-export const SignUp : React.FC<SignUpProps> = ({ history }) => {
-  const { isAuthenticating, authStatus } = useSelector((state) => ({
+export type SignInSchemaForm = {
+  email: string;
+  password: string;
+  fullname: string;
+};
+
+export const SignUp: React.FC<SignUpProps> = ({ history }) => {
+  const { isAuthenticating, authStatus } = useSelector<
+    AppState,
+    { isAuthenticating: boolean; authStatus: MiscState["authStatus"] }
+  >((state) => ({
     isAuthenticating: state.app.isAuthenticating,
     authStatus: state.app.authStatus,
   }));
@@ -41,9 +49,9 @@ export const SignUp : React.FC<SignUpProps> = ({ history }) => {
     [dispatch]
   );
 
-  export const onClickSignIn : React.FC<onClickSignInProps> = () => history.push(SIGNIN);
+  const onClickSignIn = () => history.push(SIGNIN);
 
-  export const onFormSubmit : React.FC<onFormSubmitProps> = (form) => {
+  const onFormSubmit = (form: SignInSchemaForm) => {
     dispatch(
       signUp({
         fullname: form.fullname.trim(),
@@ -147,9 +155,7 @@ export const SignUp : React.FC<SignUpProps> = ({ history }) => {
 };
 
 type SignUpProps = {
-  history: PropType.shape({
-    push?: func,
-  }).isRequired,
+  history: {
+    push: (path: string) => void;
+  };
 };
-
-export default SignUp;

@@ -4,10 +4,14 @@ import React, { lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
+import { v4 as uuidv4 } from "uuid";
+
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
 import { addProduct, AppState, Product } from "../../../redux";
 
-const ProductForm = lazy(() => import("../components/ProductForm"));
+const ProductForm = lazy(() =>
+  import("../components/ProductForm").then(({ ProductForm }) => ({ default: ProductForm }))
+);
 
 const _AddProduct: React.FC<AddProductProps> = () => {
   useScrollTop();
@@ -34,6 +38,7 @@ const _AddProduct: React.FC<AddProductProps> = () => {
           isLoading={isLoading}
           onSubmit={onSubmit}
           product={{
+            id: uuidv4(),
             name: "",
             brand: "",
             price: 0,
@@ -46,6 +51,8 @@ const _AddProduct: React.FC<AddProductProps> = () => {
             isRecommended: false,
             availableColors: [],
             imageCollection: [],
+            imageUrl: "",
+            quantity: 1,
           }}
         />
       </Suspense>

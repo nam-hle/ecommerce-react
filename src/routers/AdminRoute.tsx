@@ -1,14 +1,14 @@
-import PropType from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 
 import { AdminNavigation, AdminSideBar } from "../components/common";
+import { AppState } from "../redux";
 
-const AdminRoute = ({ isAuth, role, component: Component, ...rest }) => (
+const _AdminRoute: React.FC<AdminRouteProps> = ({ isAuth, role, component: Component, ...rest }) => (
   <Route
     {...rest}
-    component={(props) =>
+    component={(props: JSX.IntrinsicAttributes) =>
       isAuth && role === "ADMIN" ? (
         <>
           <AdminNavigation />
@@ -26,21 +26,22 @@ const AdminRoute = ({ isAuth, role, component: Component, ...rest }) => (
   />
 );
 
-const mapStateToProps = ({ auth }) => ({
+const mapStateToProps = ({ auth }: AppState) => ({
   isAuth: !!auth,
   role: auth?.role || "",
 });
 
-AdminRoute.defaultProps = {
+_AdminRoute.defaultProps = {
   isAuth: false,
   role: "USER",
 };
 
-AdminRoute.propTypes = {
-  isAuth: PropType.bool,
-  role: PropType.string,
-  component: PropType.func.isRequired,
-  rest: PropType.any,
+type AdminRouteProps = {
+  isAuth: boolean;
+  role: string;
+  component: any;
+  exact?: boolean;
+  path: string;
 };
 
-export default connect(mapStateToProps)(AdminRoute);
+export const AdminRoute = connect(mapStateToProps)(_AdminRoute);

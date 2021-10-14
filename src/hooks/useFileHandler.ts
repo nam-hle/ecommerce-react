@@ -1,8 +1,9 @@
-/* eslint-disable no-alert */
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const useFileHandler = (initState: Record<string, { id: string; file: string; url: string }[]>) => {
+import { File } from "../redux";
+
+export const useFileHandler = (initState: Record<string, File[]>) => {
   const [imageFile, setImageFile] = useState(initState);
   const [isFileLoading, setFileLoading] = useState(false);
 
@@ -32,9 +33,10 @@ const useFileHandler = (initState: Record<string, { id: string; file: string; ur
       Array.from(event.target.files).forEach((file) => {
         const reader = new FileReader();
         reader.addEventListener("load", (e) => {
+          const x = { file: file as any, url: JSON.stringify(e.target?.result ?? ""), id: uuidv4() };
           setImageFile((oldFiles) => ({
             ...oldFiles,
-            [params.name]: [...oldFiles[params.name], { file: file as any, url: e.target.result, id: uuidv4() }],
+            [params.name]: [...oldFiles[params.name], x],
           }));
         });
         reader.readAsDataURL(file as any);
@@ -46,10 +48,10 @@ const useFileHandler = (initState: Record<string, { id: string; file: string; ur
       const reader = new FileReader();
 
       reader.addEventListener("load", (e) => {
-        setImageFile({
+        setImageFile(() => ({
           ...imageFile,
-          [params.name]: { file: img, url: e.target?.result ?? "" },
-        });
+          [params.name]: [{ file: img, url: JSON.stringify(e.target?.result ?? ""), id: uuidv4() }],
+        }));
         setFileLoading(false);
       });
       reader.readAsDataURL(img);

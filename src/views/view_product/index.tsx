@@ -3,6 +3,7 @@ import { ArrowLeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Select from "react-select";
+import { v4 as uuidv4 } from "uuid";
 
 import { ColorChooser, ImageLoader, MessageDisplay } from "../../components/common";
 import { ProductShowcase } from "../../components/product";
@@ -10,15 +11,15 @@ import { RECOMMENDED_PRODUCTS, SHOP } from "../../constants";
 import { displayMoney } from "../../helpers";
 import { useBasket, useDocumentTitle, useProduct, useRecommendedProducts, useScrollTop } from "../../hooks";
 
-export const ViewProduct: React.FC<ViewProductProps> = () => {
-  const { id } = useParams();
+export const ViewProduct: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const { product, isLoading, error } = useProduct(id);
-  const { addToBasket, isItemOnBasket } = useBasket(id);
+  const { addToBasket, isItemOnBasket } = useBasket();
   useScrollTop();
   useDocumentTitle(`View ${product?.name || "Item"}`);
 
   const [selectedImage, setSelectedImage] = useState(product?.image || "");
-  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedSize, setSelectedSize] = useState<number>(0);
   const [selectedColor, setSelectedColor] = useState("");
 
   const {
@@ -27,25 +28,43 @@ export const ViewProduct: React.FC<ViewProductProps> = () => {
     isLoading: isLoadingFeatured,
     error: errorFeatured,
   } = useRecommendedProducts(6);
-  const colorOverlay = useRef(null);
+  const colorOverlay = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    setSelectedImage(product?.image);
+    setSelectedImage(product?.image ?? "");
   }, [product]);
 
-  export const onSelectedSizeChange: React.FC<onSelectedSizeChangeProps> = (newValue) => {
+  const onSelectedSizeChange = (newValue: any) => {
     setSelectedSize(newValue.value);
   };
 
-  export const onSelectedColorChange: React.FC<onSelectedColorChangeProps> = (color) => {
+  const onSelectedColorChange = (color: any) => {
     setSelectedColor(color);
     if (colorOverlay.current) {
       colorOverlay.current.value = color;
     }
   };
 
-  export const handleAddToBasket: React.FC<handleAddToBasketProps> = () => {
-    addToBasket({ ...product, selectedColor, selectedSize: selectedSize || product.sizes[0] });
+  const handleAddToBasket = () => {
+    addToBasket({
+      availableColors: [],
+      brand: "",
+      description: "",
+      isFeatured: false,
+      isRecommended: false,
+      maxQuantity: 0,
+      name: "",
+      price: 0,
+      sizes: [],
+      ...product,
+      quantity: product?.quantity ?? 1,
+      imageUrl: product?.imageUrl ?? "",
+      imageCollection: product?.imageCollection ?? [],
+      image: product?.image ?? "",
+      id: product?.id || uuidv4(),
+      selectedColor,
+      selectedSize: selectedSize || product?.sizes[0],
+    });
   };
 
   return (
@@ -137,7 +156,7 @@ export const ViewProduct: React.FC<ViewProductProps> = () => {
               <Link to={RECOMMENDED_PRODUCTS}>See All</Link>
             </div>
             {errorFeatured && !isLoadingFeatured ? (
-              <MessageDisplay message={error} action={fetchRecommendedProducts} buttonLabel="Try Again" />
+              <MessageDisplay message={error ?? ""} action={fetchRecommendedProducts} buttonLabel="Try Again" />
             ) : (
               <ProductShowcase products={recommendedProducts} skeletonCount={3} />
             )}
@@ -147,5 +166,3 @@ export const ViewProduct: React.FC<ViewProductProps> = () => {
     </main>
   );
 };
-
-export default ViewProduct;

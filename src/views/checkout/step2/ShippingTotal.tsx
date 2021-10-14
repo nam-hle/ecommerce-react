@@ -1,6 +1,5 @@
 import { useFormikContext } from "formik";
 
-import PropType from "prop-types";
 import React from "react";
 
 import { displayMoney } from "../../../helpers";
@@ -18,6 +17,7 @@ export const ShippingTotal: React.FC<ShippingTotalProps> = ({ subtotal }) => {
             </td>
             <td>
               <h4 className="basket-total-amount text-subtle text-right margin-0 ">
+                {/*@ts-ignore*/}
                 {values.isInternational ? "$50.00" : "$0.00"}
               </h4>
             </td>
@@ -36,6 +36,7 @@ export const ShippingTotal: React.FC<ShippingTotalProps> = ({ subtotal }) => {
             </td>
             <td>
               <h2 className="basket-total-amount text-right">
+                {/* @ts-ignore */}
                 {displayMoney(Number(subtotal) + (values.isInternational ? 50 : 0))}
               </h2>
             </td>
@@ -47,7 +48,5 @@ export const ShippingTotal: React.FC<ShippingTotalProps> = ({ subtotal }) => {
 };
 
 type ShippingTotalProps = {
-  subtotal: number,
+  subtotal: number;
 };
-
-export default ShippingTotal;

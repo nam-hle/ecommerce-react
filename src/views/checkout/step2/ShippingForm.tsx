@@ -3,7 +3,7 @@ import React from "react";
 
 import { CustomInput, CustomMobileInput } from "../../../components/formik";
 
-export const ShippingForm: React.FC<ShippingFormProps> = () => {
+export const ShippingForm: React.FC = () => {
   const { values } = useFormikContext();
   return (
     <div className="checkout-shipping-wrapper">
@@ -40,17 +40,18 @@ export const ShippingForm: React.FC<ShippingFormProps> = () => {
             />
           </div>
           <div className="d-block checkout-field">
+            {/* @ts-ignore */}
             <CustomMobileInput name="mobile" defaultValue={values.mobile} />
           </div>
         </div>
         <div className="checkout-fieldset">
           <Field name="isInternational">
+            {/* @ts-ignore */}
             {({ field, form, meta }) => (
               <div className="checkout-field">
                 {meta.touched && meta.error ? (
                   <span className="label-input label-error">{meta.error}</span>
                 ) : (
-                  // eslint-disable-next-line jsx-a11y/label-has-associated-control
                   <label className="label-input" htmlFor={field.name}>
                     Shipping Option
                   </label>
@@ -81,5 +82,3 @@ export const ShippingForm: React.FC<ShippingFormProps> = () => {
     </div>
   );
 };
-
-export default ShippingForm;

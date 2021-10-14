@@ -1,14 +1,15 @@
-import PropType from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 
 import { ADMIN_DASHBOARD, SIGNIN, SIGNUP } from "../constants";
+import { AppState } from "../redux";
 
-const PublicRoute = ({ isAuth, role, component: Component, path, ...rest }) => (
+const _PublicRoute: React.FC<PublicRouteProps> = ({ isAuth, role, component: Component, path, ...rest }) => (
   <Route
     {...rest}
     render={(props) => {
+      // @ts-ignore
       const { from } = props.location.state || { from: { pathname: "/" } };
 
       if (isAuth && role === "ADMIN") {
@@ -28,23 +29,24 @@ const PublicRoute = ({ isAuth, role, component: Component, path, ...rest }) => (
   />
 );
 
-PublicRoute.defaultProps = {
+_PublicRoute.defaultProps = {
   isAuth: false,
   role: "USER",
   path: "/",
+  exact: false,
 };
 
-PublicRoute.propTypes = {
-  isAuth: PropType.bool,
-  role: PropType.string,
-  component: PropType.func.isRequired,
-  path: PropType.string,
-  rest: PropType.any,
+type PublicRouteProps = {
+  isAuth?: boolean;
+  role?: string;
+  component: any;
+  path?: string;
+  exact?: boolean;
 };
 
-const mapStateToProps = ({ auth }) => ({
-  isAuth: !!auth,
-  role: auth?.role || "",
+const mapStateToProps = (params: AppState) => ({
+  isAuth: !!params.auth,
+  role: params.auth?.role || "",
 });
 
-export default connect(mapStateToProps)(PublicRoute);
+export const PublicRoute = connect(mapStateToProps)(_PublicRoute);

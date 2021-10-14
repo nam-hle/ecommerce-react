@@ -12,7 +12,7 @@ type ShopSelectorResult = {
   isLoading: MiscState["loading"];
 };
 
-const Shop = () => {
+export const Shop = () => {
   useDocumentTitle("Shop | Salinaka");
   useScrollTop();
 
@@ -37,5 +37,3 @@ const Shop = () => {
     </main>
   );
 };
-
-export default Shop;

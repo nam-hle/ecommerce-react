@@ -6,9 +6,9 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { Preloader } from "./components/common";
 import { AppState } from "./redux";
-import AppRouter from "./routers/AppRouter";
+import { AppRouter } from "./routers/AppRouter";
 
-const App: React.FC<AppProps> = ({ store, persistor }) => (
+export const App: React.FC<AppProps> = ({ store, persistor }) => (
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={<Preloader />} persistor={persistor}>
@@ -22,5 +22,3 @@ type AppProps = {
   store: Store<AppState>;
   persistor: Persistor;
 };
-
-export default App;

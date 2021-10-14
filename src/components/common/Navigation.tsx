@@ -6,7 +6,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../../static/logo-full.png";
 import * as ROUTE from "../../constants/routes";
 import { AppState, AuthState } from "../../redux";
-import UserAvatar from "../../views/account/components/UserAvatar";
+import { UserAvatar } from "../../views/account/components/UserAvatar";
 import { BasketToggle } from "../basket";
 
 import { Badge } from "./Badge";

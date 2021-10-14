@@ -1,14 +1,15 @@
 import { CheckOutlined, LoadingOutlined } from "@ant-design/icons";
 
 import { Field, FieldArray, Form, Formik } from "formik";
-
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import * as Yup from "yup";
 
 import { ImageLoader } from "../../../components/common";
 import { CustomColorInput, CustomCreatableSelect, CustomInput, CustomTextarea } from "../../../components/formik";
 import { useFileHandler } from "../../../hooks";
-import { ImageCollection } from "../../../redux";
+import { Product } from "../../../redux";
 
 // Default brand names that I used. You can use what you want
 const brandOptions = [
@@ -67,12 +68,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
   };
 
   const { imageFile, isFileLoading, onFileChange, removeImage } = useFileHandler({
-    image: {},
+    image: [],
     imageCollection: product?.imageCollection || [],
   });
 
   const onSubmitForm = (form: ProductFormSchema) => {
-    if (imageFile.image.file || product.imageUrl) {
+    if (imageFile.image[0].file || product.imageUrl) {
       onSubmit({
         ...form,
         quantity: 1,
@@ -80,8 +81,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
         // of name here instead in firebase functions
         name_lower: form.name.toLowerCase(),
         dateAdded: new Date().getTime(),
-        image: imageFile?.image?.file || product.imageUrl,
+        image: imageFile?.image[0]?.file || product.imageUrl,
         imageCollection: imageFile.imageCollection,
+        id: uuidv4(),
+        imageUrl: "",
       });
     } else {
       // eslint-disable-next-line no-alert
@@ -276,11 +279,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
                 )}
               </div>
               <div className="product-form-image-wrapper">
-                {(imageFile.image.url || product.image) && (
+                {(imageFile.image[0].url || product.image) && (
                   <ImageLoader
                     alt=""
                     className="product-form-image-preview"
-                    src={imageFile.image.url || product.image}
+                    src={imageFile.image[0].url || product.image}
                   />
                 )}
               </div>
@@ -293,15 +296,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
 };
 
 type ProductFormProps = {
-  product: ProductFormSchema & { imageCollection: ImageCollection; imageUrl: string; image: string };
+  product: Product;
   onSubmit: (
-    params: ProductFormSchema & {
+    params: Product & {
       quantity: number;
       // of name here instead in firebase functions
       name_lower: string;
       dateAdded: number;
       image: string;
-      imageCollection: ImageCollection[];
     }
   ) => void;
   isLoading: boolean;

@@ -41,7 +41,7 @@ export type EditAccountForm = {
   };
 };
 
-export const EditProfile: React.FC = () => {
+export const EditAccount: React.FC = () => {
   useDocumentTitle("Edit Account | Salinaka");
   useScrollTop();
 
@@ -71,7 +71,7 @@ export const EditProfile: React.FC = () => {
     mobile: profile.mobile || {},
   };
 
-  const { imageFile, isFileLoading, onFileChange } = useFileHandler({ avatar: {}, banner: {} });
+  const { imageFile, isFileLoading, onFileChange } = useFileHandler({ avatar: [], banner: [] });
 
   const update = (form: EditAccountForm, credentials: Credentials = {}) => {
     dispatch(
@@ -85,8 +85,8 @@ export const EditProfile: React.FC = () => {
           banner: profile.banner,
         },
         files: {
-          bannerFile: imageFile.banner.file,
-          avatarFile: imageFile.avatar.file,
+          bannerFile: imageFile.banner[0].file,
+          avatarFile: imageFile.avatar[0].file,
         },
         credentials,
       })
@@ -104,7 +104,7 @@ export const EditProfile: React.FC = () => {
     // @ts-ignore
     const fieldsChanged = Object.keys(form).some((key) => profile[key] !== form[key]);
 
-    if (fieldsChanged || Boolean(imageFile.banner.file || imageFile.avatar.file)) {
+    if (fieldsChanged || Boolean(imageFile.banner[0].file || imageFile.avatar[0].file)) {
       if (form.email !== profile.email) {
         modal.onOpenModal();
       } else {
@@ -129,7 +129,7 @@ export const EditProfile: React.FC = () => {
                   <ImageLoader
                     alt="Banner"
                     className="user-profile-banner-img"
-                    src={imageFile.banner.url || profile.banner}
+                    src={imageFile.banner[0].url || profile.banner}
                   />
                   {isFileLoading ? (
                     <div className="loading-wrapper">
@@ -150,7 +150,11 @@ export const EditProfile: React.FC = () => {
                   )}
                 </div>
                 <div className="user-profile-avatar-wrapper">
-                  <ImageLoader alt="Avatar" className="user-profile-img" src={imageFile.avatar.url || profile.avatar} />
+                  <ImageLoader
+                    alt="Avatar"
+                    className="user-profile-img"
+                    src={imageFile.avatar[0].url || profile.avatar}
+                  />
                   {isFileLoading ? (
                     <div className="loading-wrapper">
                       <LoadingOutlined />
