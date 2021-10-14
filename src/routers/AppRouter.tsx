@@ -2,8 +2,7 @@ import { createBrowserHistory } from "history";
 import React from "react";
 import { Route, Router, Switch } from "react-router-dom";
 
-import { Basket } from "../components/basket";
-import { Footer, Navigation } from "../components/common";
+import { Footer, Navigation, Basket } from "../components";
 import * as ROUTES from "../constants/routes";
 
 import {

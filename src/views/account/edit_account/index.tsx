@@ -1,10 +1,7 @@
 import { EditOutlined, LoadingOutlined } from "@ant-design/icons";
-
 import { Formik } from "formik";
-
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import * as Yup from "yup";
 
 import { Boundary, ImageLoader } from "../../../components/common";

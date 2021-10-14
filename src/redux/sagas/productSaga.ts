@@ -12,6 +12,7 @@ import {
   editProduct,
   EditProductPayload,
   getProducts,
+  ImageFile,
   removeProduct,
   searchProduct,
   setLoading,
@@ -77,17 +78,17 @@ export function* productSaga(action: AnyAction): SagaIterator {
       yield call(initRequest);
 
       const { imageCollection } = action.payload;
-      const key = yield call(firebase.generateKey);
-      const downloadURL = yield call(firebase.storeImage, key, "products", action.payload.image);
+      const key: string = yield call(firebase.generateKey);
+      const downloadURL = yield call(firebase.storeImage, key, "products", action.payload.image || "");
       const image = { id: key, url: downloadURL };
       let images: { id: string; url: string }[] = [];
 
-      if (imageCollection.length !== 0) {
-        const imageKeys = yield all(imageCollection.map(() => call(firebase.generateKey)));
+      if (imageCollection.length !== 0 && imageCollection.every((e) => e.file)) {
+        const imageKeys: string[] = yield all(imageCollection.map(() => call(firebase.generateKey)));
         const imageUrls: string[] = yield all(
-          imageCollection.map((img, i) => call(firebase.storeImage, imageKeys[i](), "products", img.file))
+          imageCollection.map((img, i) => call(firebase.storeImage, imageKeys[i], "products", img.file || ""))
         );
-        images = imageUrls.map((url, i) => ({ id: imageKeys[i](), url }));
+        images = imageUrls.map((url, i) => ({ id: imageKeys[i], url }));
       }
 
       const product: Product = {
@@ -133,8 +134,8 @@ export function* productSaga(action: AnyAction): SagaIterator {
         newUpdates = { ...newUpdates, image: url };
       }
 
-      if (imageCollection.length > 1) {
-        const existingUploads: File[] = [];
+      if (imageCollection?.length && imageCollection.length > 1) {
+        const existingUploads: ImageFile[] = [];
         const newUploads: { file: string }[] = [];
 
         imageCollection.forEach((img) => {
@@ -152,7 +153,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
         );
         const images = imageUrls.map((url, i) => ({ id: imageKeys[i](), url }));
         newUpdates = { ...newUpdates, imageCollection: [...existingUploads, ...images] };
-      } else {
+      } else if (newUpdates.image) {
         newUpdates = {
           ...newUpdates,
           imageCollection: [{ id: new Date().getTime().toString(), file: "", url: newUpdates.image }],

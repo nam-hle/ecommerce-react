@@ -1,7 +1,7 @@
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 
-import { ProductAppliedFilters, ProductGrid, ProductList } from "../../components/product";
+import { ProductAppliedFilters, ProductGrid, ProductList } from "../../components";
 import { useDocumentTitle, useScrollTop } from "../../hooks";
 import { MiscState, AppState, Product, ProductState, selectFilter } from "../../redux";
 

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { HOME, SIGNIN } from "../../constants";
 import { AuthState } from "../../redux";
-import { UserNav } from "../../views/account/components/UserAvatar";
+import { UserAvatar } from "../../views/account/components/UserAvatar";
 import { BasketToggle } from "../basket";
 
 import { Badge } from "./Badge";
@@ -45,7 +45,7 @@ export const MobileNavigation: React.FC<NavigationProps> = (props) => {
         <ul className="mobile-navigation-menu">
           {user ? (
             <li className="mobile-navigation-item">
-              <UserNav />
+              <UserAvatar />
             </li>
           ) : (
             <>

@@ -1,4 +1,4 @@
-export { ProductForm } from "./ProductForm";
-export { ProductItem } from "./ProductItem";
-export { ProductsNavbar } from "./ProductsNavbar";
-export { ProductsTable } from "./ProductsTable";
+export * from "./ProductForm";
+export * from "./ProductItem";
+export * from "./ProductsNavbar";
+export * from "./ProductsTable";

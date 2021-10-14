@@ -105,7 +105,7 @@ export const Basket: React.FC = () => {
             </div>
           )}
           {basket.map((product, i) => (
-            <BasketItem key={`${product.id}_${i}`} product={product} />
+            <BasketItem basket={basket} key={`${product.id}_${i}`} product={product} />
           ))}
         </div>
         <div className="basket-checkout">

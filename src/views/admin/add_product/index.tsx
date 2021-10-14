@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
-import { addProduct, AppState, Product } from "../../../redux";
+import { addProduct, AddProductPayload, AppState } from "../../../redux";
 
 const ProductForm = lazy(() =>
   import("../components/ProductForm").then(({ ProductForm }) => ({ default: ProductForm }))
@@ -19,7 +19,7 @@ const _AddProduct: React.FC<AddProductProps> = () => {
   const isLoading = useSelector<AppState, boolean>((state) => state.app.loading);
   const dispatch = useDispatch();
 
-  const onSubmit = (product: Product) => {
+  const onSubmit = (product: AddProductPayload) => {
     dispatch(addProduct.started(product));
   };
 

@@ -15,13 +15,13 @@ export interface Shipping {
 }
 
 export const setPaymentDetails = factory<SetCheckoutPaymentPayload>("SET_CHECKOUT_PAYMENT_DETAILS");
-export type SetCheckoutPaymentPayload = Omit<Payment, "cardnumber" | "ccv">;
+export type SetCheckoutPaymentPayload = Payment;
 export interface Payment {
   type: string;
   name: string;
-  cardnumber: string;
+  cardnumber?: string;
   expiry: string;
-  ccv: string;
+  ccv?: string;
 }
 
 export const resetCheckout = factory<ResetCheckoutPayload>("RESET_CHECKOUT");

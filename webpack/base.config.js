@@ -6,7 +6,7 @@ const resolve = (dir) => {
 };
 
 module.exports = {
-  entry: ["@babel/polyfill", resolve("lib/index.jsx")],
+  entry: ["@babel/polyfill", resolve("lib/index.js")],
   output: {
     path: resolve("dist"),
     filename: "js/[name].bundle.js",

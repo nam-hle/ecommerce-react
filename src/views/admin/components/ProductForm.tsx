@@ -283,7 +283,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
                   <ImageLoader
                     alt=""
                     className="product-form-image-preview"
-                    src={imageFile.image[0].url || product.image}
+                    src={imageFile.image[0].url || product.image || ""}
                   />
                 )}
               </div>

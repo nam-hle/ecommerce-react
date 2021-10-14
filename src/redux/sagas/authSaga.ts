@@ -236,9 +236,6 @@ export function* authSaga(action: AnyAction): SagaIterator {
   }
 
   if (onAuthStateChanged.failed.match(action)) {
-    console.log("here");
-    console.log(clearProfile({}));
-    console.log(signOut.done({ params: {}, result: {} }));
     yield put(clearProfile({}));
     yield put(signOut.done({ params: {}, result: {} }));
     return;
@@ -252,8 +249,6 @@ export function* authSaga(action: AnyAction): SagaIterator {
     }
     return;
   }
-
-  console.log("===>", action);
 
   throw new Error("AuthSaga.ts/Unexpected Action Type.");
 }

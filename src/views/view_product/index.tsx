@@ -5,8 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import Select from "react-select";
 import { v4 as uuidv4 } from "uuid";
 
-import { ColorChooser, ImageLoader, MessageDisplay } from "../../components/common";
-import { ProductShowcase } from "../../components/product";
+import { ColorChooser, ImageLoader, MessageDisplay, ProductShowcase } from "../../components";
 import { RECOMMENDED_PRODUCTS, SHOP } from "../../constants";
 import { displayMoney } from "../../helpers";
 import { useBasket, useDocumentTitle, useProduct, useRecommendedProducts, useScrollTop } from "../../hooks";

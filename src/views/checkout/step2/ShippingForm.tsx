@@ -1,7 +1,7 @@
 import { Field, useFormikContext } from "formik";
 import React from "react";
 
-import { CustomInput, CustomMobileInput } from "../../../components/formik";
+import { CustomInput, CustomMobileInput } from "../../../components";
 
 export const ShippingForm: React.FC = () => {
   const { values } = useFormikContext();

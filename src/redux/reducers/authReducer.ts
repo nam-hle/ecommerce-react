@@ -1,6 +1,6 @@
 import { AnyAction } from "typescript-fsa";
 
-import { signInSuccess, signOut } from "../actions";
+import { signIn, signOut } from "../actions";
 
 export type AuthState = {
   id: string;
@@ -13,11 +13,9 @@ export function authReducer(state: AuthState | undefined, action: AnyAction): Au
     return null;
   }
 
-  if (signInSuccess.match(action)) {
+  if (signIn.done.match(action)) {
     return {
-      id: action.payload.id,
-      role: action.payload.role,
-      provider: action.payload.provider,
+      ...action.payload.result,
     };
   }
 

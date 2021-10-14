@@ -4,7 +4,7 @@ import { Store } from "redux";
 import { Persistor } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
-import { Preloader } from "./components/common";
+import { Preloader } from "./components";
 import { AppState } from "./redux";
 import { AppRouter } from "./routers/AppRouter";
 

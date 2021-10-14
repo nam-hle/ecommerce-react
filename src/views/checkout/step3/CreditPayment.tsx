@@ -1,7 +1,7 @@
 import { Field, useFormikContext } from "formik";
 import React, { useCallback, useEffect, useRef } from "react";
 
-import { CustomInput } from "../../../components/formik";
+import { CustomInput } from "../../../components";
 import { Payment } from "../../../redux";
 
 export const CreditPayment: React.FC = () => {

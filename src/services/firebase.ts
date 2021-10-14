@@ -4,7 +4,7 @@ import "firebase/firestore";
 import "firebase/storage";
 import firebase from "firebase/app";
 
-import { BasketState, Profile, Product } from "../redux";
+import { BasketState, Profile, Product, EditProductPayload } from "../redux";
 
 import firebaseConfig from "./config";
 
@@ -251,7 +251,8 @@ class Firebase {
 
   deleteImage = (id: string) => this.storage.ref("products").child(id).delete();
 
-  editProduct = (id: string, updates: Product) => this.db.collection("products").doc(id).update(updates);
+  editProduct = (id: string, updates: EditProductPayload["updates"]) =>
+    this.db.collection("products").doc(id).update(updates);
 
   removeProduct = (id: string) => this.db.collection("products").doc(id).delete();
 }

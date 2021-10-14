@@ -4,8 +4,7 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { Boundary, MessageDisplay } from "../../components/common";
-import { ProductGrid } from "../../components/product";
+import { Boundary, MessageDisplay, ProductGrid } from "../../components";
 import { useDidMount } from "../../hooks";
 
 import { setRequestStatus, searchProduct, AppState, Product, BasketState, MiscState } from "../../redux";

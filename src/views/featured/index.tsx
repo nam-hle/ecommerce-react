@@ -1,8 +1,7 @@
 import React from "react";
 
 import bannerImg from "../../../static/banner-guy.png";
-import { MessageDisplay } from "../../components/common";
-import { ProductShowcase } from "../../components/product";
+import { MessageDisplay, ProductShowcase } from "../../components";
 import { useDocumentTitle, useFeaturedProducts, useScrollTop } from "../../hooks";
 
 export const FeaturedProducts = () => {

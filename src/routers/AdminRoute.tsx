@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 
-import { AdminNavigation, AdminSideBar } from "../components/common";
+import { AdminNavigation, AdminSideBar } from "../components";
 import { AppState } from "../redux";
 
 const _AdminRoute: React.FC<AdminRouteProps> = ({ isAuth, role, component: Component, ...rest }) => (

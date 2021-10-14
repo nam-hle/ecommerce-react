@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 
 import * as Yup from "yup";
 
-import { Boundary } from "../../../components/common";
+import { Boundary } from "../../../components";
 import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from "../../../constants";
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
 import { Profile, setShippingDetails, Shipping } from "../../../redux";

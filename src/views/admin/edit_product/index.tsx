@@ -5,7 +5,7 @@ import { Redirect, RouteComponentProps, withRouter } from "react-router-dom";
 
 import { useDocumentTitle, useProduct, useScrollTop } from "../../../hooks";
 import { editProduct } from "../../../redux";
-import { ProductFormSchema } from "../components/ProductForm";
+import { ProductFormSchema } from "../components";
 
 const ProductForm = lazy(() =>
   import("../components/ProductForm").then(({ ProductForm }) => ({ default: ProductForm }))

@@ -23,7 +23,7 @@ export const BasketItem: React.FC<BasketItemProps> = ({ product }) => {
       <BasketItemControl product={product} />
       <div className="basket-item-wrapper">
         <div className="basket-item-img-wrapper">
-          <ImageLoader alt={product.name} className="basket-item-img" src={product.image} />
+          <ImageLoader alt={product.name} className="basket-item-img" src={product.image || ""} />
         </div>
         <div className="basket-item-details">
           <Link to={`/product/${product.id}`} onClick={() => document.body.classList.remove("is-basket-open")}>

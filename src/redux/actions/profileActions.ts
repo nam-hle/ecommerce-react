@@ -1,6 +1,6 @@
 import actionCreatorFactory from "typescript-fsa";
 
-import { Profile } from "../reducers/profileReducer";
+import { Profile } from "../reducers";
 
 const factory = actionCreatorFactory("PROFILE");
 
