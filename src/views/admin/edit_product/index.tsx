@@ -1,15 +1,11 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import React, { lazy, Suspense } from "react";
+import React, { Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { Redirect, RouteComponentProps, withRouter } from "react-router-dom";
 
 import { useDocumentTitle, useProduct, useScrollTop } from "../../../hooks";
 import { editProduct } from "../../../redux";
-import { ProductFormSchema } from "../components";
-
-const ProductForm = lazy(() =>
-  import("../components/ProductForm").then(({ ProductForm }) => ({ default: ProductForm }))
-);
+import { ProductForm, ProductFormSchema } from "../components";
 
 const _EditProduct: React.FC<EditProductProps> = ({ match }) => {
   useDocumentTitle("Edit Product | Salinaka");
@@ -34,6 +30,7 @@ const _EditProduct: React.FC<EditProductProps> = ({ match }) => {
               <LoadingOutlined />
             </div>
           }>
+          {/* @ts-ignore */}
           <ProductForm isLoading={isLoading} onSubmit={onSubmitForm} product={product} />
         </Suspense>
       )}

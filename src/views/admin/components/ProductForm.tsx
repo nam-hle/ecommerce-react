@@ -43,8 +43,8 @@ export type ProductFormSchema = {
   availableColors: string[];
   brand: string;
   description: string;
-  isFeatured: boolean;
-  isRecommended: boolean;
+  isFeatured?: boolean;
+  isRecommended?: boolean;
   keywords?: string[];
   maxQuantity: number;
   name: string;
@@ -53,7 +53,7 @@ export type ProductFormSchema = {
 };
 
 export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isLoading }) => {
-  const initFormikValues = {
+  const initFormikValues: ProductFormSchema = {
     name: product?.name || "",
     brand: product?.brand || "",
     price: product?.price || 0,

@@ -26,6 +26,7 @@ export const ImageLoader: React.FC<ImageLoaderProps> = ({ src, alt, className })
         alt={alt || ""}
         className={`${className || ""} ${loaded ? "is-img-loaded" : "is-img-loading"}`}
         onLoad={onLoad}
+        // @ts-ignore
         src={src}
       />
     </>

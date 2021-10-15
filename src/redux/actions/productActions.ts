@@ -1,6 +1,6 @@
 import actionCreatorFactory from "typescript-fsa";
 
-import { ProductFormSchema } from "../../views/admin/components/ProductForm";
+import { ProductFormSchema } from "../../views/admin";
 
 import { Product, SearchedProduct } from "../reducers";
 const factory = actionCreatorFactory("PRODUCT");

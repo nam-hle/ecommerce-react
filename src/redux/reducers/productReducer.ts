@@ -1,7 +1,7 @@
 import firebase from "firebase";
 import { AnyAction } from "typescript-fsa";
 
-import { ProductFormSchema } from "../../views/admin/components/ProductForm";
+import { ProductFormSchema } from "../../views/admin";
 
 import {
   addProduct,

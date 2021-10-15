@@ -3,6 +3,16 @@ import { v4 as uuidv4 } from "uuid";
 
 import { AddImageFile } from "../redux";
 
+function arrayBufferToString(buffer: string | ArrayBuffer | null | undefined): string {
+  if (!buffer) {
+    return "";
+  }
+  if (typeof buffer === "string") {
+    return buffer;
+  }
+  return new Uint16Array(buffer).toString();
+}
+
 export const useFileHandler = (initState: Record<string, AddImageFile[]>) => {
   const [imageFile, setImageFile] = useState(initState);
   const [isFileLoading, setFileLoading] = useState(false);
@@ -16,12 +26,13 @@ export const useFileHandler = (initState: Record<string, AddImageFile[]>) => {
     });
   };
 
-  const onFileChange = (event: any, params: { name: string; type: string }) => {
+  const onFileChange = (event: any, params: { name: string; type: "single" | "multiple" }) => {
+    console.log({ params });
+    const inputFiles = event.target.files as FileList;
     const val = event.target.value;
-    const img: File = event.target.files[0];
+    const img: File = inputFiles[0];
     const size = img.size / 1024 / 1024;
     const regex = /(\.jpg|\.jpeg|\.png)$/i;
-    console.log({ img, size, val });
 
     setFileLoading(true);
     if (!regex.exec(val)) {
@@ -31,7 +42,7 @@ export const useFileHandler = (initState: Record<string, AddImageFile[]>) => {
       alert("File size exceeded 500kb, consider optimizing your image");
       setFileLoading(false);
     } else if (params.type === "multiple") {
-      Array.from(event.target.files).forEach((file) => {
+      Array.from(inputFiles).forEach((file) => {
         const reader = new FileReader();
         reader.addEventListener("load", (e) => {
           const x = { file: file as any, url: JSON.stringify(e.target?.result ?? ""), id: uuidv4() };
@@ -40,7 +51,7 @@ export const useFileHandler = (initState: Record<string, AddImageFile[]>) => {
             [params.name]: [...oldFiles[params.name], x],
           }));
         });
-        reader.readAsDataURL(file as any);
+        reader.readAsDataURL(file);
       });
 
       setFileLoading(false);
@@ -49,14 +60,16 @@ export const useFileHandler = (initState: Record<string, AddImageFile[]>) => {
       const reader = new FileReader();
 
       reader.addEventListener("load", (e) => {
-        console.log("@@@", e.target?.result);
-        setImageFile(() => ({
-          ...imageFile,
-          [params.name]: [{ file: img, url: JSON.stringify(e.target?.result ?? ""), id: uuidv4() }],
+        console.log(e.target?.result);
+        setImageFile((oldImageFiles) => ({
+          ...oldImageFiles,
+          [params.name]: [
+            ...oldImageFiles[params.name],
+            { file: img, url: arrayBufferToString(e.target?.result), id: uuidv4() },
+          ],
         }));
         setFileLoading(false);
       });
-      console.log("here");
       reader.readAsDataURL(img);
     }
   };

@@ -66,6 +66,7 @@ export const EditAccount: React.FC = () => {
   const { imageFile, isFileLoading, onFileChange } = useFileHandler({ avatar: [], banner: [] });
 
   const update = (form: EditAccountForm, credentials: Credentials = {}) => {
+    console.log("dispatch", { form, imageFile });
     dispatch(
       updateProfile.started({
         updates: {
@@ -86,12 +87,14 @@ export const EditAccount: React.FC = () => {
   };
 
   const onConfirmUpdate = (form: EditAccountForm, password: string | undefined) => {
+    console.log("onConfirmUpdate", form);
     if (password) {
       update(form, { email: form.email, password });
     }
   };
 
   const onSubmitUpdate = (form: EditAccountForm) => {
+    console.log("onSubmitUpdate", { form });
     // check if data has changed
     // @ts-ignore
     const fieldsChanged = Object.keys(form).some((key) => profile[key] !== form[key]);
@@ -100,6 +103,7 @@ export const EditAccount: React.FC = () => {
       if (form.email !== profile.email) {
         modal.onOpenModal();
       } else {
+        console.log("@@@");
         update(form);
       }
     }

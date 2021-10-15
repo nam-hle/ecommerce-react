@@ -1,6 +1,6 @@
 import { LoadingOutlined } from "@ant-design/icons";
 
-import React, { lazy, Suspense } from "react";
+import React, { Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
@@ -8,10 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
 import { addProduct, AddProductPayload, AppState } from "../../../redux";
-
-const ProductForm = lazy(() =>
-  import("../components/ProductForm").then(({ ProductForm }) => ({ default: ProductForm }))
-);
+import { ProductForm } from "../components";
 
 const _AddProduct: React.FC<AddProductProps> = () => {
   useScrollTop();
@@ -46,6 +43,7 @@ const _AddProduct: React.FC<AddProductProps> = () => {
             description: "",
             keywords: [],
             sizes: [],
+            // @ts-ignore
             image: undefined,
             isFeatured: false,
             isRecommended: false,
