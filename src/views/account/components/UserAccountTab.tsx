@@ -15,10 +15,10 @@ const _UserProfile: React.FC<UserProfileProps> = (props) => {
       <div className="user-profile-block">
         <div className="user-profile-banner">
           <div className="user-profile-banner-wrapper">
-            <ImageLoader alt="Banner" className="user-profile-banner-img" src={profile.banner} />
+            <ImageLoader alt="Banner" className="user-profile-banner-img" src={profile.banner || ""} />
           </div>
           <div className="user-profile-avatar-wrapper">
-            <ImageLoader alt="Avatar" className="user-profile-img" src={profile.avatar} />
+            <ImageLoader alt="Avatar" className="user-profile-img" src={profile.avatar || ""} />
           </div>
           <button
             className="button button-small user-profile-edit"

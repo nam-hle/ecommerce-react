@@ -130,6 +130,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
       };
 
       yield call(firebase.addUser, ref.user.uid, user);
+
       yield put(setProfile(user));
       yield put(setAuthenticating(false));
     } catch (e) {
@@ -185,8 +186,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
       yield put(setBasketItems(user.basket));
       yield put(
         signIn.done({
-          // @ts-ignore
-          params: {},
+          params: user,
           result: {
             id: action.payload.result.uid,
             role: user.role,

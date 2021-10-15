@@ -17,7 +17,6 @@ class Firebase {
 
   constructor() {
     if (!app.apps.length) {
-      console.log({ firebaseConfig });
       app.initializeApp(firebaseConfig);
     }
 
@@ -29,7 +28,6 @@ class Firebase {
   // AUTH ACTIONS ------------
 
   createAccount = (email: string, password: string) => {
-    console.log("createAccount", email, password);
     return this.auth.createUserWithEmailAndPassword(email, password);
   };
 
@@ -87,7 +85,7 @@ class Firebase {
         .catch((error) => reject(error));
     });
 
-  updateProfile = (id: string, updates: Profile) => this.db.collection("users").doc(id).update(updates);
+  updateProfile = (id: string, updates: Partial<Profile>) => this.db.collection("users").doc(id).update(updates);
 
   onAuthStateChanged = () =>
     new Promise((resolve, reject) => {
@@ -148,7 +146,6 @@ class Firebase {
               const products: Product[] = [];
               snapshot.forEach((doc) => products.push({ ...doc.data(), id: doc.id }));
               const lastKey = snapshot.docs[snapshot.docs.length - 1];
-              console.log({ total, products });
 
               resolve({ items: products, lastKey, total });
             }

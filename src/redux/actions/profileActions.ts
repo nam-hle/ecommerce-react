@@ -19,7 +19,7 @@ export interface UpdateEmailPayload {
 
 export const updateProfile = factory.async<UpdateProfilePayload, UpdateProfileSuccessPayload>("UPDATE_PROFILE");
 export interface UpdateProfilePayload {
-  updates: Profile;
+  updates: Partial<Profile>;
   files: ProfileFiles;
   credentials: Credentials;
 }
@@ -32,5 +32,5 @@ export interface Credentials {
   password?: string;
 }
 export interface UpdateProfileSuccessPayload {
-  updates: Profile;
+  updates: Partial<Profile>;
 }

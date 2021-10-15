@@ -48,7 +48,7 @@ const _UserNav: React.FC<UserNav> = () => {
       <LoadingOutlined />
     </div>
   ) : (
-    <div className="user-nav" onClick={onClickNav} onKeyDown={() => {}} ref={userNav} role="button" tabIndex={0}>
+    <div className="user-nav" onClick={onClickNav} ref={userNav} role="button" tabIndex={0}>
       <h5 className="text-overflow-ellipsis">{profile.fullname && profile.fullname.split(" ")[0]}</h5>
       <div className="user-nav-img-wrapper">
         <img alt="" className="user-nav-img" src={profile.avatar} />

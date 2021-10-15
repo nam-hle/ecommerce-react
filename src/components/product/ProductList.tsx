@@ -11,7 +11,6 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
 
   const fetchProducts = useCallback(() => {
     setFetching(true);
-    console.log("here");
     dispatch(getProducts.started(products.lastRefKey));
   }, [products.lastRefKey]); // eslint-disable-line react-hooks/exhaustive-deps
 

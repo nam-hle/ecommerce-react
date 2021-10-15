@@ -42,7 +42,7 @@ export const onAuthStateChanged = factory.async<
   OnAuthStateChangedResult,
   OnAuthStateChangedError
 >("AUTH_STATE_CHANGED");
-export interface OnAuthStateChangedParam {}
+export type OnAuthStateChangedParam = void;
 export type OnAuthStateChangedResult = firebase.User;
 
 export type OnAuthStateChangedError = string;

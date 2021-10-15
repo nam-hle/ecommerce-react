@@ -5,7 +5,6 @@ export const UserTab: React.FC<UserTabProps> = (props) => {
   const [activeTab, setActiveTab] = useState(0);
   const onClickTabItem = (index: number) => setActiveTab(index);
 
-  console.log({ children });
   return (
     <div className="user-tab">
       <div className="user-tab-nav">

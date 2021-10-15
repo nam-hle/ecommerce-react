@@ -7,6 +7,7 @@ import { displayActionMessage } from "../../helpers";
 import { history } from "../../routers/AppRouter";
 import firebase from "../../services/firebase";
 import { updateEmail, updateProfile, setLoading } from "../actions";
+import { Profile } from "../reducers";
 
 interface ProfileError extends Error {
   code: string;
@@ -48,7 +49,7 @@ export function* profileSaga(action: AnyAction): SagaIterator {
         const avatarURL = avatarFile
           ? yield call(firebase.storeImage, state.auth.id, "avatar", avatarFile)
           : action.payload.updates.avatar;
-        const updates = { ...action.payload.updates, avatar: avatarURL, banner: bannerURL };
+        const updates: Profile = { ...action.payload.updates, avatar: avatarURL, banner: bannerURL };
 
         yield call(firebase.updateProfile, state.auth.id, updates);
         yield put(updateProfile.done({ params: action.payload, result: { updates } }));

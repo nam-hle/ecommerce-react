@@ -2,16 +2,6 @@ import { AnyAction } from "typescript-fsa";
 
 import { clearProfile, setProfile, updateProfile } from "../actions";
 
-// const initState = {
-//   fullname: 'Pedro Juan',
-//   email: 'juanpedro@gmail.com',
-//   address: '',
-//   mobile: {},
-//   avatar: profile,
-//   banner,
-//   dateJoined: 1954234787348
-// };
-
 export interface Mobile {
   country?: string;
   countryCode?: string;
@@ -24,8 +14,8 @@ export interface Profile {
   email?: string | null;
   address?: string;
   mobile?: Mobile;
-  avatar?: any;
-  banner?: any;
+  avatar?: string;
+  banner?: string;
   dateJoined?: string;
   role?: string;
 }
@@ -35,10 +25,7 @@ export interface File {
   avatarFile: string;
 }
 
-export interface ProfileState extends Profile {
-  files?: File[];
-  credentials?: string[];
-}
+export type ProfileState = Profile;
 
 export function profileReducer(state: ProfileState | undefined, action: AnyAction): ProfileState {
   if (state === undefined) {
@@ -50,7 +37,7 @@ export function profileReducer(state: ProfileState | undefined, action: AnyActio
   }
 
   if (updateProfile.done.match(action)) {
-    return { ...state, ...action.payload.result };
+    return { ...state, ...action.payload.result.updates };
   }
 
   if (clearProfile.match(action)) {

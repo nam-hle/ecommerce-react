@@ -7,17 +7,19 @@ function arrayBufferToString(buffer: string | ArrayBuffer | null | undefined): s
   if (!buffer) {
     return "";
   }
+
   if (typeof buffer === "string") {
     return buffer;
   }
+
   return new Uint16Array(buffer).toString();
 }
 
-export const useFileHandler = (initState: Record<string, AddImageFile[]>) => {
+export function useFileHandler<T extends string>(initState: Record<T, AddImageFile[]>) {
   const [imageFile, setImageFile] = useState(initState);
   const [isFileLoading, setFileLoading] = useState(false);
 
-  const removeImage = (params: { id: string; name: string }) => {
+  const removeImage = (params: { id: string; name: T }) => {
     const items = imageFile[params.name].filter((item) => item.id !== params.id);
 
     setImageFile({
@@ -26,52 +28,65 @@ export const useFileHandler = (initState: Record<string, AddImageFile[]>) => {
     });
   };
 
-  const onFileChange = (event: any, params: { name: string; type: "single" | "multiple" }) => {
-    console.log({ params });
-    const inputFiles = event.target.files as FileList;
-    const val = event.target.value;
-    const img: File = inputFiles[0];
+  const onFileChange = (
+    event: { target: { value: string; files: FileList | null } },
+    params: { name: T; type: "single" | "multiple" }
+  ) => {
+    const { files, value } = event.target;
+
+    if (!files || !files[0]) {
+      return;
+    }
+
+    const img: File = files[0];
     const size = img.size / 1024 / 1024;
-    const regex = /(\.jpg|\.jpeg|\.png)$/i;
 
     setFileLoading(true);
-    if (!regex.exec(val)) {
+    if (!/(\.jpg|\.jpeg|\.png)$/i.exec(value)) {
       alert("File type must be JPEG or PNG");
       setFileLoading(false);
-    } else if (size > 0.5) {
+      return;
+    }
+
+    if (size > 0.5) {
       alert("File size exceeded 500kb, consider optimizing your image");
       setFileLoading(false);
-    } else if (params.type === "multiple") {
-      Array.from(inputFiles).forEach((file) => {
+      return;
+    }
+
+    if (params.type === "multiple") {
+      Array.from(files).forEach((file) => {
         const reader = new FileReader();
         reader.addEventListener("load", (e) => {
-          const x = { file: file as any, url: JSON.stringify(e.target?.result ?? ""), id: uuidv4() };
           setImageFile((oldFiles) => ({
             ...oldFiles,
-            [params.name]: [...oldFiles[params.name], x],
+            [params.name]: [
+              ...oldFiles[params.name],
+              { file, url: arrayBufferToString(e.target?.result ?? ""), id: uuidv4() },
+            ],
           }));
         });
         reader.readAsDataURL(file);
       });
 
       setFileLoading(false);
-    } else {
-      // type is single
-      const reader = new FileReader();
-
-      reader.addEventListener("load", (e) => {
-        console.log(e.target?.result);
-        setImageFile((oldImageFiles) => ({
-          ...oldImageFiles,
-          [params.name]: [
-            ...oldImageFiles[params.name],
-            { file: img, url: arrayBufferToString(e.target?.result), id: uuidv4() },
-          ],
-        }));
-        setFileLoading(false);
-      });
-      reader.readAsDataURL(img);
+      return;
     }
+
+    // type is single
+    const reader = new FileReader();
+
+    reader.addEventListener("load", (e) => {
+      setImageFile((oldImageFiles) => ({
+        ...oldImageFiles,
+        [params.name]: [
+          ...oldImageFiles[params.name],
+          { file: img, url: arrayBufferToString(e.target?.result), id: uuidv4() },
+        ],
+      }));
+      setFileLoading(false);
+    });
+    reader.readAsDataURL(img);
   };
 
   return {
@@ -81,4 +96,4 @@ export const useFileHandler = (initState: Record<string, AddImageFile[]>) => {
     onFileChange,
     removeImage,
   };
-};
+}
