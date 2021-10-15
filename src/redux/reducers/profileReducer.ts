@@ -12,11 +12,18 @@ import { clearProfile, setProfile, updateProfile } from "../actions";
 //   dateJoined: 1954234787348
 // };
 
+export interface Mobile {
+  country: string;
+  countryCode: string;
+  dialCode: string;
+  value: string;
+}
+
 export interface Profile {
   fullname?: string;
   email?: string | null;
   address?: string;
-  mobile?: any;
+  mobile?: Mobile;
   avatar?: any;
   banner?: any;
   dateJoined?: string;

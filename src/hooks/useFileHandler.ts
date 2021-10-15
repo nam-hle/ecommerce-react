@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { ImageFile } from "../redux";
+import { AddImageFile } from "../redux";
 
-export const useFileHandler = (initState: Record<string, ImageFile[]>) => {
+export const useFileHandler = (initState: Record<string, AddImageFile[]>) => {
   const [imageFile, setImageFile] = useState(initState);
   const [isFileLoading, setFileLoading] = useState(false);
 
@@ -18,9 +18,10 @@ export const useFileHandler = (initState: Record<string, ImageFile[]>) => {
 
   const onFileChange = (event: any, params: { name: string; type: string }) => {
     const val = event.target.value;
-    const img = event.target.files[0];
+    const img: File = event.target.files[0];
     const size = img.size / 1024 / 1024;
     const regex = /(\.jpg|\.jpeg|\.png)$/i;
+    console.log({ img, size, val });
 
     setFileLoading(true);
     if (!regex.exec(val)) {
@@ -48,12 +49,14 @@ export const useFileHandler = (initState: Record<string, ImageFile[]>) => {
       const reader = new FileReader();
 
       reader.addEventListener("load", (e) => {
+        console.log("@@@", e.target?.result);
         setImageFile(() => ({
           ...imageFile,
           [params.name]: [{ file: img, url: JSON.stringify(e.target?.result ?? ""), id: uuidv4() }],
         }));
         setFileLoading(false);
       });
+      console.log("here");
       reader.readAsDataURL(img);
     }
   };

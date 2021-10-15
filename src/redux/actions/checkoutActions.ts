@@ -1,5 +1,7 @@
 import actionCreatorFactory from "typescript-fsa";
 
+import { Mobile } from "../reducers";
+
 const factory = actionCreatorFactory("CHECKOUT");
 
 export const setShippingDetails = factory<SetCheckoutShippingPayload>("SET_CHECKOUT_SHIPPING_DETAILS");
@@ -9,7 +11,7 @@ export interface Shipping {
   fullname: string;
   email: string;
   address: string;
-  mobile: string;
+  mobile?: Mobile;
   isInternational?: boolean;
   isDone?: boolean;
 }

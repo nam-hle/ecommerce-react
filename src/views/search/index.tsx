@@ -27,13 +27,13 @@ export const Search: React.FC<SearchProps> = ({ match }) => {
     if (didMount && !store.isLoading && searchKey) {
       dispatch(searchProduct.started({ searchKey }));
     }
-  }, [didMount, dispatch, searchKey, store.isLoading]);
+  }, [didMount, searchKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(
     () => () => {
       dispatch(setRequestStatus({ message: "" }));
     },
-    [dispatch]
+    [] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   if (store.requestStatus && !store.isLoading) {

@@ -11,13 +11,14 @@ DotEnv.config({ path: ".env.dev" });
 
 module.exports = merge(baseConfig, {
   mode: "development",
-  devtool: "inline-source-map",
+  devtool: "eval-cheap-module-source-map",
   devServer: {
     contentBase: false,
     publicPath: "/",
     historyApiFallback: true,
     clientLogLevel: "warning",
     compress: true,
+    hot: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

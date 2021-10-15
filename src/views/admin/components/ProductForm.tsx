@@ -6,10 +6,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import * as Yup from "yup";
 
-import { ImageLoader } from "../../../components/common";
-import { CustomColorInput, CustomCreatableSelect, CustomInput, CustomTextarea } from "../../../components/formik";
+import { ImageLoader, CustomColorInput, CustomCreatableSelect, CustomInput, CustomTextarea } from "../../../components";
 import { useFileHandler } from "../../../hooks";
-import { Product } from "../../../redux";
+import { AddProductPayload } from "../../../redux";
 
 // Default brand names that I used. You can use what you want
 const brandOptions = [
@@ -73,7 +72,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
   });
 
   const onSubmitForm = (form: ProductFormSchema) => {
-    if (imageFile.image[0].file || product.imageUrl) {
+    const image = imageFile.image[0].file;
+    if (image && product.imageUrl) {
       onSubmit({
         ...form,
         quantity: 1,
@@ -81,7 +81,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
         // of name here instead in firebase functions
         name_lower: form.name.toLowerCase(),
         dateAdded: new Date().getTime(),
-        image: imageFile?.image[0]?.file || product.imageUrl,
+        image,
         imageCollection: imageFile.imageCollection,
         id: uuidv4(),
         imageUrl: "",
@@ -210,7 +210,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
                   {imageFile.imageCollection.length >= 1 &&
                     imageFile.imageCollection.map((image) => (
                       <div className="product-form-collection-image" key={image.id}>
-                        <ImageLoader alt="" src={image.url} />
+                        <ImageLoader alt="" src={image.url || ""} />
                         <button
                           className="product-form-delete-image"
                           onClick={() => removeImage({ id: image.id, name: "imageCollection" })}
@@ -296,14 +296,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, isL
 };
 
 type ProductFormProps = {
-  product: Product;
+  product: AddProductPayload;
   onSubmit: (
-    params: Product & {
+    params: AddProductPayload & {
       quantity: number;
       // of name here instead in firebase functions
       name_lower: string;
       dateAdded: number;
-      image: string;
     }
   ) => void;
   isLoading: boolean;

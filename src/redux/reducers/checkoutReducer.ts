@@ -12,7 +12,7 @@ const initState: CheckoutState = {
     fullname: "",
     email: "",
     address: "",
-    mobile: "",
+    mobile: undefined,
   },
   payment: {
     type: "paypal",

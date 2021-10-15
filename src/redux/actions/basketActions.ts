@@ -1,6 +1,6 @@
 import actionCreatorFactory from "typescript-fsa";
 
-import { Item } from "../reducers/basketReducer";
+import { Item } from "../reducers";
 
 const factory = actionCreatorFactory("BASKET");
 

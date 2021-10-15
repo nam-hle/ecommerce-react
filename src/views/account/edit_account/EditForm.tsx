@@ -4,7 +4,7 @@ import { Field, useFormikContext } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { CustomInput, CustomMobileInput } from "../../../components/formik";
+import { CustomInput, CustomMobileInput } from "../../../components";
 import { ACCOUNT } from "../../../constants";
 
 export const EditForm: React.FC<EditFormProps> = ({ isLoading, authProvider }) => {

@@ -46,7 +46,7 @@ const _AddProduct: React.FC<AddProductProps> = () => {
             description: "",
             keywords: [],
             sizes: [],
-            image: "",
+            image: undefined,
             isFeatured: false,
             isRecommended: false,
             availableColors: [],

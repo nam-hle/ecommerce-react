@@ -44,11 +44,11 @@ const _ShippingDetails: React.FC<ShippingDetailsProps> = ({ profile, shipping, s
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const initFormikValues = {
+  const initFormikValues: Shipping = {
     fullname: shipping.fullname || profile.fullname || "",
     email: shipping.email || profile.email || "",
     address: shipping.address || profile.address || "",
-    mobile: shipping.mobile || profile.mobile || {},
+    mobile: shipping.mobile || profile.mobile || undefined,
     isInternational: shipping.isInternational || false,
     isDone: shipping.isDone || false,
   };

@@ -17,7 +17,7 @@ import DocumentData = firebase.firestore.DocumentData;
 
 export interface Product extends DocumentData, ProductFormSchema {
   id: string;
-  image?: string;
+  image?: File;
   imageCollection: ImageCollection;
   imageUrl: string;
   quantity: number;

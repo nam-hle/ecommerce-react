@@ -79,7 +79,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
 
       const { imageCollection } = action.payload;
       const key: string = yield call(firebase.generateKey);
-      const downloadURL = yield call(firebase.storeImage, key, "products", action.payload.image || "");
+      const downloadURL = yield call(firebase.storeImage, key, "products", action.payload.image);
       const image = { id: key, url: downloadURL };
       let images: { id: string; url: string }[] = [];
 
@@ -136,7 +136,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
 
       if (imageCollection?.length && imageCollection.length > 1) {
         const existingUploads: ImageFile[] = [];
-        const newUploads: { file: string }[] = [];
+        const newUploads: { file: File }[] = [];
 
         imageCollection.forEach((img) => {
           const file = img.file;
@@ -156,7 +156,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
       } else if (newUpdates.image) {
         newUpdates = {
           ...newUpdates,
-          imageCollection: [{ id: new Date().getTime().toString(), file: "", url: newUpdates.image }],
+          imageCollection: [{ id: new Date().getTime().toString(), url: newUpdates.image }],
         };
         // add image thumbnail to image collection from newUpdates to
         // make sure you're adding the url not the file object.
@@ -199,7 +199,7 @@ export function* productSaga(action: AnyAction): SagaIterator {
     try {
       yield call(initRequest);
       // clear search data
-      yield put(clearSearchState);
+      yield put(clearSearchState());
 
       const state = yield select();
       const result: { products: Product[]; lastKey?: string; total?: number } = yield call(

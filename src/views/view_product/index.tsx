@@ -59,7 +59,7 @@ export const ViewProduct: React.FC = () => {
       quantity: product?.quantity ?? 1,
       imageUrl: product?.imageUrl ?? "",
       imageCollection: product?.imageCollection ?? [],
-      image: product?.image ?? "",
+      image: product?.image,
       id: product?.id || uuidv4(),
       selectedColor,
       selectedSize: selectedSize || product?.sizes[0],
@@ -87,15 +87,15 @@ export const ViewProduct: React.FC = () => {
           <div className="product-modal">
             {product.imageCollection.length !== 0 && (
               <div className="product-modal-image-collection">
-                {product.imageCollection.map((image) => (
-                  <div
-                    className="product-modal-image-collection-wrapper"
-                    key={image.id}
-                    onClick={() => setSelectedImage(image.url)}
-                    role="presentation">
-                    <ImageLoader alt="" className="product-modal-image-collection-img" src={image.url} />
-                  </div>
-                ))}
+                {/*{product.imageCollection.map((image) => (*/}
+                {/*  <div*/}
+                {/*    className="product-modal-image-collection-wrapper"*/}
+                {/*    key={image.id}*/}
+                {/*    onClick={() => setSelectedImage(image.url)}*/}
+                {/*    role="presentation">*/}
+                {/*    <ImageLoader alt="" className="product-modal-image-collection-img" src={image.url} />*/}
+                {/*  </div>*/}
+                {/*))}*/}
               </div>
             )}
             <div className="product-modal-image-wrapper">

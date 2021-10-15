@@ -51,7 +51,7 @@ export function* rootSaga(): SagaIterator {
   );
 
   yield takeLatest(
-    (action: AnyAction) => [updateEmail, updateProfile.started, updateProfile.done].some((a) => a.match(action)),
+    (action: AnyAction) => [updateEmail, updateProfile.started].some((a) => a.match(action)),
     profileSaga
   );
 }

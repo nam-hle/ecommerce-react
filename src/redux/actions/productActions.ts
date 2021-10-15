@@ -14,12 +14,13 @@ export interface CancelGetProductsPayload {}
 
 export const addProduct = factory.async<AddProductPayload, AddProductSuccessPayload>("ADD_PRODUCT");
 export interface AddProductPayload extends Product {
-  imageCollection: ImageFile[];
-  image?: string;
+  imageCollection: AddImageFile[];
+  image: File;
 }
 export type AddProductSuccessPayload = Product;
 export type ImageCollection = ImageFile[];
-export type ImageFile = { id: string; file?: string; url: string };
+export type ImageFile = { id: string; file?: File; url?: string };
+export type AddImageFile = { id: string; file: File; url?: string };
 
 export const searchProduct = factory.async<SearchProductPayload, SearchProductSuccessPayload>("SEARCH_PRODUCT");
 export interface SearchProductPayload {

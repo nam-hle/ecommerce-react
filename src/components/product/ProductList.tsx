@@ -11,8 +11,9 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
 
   const fetchProducts = useCallback(() => {
     setFetching(true);
+    console.log("here");
     dispatch(getProducts.started(products.lastRefKey));
-  }, [dispatch, products.lastRefKey]);
+  }, [products.lastRefKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // @ts-ignore
   useEffect(() => {
@@ -22,7 +23,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
 
     window.scrollTo(0, 0);
     return () => dispatch(setLoading(false));
-  }, [dispatch, fetchProducts, products.items.length, products.lastRefKey]);
+  }, [fetchProducts, products.items.length, products.lastRefKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setFetching(false);

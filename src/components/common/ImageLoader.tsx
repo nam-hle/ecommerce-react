@@ -37,7 +37,7 @@ ImageLoader.defaultProps = {
 };
 
 type ImageLoaderProps = {
-  src: string;
+  src: File | string;
   alt: string;
   className?: string;
 };

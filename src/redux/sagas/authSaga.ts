@@ -4,7 +4,7 @@ import { AnyAction } from "typescript-fsa";
 
 import defaultAvatar from "../../../static/defaultAvatar.jpg";
 import defaultBanner from "../../../static/defaultBanner.jpg";
-import { SIGNIN as ROUTE_SIGNIN } from "../../constants";
+import { SIGNIN } from "../../constants";
 import { history } from "../../routers/AppRouter";
 import firebase from "../../services/firebase";
 import {
@@ -39,7 +39,7 @@ function* handleError(e: AuthError) {
 
   switch (e.code) {
     case "auth/network-request-failed":
-      yield put(setAuthStatus({ ...obj, message: "Network error has occured. Please try again." }));
+      yield put(setAuthStatus({ ...obj, message: "Network error has occurred. Please try again." }));
       break;
     case "auth/email-already-in-use":
       yield put(setAuthStatus({ ...obj, message: "Email is already in use. Please use another email" }));
@@ -112,6 +112,8 @@ export function* authSaga(action: AnyAction): SagaIterator {
       yield call(initRequest);
 
       const ref = yield call(firebase.createAccount, action.payload.email, action.payload.password);
+      console.log("@");
+
       const fullname = action.payload.fullname
         .split(" ")
         .map((name) => name[0].toUpperCase().concat(name.substring(1)))
@@ -123,7 +125,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
         email: action.payload.email,
         address: "",
         basket: [],
-        mobile: { data: {} },
+        mobile: undefined,
         role: "USER",
         dateJoined: ref.user.metadata.creationTime || new Date().getTime(),
       };
@@ -141,13 +143,13 @@ export function* authSaga(action: AnyAction): SagaIterator {
     try {
       yield call(initRequest);
       yield call(firebase.signOut);
-      yield put(clearBasket);
-      yield put(clearProfile);
-      yield put(resetFilter);
-      yield put(resetCheckout);
-      yield put(signOut.done);
+      yield put(clearBasket({}));
+      yield put(clearProfile({}));
+      yield put(resetFilter({}));
+      yield put(resetCheckout({}));
+      yield put(signOut.done({ params: {}, result: {} }));
       yield put(setAuthenticating(false));
-      yield call(history.push, ROUTE_SIGNIN);
+      yield call(history.push, SIGNIN);
     } catch (e) {
       console.log(e);
     }
@@ -182,7 +184,6 @@ export function* authSaga(action: AnyAction): SagaIterator {
 
       yield put(setProfile(user));
       yield put(setBasketItems(user.basket));
-      yield put(setBasketItems(user.basket));
       yield put(
         signIn.done({
           // @ts-ignore
@@ -203,7 +204,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
         email: action.payload.result.email,
         address: "",
         basket: [],
-        mobile: { data: {} },
+        mobile: undefined,
         role: "USER",
         dateJoined: action.payload.result.metadata.creationTime,
       };

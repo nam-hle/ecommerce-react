@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
-import { ImageLoader } from "../../../components/common";
+import { ImageLoader } from "../../../components";
 import { ACCOUNT_EDIT } from "../../../constants";
 import { displayDate } from "../../../helpers";
 import { AppState, ProfileState } from "../../../redux";

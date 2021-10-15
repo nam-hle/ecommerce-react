@@ -4,9 +4,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
-import { Boundary, ImageLoader } from "../../../components/common";
+import { Boundary, ImageLoader } from "../../../components";
 import { useDocumentTitle, useFileHandler, useModal, useScrollTop } from "../../../hooks";
-import { AppState, AuthState, Credentials, ProfileState, setLoading, updateProfile } from "../../../redux";
+import { AppState, AuthState, Credentials, Mobile, ProfileState, setLoading, updateProfile } from "../../../redux";
 
 import { ConfirmModal } from "./ConfirmModal";
 import { EditForm } from "./EditForm";
@@ -30,12 +30,7 @@ export type EditAccountForm = {
   fullname: string;
   email: string;
   address?: string;
-  mobile?: {
-    country?: string;
-    countryCode?: string;
-    dialCode?: string;
-    value?: string;
-  };
+  mobile?: Mobile;
 };
 
 export const EditAccount: React.FC = () => {
@@ -61,11 +56,11 @@ export const EditAccount: React.FC = () => {
     isLoading: state.app.loading,
   }));
 
-  const initFormikValues = {
+  const initFormikValues: EditAccountForm = {
     fullname: profile.fullname || "",
     email: profile.email || "",
     address: profile.address || "",
-    mobile: profile.mobile || {},
+    mobile: profile.mobile,
   };
 
   const { imageFile, isFileLoading, onFileChange } = useFileHandler({ avatar: [], banner: [] });
@@ -82,8 +77,8 @@ export const EditAccount: React.FC = () => {
           banner: profile.banner,
         },
         files: {
-          bannerFile: imageFile.banner[0].file,
-          avatarFile: imageFile.avatar[0].file,
+          bannerFile: imageFile.banner?.[0]?.file,
+          avatarFile: imageFile.avatar?.[0]?.file,
         },
         credentials,
       })
@@ -101,7 +96,7 @@ export const EditAccount: React.FC = () => {
     // @ts-ignore
     const fieldsChanged = Object.keys(form).some((key) => profile[key] !== form[key]);
 
-    if (fieldsChanged || Boolean(imageFile.banner[0].file || imageFile.avatar[0].file)) {
+    if (fieldsChanged || Boolean(imageFile.banner?.[0]?.file || imageFile.avatar?.[0]?.file)) {
       if (form.email !== profile.email) {
         modal.onOpenModal();
       } else {
@@ -126,7 +121,7 @@ export const EditAccount: React.FC = () => {
                   <ImageLoader
                     alt="Banner"
                     className="user-profile-banner-img"
-                    src={imageFile.banner[0].url || profile.banner}
+                    src={imageFile.banner?.[0]?.url || profile.banner}
                   />
                   {isFileLoading ? (
                     <div className="loading-wrapper">
@@ -150,7 +145,7 @@ export const EditAccount: React.FC = () => {
                   <ImageLoader
                     alt="Avatar"
                     className="user-profile-img"
-                    src={imageFile.avatar[0].url || profile.avatar}
+                    src={imageFile.avatar?.[0]?.url || profile.avatar}
                   />
                   {isFileLoading ? (
                     <div className="loading-wrapper">

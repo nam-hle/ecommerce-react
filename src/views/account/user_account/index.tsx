@@ -1,19 +1,9 @@
 import { LoadingOutlined } from "@ant-design/icons";
 
-import React, { lazy, Suspense } from "react";
+import React from "react";
 
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
-import { UserTab } from "../components";
-
-const UserAccountTab = lazy(() =>
-  import("../components/UserAccountTab").then(({ UserAccountTab }) => ({ default: UserAccountTab }))
-);
-const UserWishListTab = lazy(() =>
-  import("../components/UserWishListTab").then(({ UserWishListTab }) => ({ default: UserWishListTab }))
-);
-const UserOrdersTab = lazy(() =>
-  import("../components/UserOrdersTab").then(({ UserOrdersTab }) => ({ default: UserOrdersTab }))
-);
+import { UserAccountTab, UserOrdersTab, UserTab, UserWishListTab } from "../components";
 
 export const Loader: React.FC = () => (
   <div className="loader" style={{ minHeight: "80vh" }}>
@@ -28,20 +18,17 @@ export const UserAccount: React.FC = () => {
 
   return (
     <UserTab>
-      <div key={0}>
-        <Suspense fallback={<Loader />}>
-          <UserAccountTab />
-        </Suspense>
+      {/* @ts-ignore */}
+      <div key={0} label="Account">
+        <UserAccountTab />
       </div>
-      <div key={1}>
-        <Suspense fallback={<Loader />}>
-          <UserWishListTab />
-        </Suspense>
+      {/* @ts-ignore */}
+      <div key={1} label="Wishlist">
+        <UserWishListTab />
       </div>
-      <div key={2}>
-        <Suspense fallback={<Loader />}>
-          <UserOrdersTab />
-        </Suspense>
+      {/* @ts-ignore */}
+      <div key={2} label="Orders">
+        <UserOrdersTab />
       </div>
     </UserTab>
   );

@@ -24,8 +24,8 @@ export interface UpdateProfilePayload {
   credentials: Credentials;
 }
 export interface ProfileFiles {
-  avatarFile?: string;
-  bannerFile?: string;
+  avatarFile?: File;
+  bannerFile?: File;
 }
 export interface Credentials {
   email?: string;

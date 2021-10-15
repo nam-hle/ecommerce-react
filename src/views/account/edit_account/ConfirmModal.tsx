@@ -3,7 +3,7 @@ import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { useFormikContext } from "formik";
 import React, { useState } from "react";
 
-import { Modal } from "../../../components/common";
+import { Modal } from "../../../components";
 
 export const ConfirmModal: React.FC<ConfirmModalProps> = ({ onConfirmUpdate, modal }) => {
   const [password, setPassword] = useState("");
