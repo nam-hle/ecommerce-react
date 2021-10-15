@@ -112,7 +112,6 @@ export function* authSaga(action: AnyAction): SagaIterator {
       yield call(initRequest);
 
       const ref = yield call(firebase.createAccount, action.payload.email, action.payload.password);
-      console.log("@");
 
       const fullname = action.payload.fullname
         .split(" ")
@@ -125,7 +124,7 @@ export function* authSaga(action: AnyAction): SagaIterator {
         email: action.payload.email,
         address: "",
         basket: [],
-        mobile: undefined,
+        mobile: {},
         role: "USER",
         dateJoined: ref.user.metadata.creationTime || new Date().getTime(),
       };

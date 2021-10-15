@@ -13,10 +13,10 @@ import { clearProfile, setProfile, updateProfile } from "../actions";
 // };
 
 export interface Mobile {
-  country: string;
-  countryCode: string;
-  dialCode: string;
-  value: string;
+  country?: string;
+  countryCode?: string;
+  dialCode?: string;
+  value?: string;
 }
 
 export interface Profile {

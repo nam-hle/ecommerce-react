@@ -3,10 +3,10 @@ import { render } from "react-dom";
 import WebFont from "webfontloader";
 
 import { App } from "./App";
-import { Preloader } from "./components/common";
+import { Preloader } from "./components";
 import "normalize.css/normalize.css";
 import "react-phone-input-2/lib/style.css";
-import { onAuthStateChanged, createAppStore } from "./redux";
+import { createAppStore, onAuthStateChanged } from "./redux";
 import "../styles/style.scss";
 import firebase from "./services/firebase";
 
