@@ -22,6 +22,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onRequestClose, afterOpenM
 
   AppModal.setAppElement("#app");
 
+  console.log({ isOpen });
   return (
     <AppModal
       closeTimeoutMS={300}

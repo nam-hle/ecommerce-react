@@ -35,12 +35,12 @@ const _Filters: React.FC<FiltersProps> = ({ closeModal }) => {
     }
 
     if (didMount && closeModal) {
-      closeModal();
+      closeModal("useEffect");
     }
 
     setFilter(filter);
     window.scrollTo(0, 0);
-  }, [closeModal, didMount, filter, history]);
+  }, [filter, history]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onPriceChange = (values: ReadonlyArray<number>) => {
     setFilter({ ...field, minPrice: values[0], maxPrice: values[1] });
@@ -66,7 +66,7 @@ const _Filters: React.FC<FiltersProps> = ({ closeModal }) => {
     if (isChanged) {
       dispatch(applyFilter(field));
     } else {
-      closeModal();
+      closeModal("onApplyFilter");
     }
   };
 
@@ -76,7 +76,7 @@ const _Filters: React.FC<FiltersProps> = ({ closeModal }) => {
     if (filterFields.some((key) => !!(filter as any)[key])) {
       dispatch(resetFilter({}));
     } else {
-      closeModal();
+      closeModal("onresetFilter");
     }
   };
 
@@ -94,11 +94,13 @@ const _Filters: React.FC<FiltersProps> = ({ closeModal }) => {
             value={field.brand}
             disabled={isLoading || products.length === 0}
             onChange={onBrandFilterChange}>
-            <option value="">All Brands</option>
-            <option value="salt">Salt Maalat</option>
-            <option value="betsin">Betsin Maalat</option>
-            <option value="black">Black Kibal</option>
-            <option value="sexbomb">Sexbomb</option>
+            {products.map((p, i) => {
+              return (
+                <option key={i} value={p.brand}>
+                  {p.brand}
+                </option>
+              );
+            })}
           </select>
         )}
       </div>
@@ -158,7 +160,7 @@ const _Filters: React.FC<FiltersProps> = ({ closeModal }) => {
 };
 
 type FiltersProps = RouteComponentProps & {
-  closeModal: () => void;
+  closeModal: (path: string) => void;
 };
 
 export const Filters = withRouter(_Filters);

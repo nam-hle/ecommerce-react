@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export const useModal = () => {
   const [isOpenModal, setModalOpen] = useState(false);
 
   const onOpenModal = () => {
-    setModalOpen(true);
+    console.log("onOpenModal");
+    setModalOpen(() => true);
   };
 
-  const onCloseModal = () => {
-    setModalOpen(false);
+  const onCloseModal = (from: string) => {
+    console.log("onCloseModal", from);
+    setModalOpen(() => false);
   };
 
-  return { isOpenModal, onOpenModal, onCloseModal };
+  return useMemo(
+    () => ({
+      isOpenModal,
+      onOpenModal,
+      onCloseModal,
+    }),
+    [isOpenModal]
+  );
 };

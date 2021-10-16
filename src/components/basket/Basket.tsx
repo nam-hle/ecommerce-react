@@ -48,7 +48,7 @@ export const Basket: React.FC = () => {
   };
 
   const onSignInClick = () => {
-    onCloseModal();
+    onCloseModal("basket");
     document.body.classList.remove("basket-open");
     history.push(CHECKOUT_STEP_1);
   };
@@ -61,11 +61,14 @@ export const Basket: React.FC = () => {
 
   return user && user.role === "ADMIN" ? null : (
     <Boundary>
-      <Modal isOpen={isOpenModal} onRequestClose={onCloseModal}>
+      <Modal isOpen={isOpenModal} onRequestClose={() => onCloseModal("basket")}>
         <p className="text-center">You must sign in to continue checking out</p>
         <br />
         <div className="d-flex-center">
-          <button className="button button-border button-border-gray button-small" onClick={onCloseModal} type="button">
+          <button
+            className="button button-border button-border-gray button-small"
+            onClick={() => onCloseModal("basket")}
+            type="button">
             Continue shopping
           </button>
           &nbsp;

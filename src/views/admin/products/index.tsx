@@ -2,8 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
-import { Boundary } from "../../../components/common";
-import { ProductAppliedFilters, ProductList } from "../../../components/product";
+import { ProductAppliedFilters, ProductList, Boundary } from "../../../components";
 import { useDocumentTitle, useScrollTop } from "../../../hooks";
 import { AppState, MiscState, Product, ProductState, selectFilter } from "../../../redux";
 

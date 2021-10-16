@@ -113,6 +113,7 @@ class Firebase {
     return new Promise((resolve, reject) => {
       (async () => {
         if (lastRefKey) {
+          console.log({ lastRefKey });
           try {
             const query = this.db
               .collection("products")
@@ -123,9 +124,10 @@ class Firebase {
             const snapshot = (await query.get()) as app.firestore.QuerySnapshot<Product>;
             const products: Product[] = [];
             snapshot.forEach((doc) => products.push({ ...doc.data(), id: doc.id }));
+            console.log({ snapshot, products });
             const lastKey = snapshot.docs[snapshot.docs.length - 1];
 
-            resolve({ products, lastKey });
+            resolve({ items: products, lastKey });
           } catch (e: any) {
             reject(e?.message || ":( Failed to fetch products.");
           }

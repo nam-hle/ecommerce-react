@@ -10,7 +10,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({ onConfirmUpdate, mod
   const { values } = useFormikContext();
 
   return (
-    <Modal isOpen={modal.isOpenModal} onRequestClose={modal.onCloseModal}>
+    <Modal isOpen={modal.isOpenModal} onRequestClose={() => modal.onCloseModal("edit_account")}>
       <div className="text-center padding-l">
         <h4>Confirm Update</h4>
         <p>
@@ -35,7 +35,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({ onConfirmUpdate, mod
           className="button"
           onClick={() => {
             onConfirmUpdate(values, password);
-            modal.onCloseModal();
+            modal.onCloseModal("edit_account");
           }}
           type="button">
           <CheckOutlined />
@@ -44,7 +44,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({ onConfirmUpdate, mod
       </div>
       <button
         className="modal-close-button button button-border button-border-gray button-small"
-        onClick={modal.onCloseModal}
+        onClick={() => modal.onCloseModal("edit_account")}
         type="button">
         <CloseOutlined />
       </button>
@@ -55,7 +55,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({ onConfirmUpdate, mod
 type ConfirmModalProps = {
   onConfirmUpdate: (values: any, password: string) => void;
   modal: {
-    onCloseModal: () => void;
+    onCloseModal: (from: string) => void;
     isOpenModal: boolean;
   };
 };

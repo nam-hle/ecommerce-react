@@ -9,6 +9,7 @@ export const ProductAppliedFilters: React.FC<ProductAppliedFiltersProps> = ({ fi
   const fields: (keyof FilterState)[] = ["brand", "minPrice", "maxPrice", "sortBy", "keyword"];
   const isFiltered = fields.some((key) => !!filter[key]);
   const dispatch = useDispatch();
+  console.log({ filter, isFiltered });
 
   const onRemoveKeywordFilter = () => {
     dispatch(applyFilter({ keyword: "" }));
